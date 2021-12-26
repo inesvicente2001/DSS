@@ -1,14 +1,19 @@
 package SSReparacoes;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 public interface ISSReparacoes {
 
-    public void registarReparacao(String nif, String nome, String descricao);
-    public void registarEntrega(String id);
-    public void repararProduto(String id);
-    public void registarPlanoTrabalho(String id);
-    public void registarConclusao(String id);
-    public LocalDateTime obterPrazoMaximo(String id);
+    Reparacao registarReparacao(String nome, String descricao, LocalDateTime prazoMaximo);
 
+    public void registarEntrega(String id);
+
+    public void repararProduto(String id);
+
+    public void registarPlanoTrabalho(Map<Integer,Passo> planoTrabalho);
+
+    public void registarConclusao();
+
+    LocalDateTime obterPrazoMaximo();
 }
