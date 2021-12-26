@@ -1,9 +1,9 @@
 package SSEmpregados;
 
-import java.util.Map;
 
 public class Gestor extends Empregado{
 
-    public Map<String, Funcionario> funcionarios;
-    public Map<String, Tecnico> tecnicos;
+    public Gestor(String id, String nome, String password) {
+        super(id,nome,password);
+    }
 }
