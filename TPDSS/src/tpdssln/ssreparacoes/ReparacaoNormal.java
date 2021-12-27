@@ -1,4 +1,4 @@
-package SSReparacoes;
+package tpdssln.ssreparacoes;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;

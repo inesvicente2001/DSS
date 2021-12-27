@@ -1,4 +1,4 @@
-package SSEmpregados;
+package tpdssln.ssempregados;
 
 import java.util.HashMap;
 import java.util.Map;

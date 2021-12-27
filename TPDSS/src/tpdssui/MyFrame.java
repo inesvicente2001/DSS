@@ -1,4 +1,4 @@
-package TPDSSUI;
+package tpdssui;
 
 // Java program to implement
 // a Simple Registration Form

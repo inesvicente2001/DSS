@@ -1,4 +1,4 @@
-package SSEmpregados;
+package tpdssln.ssempregados;
 
 
 public class Gestor extends Empregado{

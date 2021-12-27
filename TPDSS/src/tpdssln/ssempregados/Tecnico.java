@@ -1,11 +1,11 @@
-package SSEmpregados;
+package tpdssln.ssempregados;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import SSReparacoes.Passo;
-import SSReparacoes.Reparacao;
+import tpdssln.ssreparacoes.Passo;
+import tpdssln.ssreparacoes.Reparacao;
 
 public class Tecnico extends Empregado{
 

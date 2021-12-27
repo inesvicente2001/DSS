@@ -1,6 +1,5 @@
-package SSReparacoes;
+package tpdssln.ssreparacoes;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ReparacaoExpresso extends Reparacao{

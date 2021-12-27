@@ -1,4 +1,4 @@
-package TPDSSUI;
+package tpdssui;
 
 import javax.swing.*;
 import java.awt.*;
