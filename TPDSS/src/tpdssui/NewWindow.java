@@ -1,4 +1,4 @@
-package TPDSSUI;
+package tpdssui;
 
 //import statement
 import java.awt.Color;

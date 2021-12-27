@@ -1,7 +1,4 @@
-package TPDSSUI;
-
-import javax.swing.*;
-import java.awt.*;
+package tpdssui;
 
 public class MinhoRepairs{
 

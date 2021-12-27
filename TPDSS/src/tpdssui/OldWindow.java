@@ -1,4 +1,4 @@
-package TPDSSUI;
+package tpdssui;
 
 import java.awt.Color;
 import java.awt.EventQueue;

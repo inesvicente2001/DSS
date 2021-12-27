@@ -1,4 +1,4 @@
-package SSReparacoes;
+package tpdssln.ssreparacoes;
 
 public class Cliente {
     public String nomeCliente;

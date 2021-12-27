@@ -1,9 +1,7 @@
-package TPDSSUI;
+package tpdssui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class SplashScreenDemo extends JFrame{
     JLabel image=new JLabel(new ImageIcon("TPDSS/src/logo.png")); //depois mudar isto.....
