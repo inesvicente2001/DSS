@@ -12,6 +12,7 @@ public class Passo {
     public LocalDateTime tempoPrevisto;
     public Set<Peca> pecasEstimadas;
     public Set<Peca> pecasUsadas;
+    public Set<Passo> subPassos;
 
     public Passo(String nomePasso, LocalDateTime dataInicio, LocalDateTime dataFim, LocalDateTime tempoPrevisto) {
         this.nomePasso = nomePasso;
@@ -80,4 +81,11 @@ public class Passo {
         this.pecasUsadas = pecasUsadas;
     }
 
+    public Set<Passo> getSubPassos() {
+        return subPassos;
+    }
+
+    public void setSubPassos(Set<Passo> subPassos) {
+        this.subPassos = subPassos;
+    }
 }

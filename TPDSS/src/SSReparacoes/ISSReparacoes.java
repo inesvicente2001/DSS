@@ -13,7 +13,7 @@ public interface ISSReparacoes {
 
     public void registarPlanoTrabalho(Map<Integer,Passo> planoTrabalho);
 
-    public void registarConclusao();
+    public void registarConclusao(String idEquipamento);
 
     LocalDateTime obterPrazoMaximo();
 }

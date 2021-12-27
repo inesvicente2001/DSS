@@ -22,6 +22,14 @@ public class LoginFrame extends JFrame implements ActionListener {
         setLocationAndSize();
         addComponentsToContainer();
         addActionEvent();
+        this.setTitle("Minho Repairs");
+        this.setVisible(true);
+        this.setBounds(150, 150, 1200,800);
+        //frame.setSize(1200,800);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.pack();
+        this.setLocationRelativeTo(null);
 
     }
 
@@ -66,8 +74,9 @@ public class LoginFrame extends JFrame implements ActionListener {
             String pwdText;
             userText = userTextField.getText();
             pwdText = passwordField.getText();
-            if (userText.equalsIgnoreCase("mehtab") && pwdText.equalsIgnoreCase("12345")) {
+            if (userText.equalsIgnoreCase("admin") && pwdText.equalsIgnoreCase("admin12345")) {
                 JOptionPane.showMessageDialog(this, "Login Successful");
+                //Aqui terá de ir para uma nova frame consoante o tipo de utilizador
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             }
