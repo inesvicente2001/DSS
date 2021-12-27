@@ -14,6 +14,7 @@ public class MinhoRepairs{
 
         new SplashScreenDemo();
 
+
         new LoginFrame();
 
 
