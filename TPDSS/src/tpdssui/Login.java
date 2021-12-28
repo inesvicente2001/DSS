@@ -21,6 +21,24 @@ public class Login extends JFrame implements ActionListener {
 
     private ITPDSSLN ln;
 
+    public Login(ITPDSSLN ln) {
+        this.ln = new TPDSSLNFacade();
+
+        setLayoutManager();
+        setLocationAndSize();
+        addComponentsToContainer();
+        addActionEvent();
+
+        this.setTitle("Login");
+        this.setBounds(150, 150, 1200,800);
+        //this.setSize(1200,800);
+        this.getContentPane().setBackground(Color.WHITE);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+
+    }
+
 
     public Login() {
         this.ln = new TPDSSLNFacade();

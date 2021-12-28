@@ -14,6 +14,19 @@ public class Loading extends JFrame{
 
     private ITPDSSLN ln;
 
+    public Loading(ITPDSSLN ln) {
+        this.ln = ln;
+
+        createGUI();
+        addImage();
+        addText();
+        addProgressBar();
+        addMessage();
+        runningPBar();
+    }
+
+
+
     public Loading() {
         this.ln = new TPDSSLNFacade();
 
