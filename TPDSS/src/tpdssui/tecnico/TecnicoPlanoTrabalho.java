@@ -16,16 +16,11 @@ public class TecnicoPlanoTrabalho extends JFrame{
     private JButton adicionarPassoButton;
     private JPanel infoOrcamento;
     private JLabel orcamentoAtual;
-    private JLabel numLabel;
     private JLabel nomeLabel;
     private JLabel custoTotalLabel;
     private JLabel tempPrevistoLabel;
     private JPanel pecasPanel;
-    private JLabel nomePeca;
-    private JLabel quantPeca;
-    private JLabel custoPeca;
-    private JPanel pecaPanel;
-    private JPanel peca2Panel;
+    private JButton cancelarButton;
 
     private ITPDSSLN ln;
 
