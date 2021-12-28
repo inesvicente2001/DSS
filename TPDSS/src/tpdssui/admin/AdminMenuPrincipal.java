@@ -4,7 +4,7 @@ import tpdssln.ITPDSSLN;
 import tpdssln.TPDSSLNFacade;
 import tpdssln.ssempregados.Empregado;
 import tpdssui.Login;
-import tpdssui.LoginFrame;
+import tpdssui.MarcoLogin;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -77,7 +77,7 @@ public class AdminMenuPrincipal extends JFrame {
 
     // Para fazer logout, abrir uma nova janela de login e destruir esta janela
     private void logout() {
-        new Login(ln);
+        new MarcoLogin(ln);
         dispose();
     }
 

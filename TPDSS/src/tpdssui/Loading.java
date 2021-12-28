@@ -1,31 +1,32 @@
 package tpdssui;
 
+import tpdssln.ITPDSSLN;
+import tpdssln.TPDSSLNFacade;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class SplashScreenDemo extends JFrame{
-    JLabel image=new JLabel(new ImageIcon("TPDSS/src/logo.png")); //depois mudar isto.....
-    JLabel titleUP = new JLabel("Minho Repairs");
-    JProgressBar progressBar=new JProgressBar();
-    JLabel message=new JLabel();//Crating a JLabel for displaying the message
+public class Loading extends JFrame{
+    private JLabel image=new JLabel(new ImageIcon("TPDSS/src/logo.png")); //depois mudar isto.....
+    private JLabel titleUP = new JLabel("Minho Repairs");
+    private JProgressBar progressBar=new JProgressBar();
+    private JLabel message=new JLabel();//Crating a JLabel for displaying the message
 
-    SplashScreenDemo()
-    {
+    private ITPDSSLN ln;
+
+    public Loading() {
+        this.ln = new TPDSSLNFacade();
+
         createGUI();
         addImage();
         addText();
         addProgressBar();
         addMessage();
         runningPBar();
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.pack();
-        this.setLocationRelativeTo(null);
-
     }
     public void createGUI(){
         this.setTitle("Minho Repairs");
         this.getContentPane().setLayout(null);
-        this.setUndecorated(true);
         this.setBounds(150, 150, 1200,800);
         this.getContentPane().setBackground(Color.WHITE);
         this.setVisible(true);
@@ -70,8 +71,11 @@ public class SplashScreenDemo extends JFrame{
                 progressBar.setValue(i);//Setting value of Progress Bar
                 message.setText("LOADING "+Integer.toString(i)+"%");//Setting text of the message JLabel
                 i++;
-                if(i==100)
+                if(i==100){
                     this.dispose();
+                    new Login();
+                }
+
             }catch(Exception e){
                 e.printStackTrace();
             }
