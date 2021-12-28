@@ -5,19 +5,32 @@ import java.time.LocalDateTime;
 public class Registo{
 
     public String id;
-    public LocalDateTime data;
+    public String nomeEquipamento;
+    public LocalDateTime dataPedido;
+    public LocalDateTime dataPendente;
+    public LocalDateTime dataNConcluido;
+    public LocalDateTime dataConcluido;
+    public LocalDateTime dataEntregue;
+    public LocalDateTime dataAbandonado;
     public int urgencia;
     public String descricao;
-    public Boolean pagamento;
+    public String localizacao;
     public Reparacao reparacao;
     public Cliente cliente;
 
-    public Registo(String id, int urgencia, String descricao, Reparacao reparacao, Cliente cliente) {
+    public Registo(String id, String nomeEquipamento, int urgencia, String descricao,
+                   String localizacao, Reparacao reparacao, Cliente cliente) {
         this.id = id;
-        this.data = LocalDateTime.now();
+        this.nomeEquipamento = nomeEquipamento;
+        this.dataPedido = LocalDateTime.now();
+        this.dataPendente = null;
+        this.dataNConcluido = null;
+        this.dataConcluido = null;
+        this.dataEntregue = null;
+        this.dataAbandonado = null;
         this.urgencia = urgencia;
         this.descricao = descricao;
-        this.pagamento = false;
+        this.localizacao = localizacao;
         this.reparacao = reparacao;
         this.cliente = cliente;
     }
@@ -31,11 +44,11 @@ public class Registo{
     }
 
     public LocalDateTime getData() {
-        return data;
+        return dataPedido;
     }
 
     public void setData(LocalDateTime data) {
-        this.data = data;
+        this.dataPedido = data;
     }
 
     public int getUrgencia() {
@@ -54,14 +67,6 @@ public class Registo{
         this.descricao = descricao;
     }
 
-    public Boolean getPagamento() {
-        return pagamento;
-    }
-
-    public void setPagamento(Boolean pagamento) {
-        this.pagamento = pagamento;
-    }
-
     public Reparacao getReparacao() {
         return reparacao;
     }
@@ -77,6 +82,9 @@ public class Registo{
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 

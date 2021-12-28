@@ -7,6 +7,10 @@ import java.util.Random;
 public class SSEmpregadosFacade implements ISSEmpregados {
     public Map<String, Empregado> empregados;
 
+    public SSEmpregadosFacade() {
+        this.empregados = new HashMap<>();
+    }
+
     public Boolean autenticar(String id, String password) {
 
         Empregado value = empregados.get(id);
@@ -121,7 +125,8 @@ public class SSEmpregadosFacade implements ISSEmpregados {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
-        if (empregados.containsKey(generatedString)) generateID();
+        if (empregados.containsKey(generatedString))
+            generatedString = generateID();
 
         return generatedString;
     }
