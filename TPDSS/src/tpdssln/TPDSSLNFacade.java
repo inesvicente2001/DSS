@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 public class TPDSSLNFacade implements ITPDSSLN {
-    ISSReparacoes reparacoes = new SSReparacoesFacade();
-    ISSEmpregados empregados = new SSEmpregadosFacade();
+    private ISSReparacoes reparacoes = new SSReparacoesFacade();
+    private ISSEmpregados empregados = new SSEmpregadosFacade();
 
     public TPDSSLNFacade() {}
 
