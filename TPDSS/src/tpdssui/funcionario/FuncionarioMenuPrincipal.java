@@ -72,7 +72,7 @@ public class FuncionarioMenuPrincipal extends JFrame{
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Login();
+                new Login(ln);
                 dispose();
             }
         });

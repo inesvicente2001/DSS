@@ -86,7 +86,7 @@ public class Loading extends JFrame{
                 i++;
                 if(i==100){
                     this.dispose();
-                    new Login();
+                    new Login(ln);
                 }
 
             }catch(Exception e){

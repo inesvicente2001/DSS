@@ -1,63 +1,65 @@
-package tpdssui.tecnico;
+package tpdssui.gestor;
 
 import tpdssln.ITPDSSLN;
-import tpdssln.TPDSSLNFacade;
 import tpdssui.Login;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TecnicoMenuPrincipal extends JFrame {
+public class GestorMenuPrincipal extends JFrame {
+    private JButton lstInfoGeralTec;
+    private JButton lstInfosFunc;
     private JButton logoutButton;
-    private JButton reparaçõesButton;
-    private JButton pedidosDeOrçamentoButton;
     private JPanel topPanel;
-    private JPanel bottomPanel;
-    private JPanel panel1;
+    private JButton lstInfosPormTec;
+
 
     private ITPDSSLN ln;
 
-    public TecnicoMenuPrincipal(ITPDSSLN ln) {
+
+
+    public GestorMenuPrincipal(ITPDSSLN ln) {
+
         this.ln = ln;
 
-        logoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new Login(ln);
-                dispose();
-            }
-        });
-
-
-        this.setTitle("Técnico");
-        this.setContentPane(this.topPanel);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
-    }
-
-
-    public TecnicoMenuPrincipal() {
-        this.ln = new TPDSSLNFacade();
 
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new Login(ln);
                 dispose();
+
             }
         });
 
+        lstInfoGeralTec.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-        this.setTitle("Técnico");
+            }
+        });
+
+        lstInfosFunc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        lstInfosPormTec.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        this.setTitle("Gestor");
         this.setContentPane(this.topPanel);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-    
 
 }

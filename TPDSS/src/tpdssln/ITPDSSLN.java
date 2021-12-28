@@ -1,6 +1,8 @@
 package tpdssln;
 
 import tpdssln.ssempregados.Empregado;
+import tpdssln.ssempregados.Funcionario;
+import tpdssln.ssempregados.Tecnico;
 import tpdssln.ssreparacoes.Passo;
 import tpdssln.ssreparacoes.Reparacao;
 
@@ -24,7 +26,13 @@ public interface ITPDSSLN {
     Reparacao registarReparacao(String nome, String descricao, LocalDateTime prazoMaximo);
     public void registarEntrega(String id);
     public void repararProduto(String id);
+
+    void registarEntrega(String id, Funcionario funcionario);
+
     public void registarPlanoTrabalho(Map<Integer, Passo> planoTrabalho);
     public void registarConclusao(String idEquipamento);
+
+    void registarConclusao(String idEquipamento, Tecnico tecnico);
+
     LocalDateTime obterPrazoMaximo();
 }

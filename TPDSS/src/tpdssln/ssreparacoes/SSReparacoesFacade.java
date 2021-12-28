@@ -1,6 +1,5 @@
 package tpdssln.ssreparacoes;
 
-import SSEmpregados.Empregado;
 import tpdssln.ssempregados.Funcionario;
 import tpdssln.ssempregados.Tecnico;
 
@@ -75,7 +74,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
         pedidosOrcamento.add(registo);
     }
 
-    public void registarPlanoTrabalho(){
+    public void registarPlanoTrabalho(Map<Integer, Passo> planoTrabalho){
 
         Registo aReparar = maisUrgente();
 
@@ -167,6 +166,16 @@ public class SSReparacoesFacade implements ISSReparacoes {
         boolean conc = r.concluirPasso(tecnico);
 
         if (conc) registarConclusao(id,tecnico);
+    }
+
+    @Override
+    public Reparacao registarReparacao(String nome, String descricao, LocalDateTime prazoMaximo) {
+        return null;
+    }
+
+    @Override
+    public LocalDateTime obterPrazoMaximo() {
+        return null;
     }
 
     public Registo maisUrgente(){

@@ -1,8 +1,6 @@
 package tpdssln;
 
-import tpdssln.ssempregados.Empregado;
-import tpdssln.ssempregados.ISSEmpregados;
-import tpdssln.ssempregados.SSEmpregadosFacade;
+import tpdssln.ssempregados.*;
 import tpdssln.ssreparacoes.ISSReparacoes;
 import tpdssln.ssreparacoes.Passo;
 import tpdssln.ssreparacoes.Reparacao;
@@ -74,13 +72,21 @@ public class TPDSSLNFacade implements ITPDSSLN {
 
     @Override
     public void registarEntrega(String id) {
-        reparacoes.registarEntrega(id);
+
+
     }
 
     @Override
     public void repararProduto(String id) {
-        reparacoes.registarEntrega(id);
+
     }
+
+    @Override
+    public void registarEntrega(String id, Funcionario funcionario) {
+        reparacoes.registarEntrega(id, funcionario);
+    }
+
+
 
     @Override
     public void registarPlanoTrabalho(Map<Integer, Passo> planoTrabalho) {
@@ -89,7 +95,12 @@ public class TPDSSLNFacade implements ITPDSSLN {
 
     @Override
     public void registarConclusao(String idEquipamento) {
-        reparacoes.registarConclusao(idEquipamento);
+
+    }
+
+    @Override
+    public void registarConclusao(String idEquipamento, Tecnico tecnico) {
+        reparacoes.registarConclusao(idEquipamento, tecnico);
     }
 
     @Override
