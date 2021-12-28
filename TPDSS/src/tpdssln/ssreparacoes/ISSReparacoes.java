@@ -2,6 +2,8 @@ package tpdssln.ssreparacoes;
 
 import tpdssln.ssempregados.Funcionario;
 import tpdssln.ssempregados.Tecnico;
+
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -9,11 +11,12 @@ public interface ISSReparacoes {
 
     public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
                                                String local, LocalDateTime prazo, String nomeCliente, String nif,
-                                               String telemovel, String email);
+                                               String telemovel, String email, Funcionario funcionario);
 
     public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
-                                                 String local, LocalDateTime prazo, float precoFixo, String nomeCliente,
-                                                 String nif, String telemovel, String email);
+                                                 String local, LocalDateTime prazo, float precoFixo,
+                                                 Duration duracaoPrevista, String nomeCliente, String nif,
+                                                 String telemovel, String email, Funcionario funcionario);
 
     public void registarPlanoTrabalho(Map<Integer, Passo> planoTrabalho);
 
