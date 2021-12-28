@@ -1,7 +1,9 @@
 package tpdssln.ssempregados;
 
 
-public abstract class Empregado {
+import java.io.Serializable;
+
+public abstract class Empregado implements Serializable {
     private String id;
     private String nome;
     private String password;

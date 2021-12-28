@@ -1,8 +1,9 @@
 package tpdssln.ssreparacoes;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class ReparacaoExpresso extends Reparacao{
+public class ReparacaoExpresso extends Reparacao implements Serializable {
     public float precoFixo;
 
     public ReparacaoExpresso(LocalDateTime prazoMaximo, float precoFixo) {

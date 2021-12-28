@@ -1,5 +1,6 @@
 package tpdssln.ssempregados;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.Set;
 import tpdssln.ssreparacoes.Passo;
 import tpdssln.ssreparacoes.Reparacao;
 
-public class Tecnico extends Empregado{
+public class Tecnico extends Empregado implements Serializable {
 
     public float mediaDesvio;
     public float duracaoMedia;

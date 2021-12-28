@@ -1,6 +1,8 @@
 package tpdssln.ssempregados;
 
-public class Funcionario extends Empregado{
+import java.io.Serializable;
+
+public class Funcionario extends Empregado implements Serializable {
 
     public int nEntregas;
     public int nRececoes;

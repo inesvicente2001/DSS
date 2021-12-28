@@ -2,13 +2,14 @@ package tpdssln.ssreparacoes;
 
 import tpdssln.ssempregados.Tecnico;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class ReparacaoNormal extends Reparacao {
+public class ReparacaoNormal extends Reparacao implements Serializable {
 
     public float orcamento;
     public float custoFinal;
