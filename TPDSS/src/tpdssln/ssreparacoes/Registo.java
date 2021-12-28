@@ -85,7 +85,27 @@ public class Registo{
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public String toHTMLDescricao(){
 
+        StringBuilder html = new StringBuilder();
+
+        html.append("<html>\n");
+        html.append("<body>\n");
+
+        String[] list = this.descricao.split("\n");
+
+        int i = 0;
+        for(; i<list.length - 1 ;i++){
+            html.append(list[i] + "<br/>");
+        }
+        html.append(list[i] + "<br/>");
+
+        html.append("</body>\n");
+        html.append("</html>");
+
+
+        return html.toString();
+    }
 
 
 }

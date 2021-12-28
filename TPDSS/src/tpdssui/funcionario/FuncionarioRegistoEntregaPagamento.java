@@ -26,7 +26,6 @@ public class FuncionarioRegistoEntregaPagamento extends JFrame{
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new FuncionarioMenuPrincipal(ln);
                 dispose();
             }
         });

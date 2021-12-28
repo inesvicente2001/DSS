@@ -1,6 +1,7 @@
 package tpdssui.admin;
 
 import tpdssln.ITPDSSLN;
+import tpdssln.ssempregados.Administrador;
 import tpdssln.ssempregados.Empregado;
 import tpdssui.Login;
 
@@ -18,9 +19,9 @@ public class AdminMenuPrincipal extends JFrame {
     private JLabel greeting;
 
     private final ITPDSSLN ln;
-    private final Empregado autenticado;
+    private final Administrador autenticado;
 
-    public AdminMenuPrincipal(ITPDSSLN ln, Empregado autenticado) {
+    public AdminMenuPrincipal(ITPDSSLN ln, Administrador autenticado) {
         this.ln = ln;
         this.autenticado = autenticado;
 

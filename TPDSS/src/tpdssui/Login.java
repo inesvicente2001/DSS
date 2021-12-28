@@ -3,6 +3,9 @@ package tpdssui;
 import tpdssln.ITPDSSLN;
 import tpdssln.ssempregados.*;
 import tpdssui.admin.AdminMenuPrincipal;
+import tpdssui.funcionario.FuncionarioMenuPrincipal;
+import tpdssui.gestor.GestorMenuPrincipal;
+import tpdssui.tecnico.TecnicoMenuPrincipal;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -49,13 +52,13 @@ public class Login extends JFrame {
         Empregado autenticado = ln.verEmpregado(textField1.getText());
 
         if(autenticado instanceof Administrador) {
-            new AdminMenuPrincipal(ln, autenticado);
+            new AdminMenuPrincipal(ln, (Administrador) autenticado);
         } else if(autenticado instanceof Funcionario) {
-            // TODO Nova interface funcionário
+            new FuncionarioMenuPrincipal(ln, (Funcionario) autenticado);
         } else if(autenticado instanceof Tecnico) {
-            // TODO Nova interface técnico
+            new TecnicoMenuPrincipal(ln, (Tecnico) autenticado);
         } else if(autenticado instanceof Gestor) {
-            // TODO Nova interface gestor
+            new GestorMenuPrincipal(ln, (Gestor) autenticado);
         }
         dispose();
     }

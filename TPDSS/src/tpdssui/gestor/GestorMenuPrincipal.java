@@ -1,6 +1,7 @@
 package tpdssui.gestor;
 
 import tpdssln.ITPDSSLN;
+import tpdssln.ssempregados.Gestor;
 import tpdssui.Login;
 
 import javax.swing.*;
@@ -13,16 +14,18 @@ public class GestorMenuPrincipal extends JFrame {
     private JButton logoutButton;
     private JPanel topPanel;
     private JButton lstInfosPormTec;
+    private JLabel welcome;
 
 
     private ITPDSSLN ln;
+    private Gestor gestor;
 
 
 
-    public GestorMenuPrincipal(ITPDSSLN ln) {
+    public GestorMenuPrincipal(ITPDSSLN ln, Gestor autenticado) {
 
         this.ln = ln;
-
+        this.gestor = autenticado;
 
         logoutButton.addActionListener(new ActionListener() {
             @Override
@@ -54,6 +57,7 @@ public class GestorMenuPrincipal extends JFrame {
             }
         });
 
+        this.welcome.setText("Bem vindo, " + gestor.getNome());
         this.setTitle("Gestor");
         this.setContentPane(this.topPanel);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

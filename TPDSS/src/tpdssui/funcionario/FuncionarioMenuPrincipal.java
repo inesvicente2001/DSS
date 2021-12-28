@@ -2,6 +2,7 @@ package tpdssui.funcionario;
 
 import tpdssln.ITPDSSLN;
 import tpdssln.TPDSSLNFacade;
+import tpdssln.ssempregados.Funcionario;
 import tpdssui.Login;
 
 import javax.swing.*;
@@ -16,11 +17,14 @@ public class FuncionarioMenuPrincipal extends JFrame{
     private JButton logoutButton;
     private JButton registarEntregaEPagamentoButton;
     private JButton serviçosExpressoButton;
+    private JLabel welcome;
 
     private ITPDSSLN ln;
+    private Funcionario funcionario;
 
-    public FuncionarioMenuPrincipal(ITPDSSLN ln) {
+    public FuncionarioMenuPrincipal(ITPDSSLN ln, Funcionario autenticado) {
         this.ln = ln;
+        this.funcionario = autenticado;
 
         logoutButton.addActionListener(new ActionListener() {
             @Override
@@ -34,7 +38,6 @@ public class FuncionarioMenuPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 new FuncionarioAdicionaPedidoOrcamento(ln);
-                dispose();
             }
         });
 
@@ -42,7 +45,6 @@ public class FuncionarioMenuPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 new FuncionarioRegistoEntregaPagamento(ln);
-                dispose();
 
             }
         });
@@ -51,12 +53,10 @@ public class FuncionarioMenuPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 new FuncionarioAdicionaServicoExpresso(ln);
-                dispose();
-
             }
         });
 
-
+        this.welcome.setText("Bem vindo, " + funcionario.getNome());
         this.setTitle("Funcionário");
         this.setContentPane(this.topPanel);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
