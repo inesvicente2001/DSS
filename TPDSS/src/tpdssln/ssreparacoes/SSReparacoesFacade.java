@@ -3,7 +3,9 @@ package tpdssln.ssreparacoes;
 import tpdssln.ssempregados.Funcionario;
 import tpdssln.ssempregados.Tecnico;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -54,24 +56,27 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
     public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
                                                String local, LocalDateTime prazo, String nomeCliente, String nif,
-                                               String telemovel, String email){
+                                               String telemovel, String email, Funcionario funcionario){
 
         String id = generateID();
         Reparacao reparacao = new ReparacaoNormal(prazo);
         Cliente cliente = new Cliente(nomeCliente, nif, telemovel, email);
         Registo registo = new Registo(id, nomeEquipamento, urgencia, descricao, local, reparacao, cliente);
         pedidosOrcamento.add(registo);
+        funcionario.addRececao();
     }
 
     public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
-                                                 String local, LocalDateTime prazo, float precoFixo, String nomeCliente,
-                                                 String nif, String telemovel, String email){
+                                                 String local, LocalDateTime prazo, float precoFixo,
+                                                 Duration duracaoPrevista, String nomeCliente, String nif,
+                                                 String telemovel, String email, Funcionario funcionario){
 
         String id = generateID();
-        Reparacao reparacao = new ReparacaoExpresso(prazo, precoFixo);
+        Reparacao reparacao = new ReparacaoExpresso(prazo, precoFixo, duracaoPrevista);
         Cliente cliente = new Cliente(nomeCliente, nif, telemovel, email);
         Registo registo = new Registo(id, nomeEquipamento, urgencia, descricao, local, reparacao, cliente);
         pedidosOrcamento.add(registo);
+        funcionario.addRececao();
     }
 
     public void registarPlanoTrabalho(Map<Integer, Passo> planoTrabalho){
@@ -116,9 +121,21 @@ public class SSReparacoesFacade implements ISSReparacoes {
         concluido.dataConcluido = LocalDateTime.now();
         tecnico.addReparacao(concluido.reparacao);
 
-        //TODO
-        //if (concluido.reparacao instanceof ReparacaoNormal) //dar n telefone
-        //else //mandar mail
+        Duration duracao = Duration.between(concluido.dataNConcluido, concluido.dataConcluido);
+        tecnico.atualizarDuracaoMedia(duracao);
+        Duration desvio;
+
+        if (concluido.reparacao instanceof ReparacaoNormal) {
+            ReparacaoNormal r = (ReparacaoNormal)concluido.reparacao;
+            desvio = Duration.ofSeconds(duracao.getSeconds() - r.tempoPrevisto().getSeconds());
+            tecnico.atualizarMediaDesvio(desvio);
+            //TODO dar n telefone
+        } else {
+            ReparacaoExpresso r = (ReparacaoExpresso) concluido.reparacao;
+            desvio = Duration.ofSeconds(duracao.getSeconds() - r.duracaoPrevista.getSeconds());
+            tecnico.atualizarMediaDesvio(desvio);
+            //TODO mandar mail
+        }
     }
 
     @Override

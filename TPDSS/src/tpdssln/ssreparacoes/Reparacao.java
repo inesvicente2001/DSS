@@ -10,7 +10,6 @@ public class Reparacao {
         this.prazoMaximo = prazoMaximo;
     }
 
-
     public LocalDateTime getPrazoMaximo() {
         return prazoMaximo;
     }

@@ -3,10 +3,12 @@ package tpdssln.ssreparacoes;
 public class Peca {
     public String nomePeca;
     public float custo;
+    public int quantidade;
 
-    public Peca(String nomePeca, float custo) {
+    public Peca(String nomePeca, float custo, int quantidade) {
         this.nomePeca = nomePeca;
         this.custo = custo;
+        this.quantidade = quantidade;
     }
 
     public String getNomePeca() {

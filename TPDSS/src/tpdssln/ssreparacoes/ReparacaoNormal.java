@@ -2,6 +2,7 @@ package tpdssln.ssreparacoes;
 
 import tpdssln.ssempregados.Tecnico;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.HashMap;
@@ -45,7 +46,7 @@ public class ReparacaoNormal extends Reparacao {
         this.planoTrabalho = planoTrabalho;
     }
 
-    public void addPasso(String nomePasso, Period tempoPrevisto){
+    public void addPasso(String nomePasso, Duration tempoPrevisto){
         Passo passo = new Passo(nomePasso, null, null, tempoPrevisto);
         this.planoTrabalho.put(planoTrabalho.size() + 1, passo);
     }
@@ -62,6 +63,16 @@ public class ReparacaoNormal extends Reparacao {
         for(Passo passo: planoTrabalho.values()) {
             this.custoFinal = this.custoFinal + passo.definirCustoFinal();
         }
+    }
+
+    public Duration tempoPrevisto(){
+        Duration tempoPrevisto = Duration.ofHours(0);
+
+        for(Passo passo: planoTrabalho.values()) {
+            tempoPrevisto = Duration.ofSeconds(tempoPrevisto.getSeconds() + passo.tempoPrevisto.getSeconds());
+        }
+
+        return tempoPrevisto;
     }
 
     public void iniciarPasso() {
