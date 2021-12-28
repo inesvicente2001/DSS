@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 public class ReparacaoExpresso extends Reparacao{
     public float precoFixo;
 
-    public ReparacaoExpresso(String equipamento, String descricao, LocalDateTime prazoMaximo, float precoFixo) {
-        super(equipamento, descricao, prazoMaximo);
+    public ReparacaoExpresso(LocalDateTime prazoMaximo, float precoFixo) {
+        super(prazoMaximo);
         this.precoFixo = precoFixo;
     }
 

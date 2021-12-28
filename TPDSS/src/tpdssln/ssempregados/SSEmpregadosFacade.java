@@ -5,14 +5,18 @@ import java.util.Map;
 import java.util.Random;
 
 public class SSEmpregadosFacade implements ISSEmpregados {
-    public Map<String, Empregado> empregados;
+    private Map<String, Empregado> empregados = new HashMap<>();
+
+    public SSEmpregadosFacade() {
+        this.empregados = new HashMap<>();
+    }
 
     public Boolean autenticar(String id, String password) {
 
         Empregado value = empregados.get(id);
         if (value == null) return false; //TODO exception n existe
 
-        if (password.equals(value.password))
+        if (password.equals(value.getPassword()))
             return true;
         else return false;
     }
@@ -23,7 +27,7 @@ public class SSEmpregadosFacade implements ISSEmpregados {
 
         for (Empregado empregado : empregados.values()) {
             if (empregado instanceof Tecnico)
-                mapT.put(empregado.id, empregado);
+                mapT.put(empregado.getId(), empregado);
         }
 
         return mapT;
@@ -35,7 +39,7 @@ public class SSEmpregadosFacade implements ISSEmpregados {
 
         for (Empregado empregado : empregados.values()) {
             if (empregado instanceof Funcionario)
-                mapT.put(empregado.id, empregado);
+                mapT.put(empregado.getId(), empregado);
         }
 
         return mapT;
@@ -86,7 +90,7 @@ public class SSEmpregadosFacade implements ISSEmpregados {
         if (value == null)
             return; //TODO exception n existe
 
-        value.nome = nome;
+        value.setNome(nome);
     }
 
     public void editarPassword(String id, String password) {
@@ -95,7 +99,7 @@ public class SSEmpregadosFacade implements ISSEmpregados {
         if (value == null)
             return; //TODO exception n existe
 
-        value.password = password;
+        value.setPassword(password);
     }
 
     public void removerUtilizador(String id) {
@@ -103,8 +107,6 @@ public class SSEmpregadosFacade implements ISSEmpregados {
         Empregado value = empregados.get(id);
         if (value == null)
             return; //TODO exception n existe
-
-        //TODO metodo da interface a pedir para confirmar remoção
 
         empregados.remove(id);
     }
@@ -121,7 +123,8 @@ public class SSEmpregadosFacade implements ISSEmpregados {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
-        if (empregados.containsKey(generatedString)) generateID();
+        if (empregados.containsKey(generatedString))
+            generatedString = generateID();
 
         return generatedString;
     }
