@@ -1,9 +1,10 @@
 package tpdssln.ssreparacoes;
 
 import java.time.Duration;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class ReparacaoExpresso extends Reparacao{
+public class ReparacaoExpresso extends Reparacao implements Serializable {
     public float precoFixo;
     public Duration duracaoPrevista;
 

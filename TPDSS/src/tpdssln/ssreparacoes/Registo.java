@@ -1,8 +1,9 @@
 package tpdssln.ssreparacoes;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Registo{
+public class Registo implements Serializable {
 
     public String id;
     public String nomeEquipamento;

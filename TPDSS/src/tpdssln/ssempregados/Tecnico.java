@@ -1,6 +1,7 @@
 package tpdssln.ssempregados;
 
 import java.time.Duration;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import tpdssln.ssreparacoes.Passo;
@@ -8,7 +9,7 @@ import tpdssln.ssreparacoes.Reparacao;
 import tpdssln.ssreparacoes.ReparacaoExpresso;
 import tpdssln.ssreparacoes.ReparacaoNormal;
 
-public class Tecnico extends Empregado{
+public class Tecnico extends Empregado implements Serializable {
 
     public Duration mediaDesvio;
     public Duration duracaoMedia;
