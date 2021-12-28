@@ -1,35 +1,42 @@
 package tpdssui;
 
+import tpdssln.ITPDSSLN;
+import tpdssln.TPDSSLNFacade;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginFrame extends JFrame implements ActionListener {
+public class Login extends JFrame implements ActionListener {
 
-    Container container = getContentPane();
-    JLabel userLabel = new JLabel("USERNAME");
-    JLabel passwordLabel = new JLabel("PASSWORD");
-    JTextField userTextField = new JTextField();
-    JPasswordField passwordField = new JPasswordField();
-    JButton loginButton = new JButton("LOGIN");
-    JButton resetButton = new JButton("RESET");
-    JCheckBox showPassword = new JCheckBox("Show Password");
+    private Container container = getContentPane();
+    private JLabel userLabel = new JLabel("ID UTILIZADOR");
+    private JLabel passwordLabel = new JLabel("PASSWORD");
+    private JTextField userTextField = new JTextField();
+    private JPasswordField passwordField = new JPasswordField();
+    private JButton loginButton = new JButton("LOGIN");
+    private JButton resetButton = new JButton("RESET");
+    private JCheckBox showPassword = new JCheckBox("Mostrar Password");
+
+    private ITPDSSLN ln;
 
 
-    LoginFrame() {
+    public Login() {
+        this.ln = new TPDSSLNFacade();
+
         setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();
         addActionEvent();
-        this.setTitle("Minho Repairs");
-        this.setVisible(true);
+
+        this.setTitle("Login");
         this.setBounds(150, 150, 1200,800);
-        //frame.setSize(1200,800);
+        //this.setSize(1200,800);
+        this.getContentPane().setBackground(Color.WHITE);
+        this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-        this.pack();
-        this.setLocationRelativeTo(null);
 
     }
 
@@ -38,13 +45,13 @@ public class LoginFrame extends JFrame implements ActionListener {
     }
 
     public void setLocationAndSize() {
-        userLabel.setBounds(50, 150, 100, 30);
-        passwordLabel.setBounds(50, 220, 100, 30);
-        userTextField.setBounds(150, 150, 150, 30);
-        passwordField.setBounds(150, 220, 150, 30);
-        showPassword.setBounds(150, 250, 150, 30);
-        loginButton.setBounds(50, 300, 100, 30);
-        resetButton.setBounds(200, 300, 100, 30);
+        userLabel.setBounds(400, 250, 150, 30);
+        passwordLabel.setBounds(400, 320, 100, 30);
+        userTextField.setBounds(510, 250, 250, 30);
+        passwordField.setBounds(510, 320, 250, 30);
+        showPassword.setBounds(510, 350, 250, 30);
+        loginButton.setBounds(450, 400, 100, 30);
+        resetButton.setBounds(600, 400, 100, 30);
 
 
     }
