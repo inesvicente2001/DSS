@@ -214,4 +214,10 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
         return generatedString;
     }
+
+
+    public String toHTMLDescricao(String id) throws NullPointerException{
+        return pedidosOrcamento.stream().filter(r -> r.getId().equals(id)).findFirst().orElse(null).toHTMLDescricao();
+    }
+
 }

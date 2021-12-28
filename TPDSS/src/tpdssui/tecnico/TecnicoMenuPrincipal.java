@@ -2,6 +2,7 @@ package tpdssui.tecnico;
 
 import tpdssln.ITPDSSLN;
 import tpdssln.TPDSSLNFacade;
+import tpdssln.ssempregados.Tecnico;
 import tpdssui.Login;
 
 import javax.swing.*;
@@ -15,11 +16,14 @@ public class TecnicoMenuPrincipal extends JFrame {
     private JPanel topPanel;
     private JPanel bottomPanel;
     private JPanel panel1;
+    private JLabel welcome;
 
     private ITPDSSLN ln;
+    private Tecnico tecnico;
 
-    public TecnicoMenuPrincipal(ITPDSSLN ln) {
+    public TecnicoMenuPrincipal(ITPDSSLN ln, Tecnico autenticado) {
         this.ln = ln;
+        this.tecnico = autenticado;
 
         logoutButton.addActionListener(new ActionListener() {
             @Override
@@ -29,7 +33,7 @@ public class TecnicoMenuPrincipal extends JFrame {
             }
         });
 
-
+        this.welcome.setText("Bem vindo, " + tecnico.getNome());
         this.setTitle("Técnico");
         this.setContentPane(this.topPanel);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

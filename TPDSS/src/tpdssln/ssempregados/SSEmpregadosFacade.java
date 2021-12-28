@@ -5,10 +5,14 @@ import java.util.Map;
 import java.util.Random;
 
 public class SSEmpregadosFacade implements ISSEmpregados {
-    private Map<String, Empregado> empregados = new HashMap<>();
+    private Map<String, Empregado> empregados;
 
     public SSEmpregadosFacade() {
         this.empregados = new HashMap<>();
+        this.empregados.put("123",new Administrador("123","Rogerio Bala", "123"));
+        this.empregados.put("122222", new Funcionario("122222","Tomas F.", "Furry"));
+        this.empregados.put("12", new Tecnico("12","Gui", "0"));
+        this.empregados.put("42", new Gestor("42","JBB","monos"));
     }
 
     public Boolean autenticar(String id, String password) {

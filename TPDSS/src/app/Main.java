@@ -12,8 +12,13 @@ import tpdssui.gestor.GestorMenuPrincipal;
 public class Main {
     public static void main(String[] args) {
         //new TecnicoMenuPrincipal();
-        ITPDSSLN ln = new TPDSSLNFacade();
+        //ITPDSSLN ln = new TPDSSLNFacade();
 
         //new Loading(ln);
+
+
+
+
+        //new Login(ln);
     }
 }

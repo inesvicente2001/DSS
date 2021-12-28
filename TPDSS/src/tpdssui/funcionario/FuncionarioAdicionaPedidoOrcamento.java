@@ -20,15 +20,12 @@ public class FuncionarioAdicionaPedidoOrcamento extends JFrame{
     private JTextField tlmClienteField;
     private JLabel nomeEquipamento;
     private JTextField nomeEquipamentoField;
-    private JTextField descProblemaField;
     private JLabel descProblema;
-    private JLabel prazoMaximo;
-    private JTextField diaField;
-    private JTextField anoField;
-    private JTextField mesField;
-    private JLabel sepDiaMes;
-    private JLabel sepMesAno;
     private JPanel topPanel;
+    private JComboBox urgenciaBox;
+    private JLabel urgencia;
+    private JTextArea descrProblema;
+    private JScrollPane descProblemaScrollPane;
 
     private ITPDSSLN ln;
 
@@ -72,7 +69,6 @@ public class FuncionarioAdicionaPedidoOrcamento extends JFrame{
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new FuncionarioMenuPrincipal(ln);
                 dispose();
 
             }
