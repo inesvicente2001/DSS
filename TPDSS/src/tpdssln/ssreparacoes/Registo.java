@@ -35,16 +35,6 @@ public class Registo{
         this.cliente = cliente;
     }
 
-    public Registo(String id, LocalDateTime data, int urgencia, String descricao, Boolean pagamento, Reparacao reparacao, Cliente cliente) {
-        this.id = id;
-        this.data = data;
-        this.urgencia = urgencia;
-        this.descricao = descricao;
-        this.pagamento = pagamento;
-        this.reparacao = reparacao;
-        this.cliente = cliente;
-    }
-
     public String getId() {
         return id;
     }

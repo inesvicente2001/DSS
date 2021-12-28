@@ -33,7 +33,7 @@ public class Tecnico extends Empregado{
     }
 
     public void addReparacao(Reparacao reparacao) {
-        reparacoes.put(reparacao.equipamento,reparacao);
+        reparacoes.put(reparacao.id,reparacao);
     }
 
     public void addPasso(Passo passo) {
