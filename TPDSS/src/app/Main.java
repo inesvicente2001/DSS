@@ -2,10 +2,7 @@ package app;
 
 import tpdssln.ITPDSSLN;
 import tpdssln.TPDSSLNFacade;
-import tpdssui.FuncionarioMenuPrincipal;
-import tpdssui.Loading;
-import tpdssui.Start;
-import tpdssui.TecnicoMenuPrincipal;
+import tpdssui.funcionario.FuncionarioMenuPrincipal;
 
 public class Main {
     public static void main(String[] args) {

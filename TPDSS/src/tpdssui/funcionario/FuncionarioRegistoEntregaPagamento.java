@@ -1,7 +1,8 @@
-package tpdssui;
+package tpdssui.funcionario;
 
 import tpdssln.ITPDSSLN;
 import tpdssln.TPDSSLNFacade;
+import tpdssui.funcionario.FuncionarioMenuPrincipal;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

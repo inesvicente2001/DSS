@@ -1,4 +1,4 @@
-package tpdssui;
+package tpdssui.funcionario;
 
 import tpdssln.ITPDSSLN;
 import tpdssln.TPDSSLNFacade;

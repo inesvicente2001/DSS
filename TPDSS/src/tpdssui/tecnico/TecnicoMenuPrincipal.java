@@ -1,7 +1,8 @@
-package tpdssui;
+package tpdssui.tecnico;
 
 import tpdssln.ITPDSSLN;
 import tpdssln.TPDSSLNFacade;
+import tpdssui.Login;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
