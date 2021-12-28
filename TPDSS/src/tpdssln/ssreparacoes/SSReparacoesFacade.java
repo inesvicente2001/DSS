@@ -1,6 +1,8 @@
 package tpdssln.ssreparacoes;
 
 import SSEmpregados.Empregado;
+import tpdssln.ssempregados.Funcionario;
+import tpdssln.ssempregados.Tecnico;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -104,7 +106,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
     }
 
     @Override
-    public void registarConclusao(String idEquipamento){
+    public void registarConclusao(String idEquipamento, Tecnico tecnico){
 
         Registo concluido = this.registosNConcluidos.get(idEquipamento);
         if (concluido == null)
@@ -113,6 +115,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
         this.registosNConcluidos.remove(idEquipamento);
         this.registosConcluidos.put(idEquipamento,concluido);
         concluido.dataConcluido = LocalDateTime.now();
+        tecnico.addReparacao(concluido.reparacao);
 
         //TODO
         //if (concluido.reparacao instanceof ReparacaoNormal) //dar n telefone
@@ -120,7 +123,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
     }
 
     @Override
-    public void registarEntrega(String id) {
+    public void registarEntrega(String id, Funcionario funcionario) {
         Registo value = registosConcluidos.get(id);
         if (value == null)
             return; //TODO exception n existe
@@ -128,6 +131,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
         registosConcluidos.remove(id);
         registosEntregues.put(id, value);
         value.dataEntregue = LocalDateTime.now();
+        funcionario.addEntrega();
     }
 
     public void equipamentoAbandonado(String id) {
@@ -154,15 +158,15 @@ public class SSReparacoesFacade implements ISSReparacoes {
     }
 
     @Override
-    public void concluirPasso(String id) {
+    public void concluirPasso(String id, Tecnico tecnico) {
 
         Registo value = registosNConcluidos.get(id);
 
         ReparacaoNormal r = (ReparacaoNormal) value.reparacao;
 
-        boolean conc = r.concluirPasso();
+        boolean conc = r.concluirPasso(tecnico);
 
-        if (conc) registarConclusao(id);
+        if (conc) registarConclusao(id,tecnico);
     }
 
     public Registo maisUrgente(){

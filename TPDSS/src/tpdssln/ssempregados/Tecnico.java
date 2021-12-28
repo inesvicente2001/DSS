@@ -11,14 +11,14 @@ public class Tecnico extends Empregado{
 
     public float mediaDesvio;
     public float duracaoMedia;
-    public Map<String, Reparacao> reparacoes;
+    public Set<Reparacao> reparacoes;
     public Set<Passo> passosRealizados;
 
     public Tecnico(String id, String nome, String password) {
         super(id,nome,password);
         mediaDesvio = 0;
         duracaoMedia = 0;
-        reparacoes = new HashMap<>();
+        reparacoes = new HashSet<>();
         passosRealizados = new HashSet<>();
     }
 
@@ -33,7 +33,7 @@ public class Tecnico extends Empregado{
     }
 
     public void addReparacao(Reparacao reparacao) {
-        reparacoes.put(reparacao.id,reparacao);
+        reparacoes.add(reparacao);
     }
 
     public void addPasso(Passo passo) {

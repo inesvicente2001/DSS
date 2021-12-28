@@ -1,7 +1,7 @@
 package tpdssln.ssreparacoes;
 
+import tpdssln.ssempregados.Tecnico;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 public interface ISSReparacoes {
 
@@ -17,7 +17,7 @@ public interface ISSReparacoes {
 
     public void confirmarReparacao(String idEquipamento);
 
-    public void registarConclusao(String idEquipamento);
+    public void registarConclusao(String idEquipamento, Tecnico tecnico);
 
     public void registarEntrega(String id);
 
@@ -25,5 +25,5 @@ public interface ISSReparacoes {
 
     public void iniciarPasso(String id);
 
-    public void concluirPasso(String id);
+    public void concluirPasso(String id, Tecnico tecnico);
 }

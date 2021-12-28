@@ -1,5 +1,7 @@
 package tpdssln.ssreparacoes;
 
+import tpdssln.ssempregados.Tecnico;
+
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.HashMap;
@@ -70,7 +72,7 @@ public class ReparacaoNormal extends Reparacao {
         planoTrabalho.get(i).dataInicio = LocalDateTime.now();
     }
 
-    public boolean concluirPasso() {
+    public boolean concluirPasso(Tecnico tecnico) {
         int i = 1;
 
         for(; planoTrabalho.get(i).concluido ; i++);
@@ -79,6 +81,7 @@ public class ReparacaoNormal extends Reparacao {
         planoTrabalho.get(i).dataFim = LocalDateTime.now();
 
         definirCustoFinal();
+        tecnico.addPasso(planoTrabalho.get(i));
 
         //TODO
         //if ((custoFinal/orcamento) > 1.2) //fazer a ceninha de contactar o cliente
