@@ -1,6 +1,7 @@
 package tpdssln.ssempregados;
 
 import tpdssln.ssreparacoes.Reparacao;
+import tpdssln.ssreparacoes.ReparacaoNormal;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -14,8 +15,8 @@ public class SSEmpregadosFacade implements ISSEmpregados {
 
 
         Tecnico fun1 = new Tecnico("123","Rogerio Bala", "123");
-        Set<Reparacao> test = new HashSet<>();
-        test.add(new Reparacao(LocalDateTime.now()));
+        Map<String, Reparacao> test = new HashMap<>();
+        test.put("123", new ReparacaoNormal(LocalDateTime.now()));
         fun1.setReparacoes(test);
         fun1.setMediaDesvio(Duration.ofDays(23));
         fun1.setDuracaoMedia(Duration.ofDays(34));
@@ -60,9 +61,6 @@ public class SSEmpregadosFacade implements ISSEmpregados {
         return numEntregas;
 
     }
-
-
-
 
     public Boolean autenticar(String id, String password) {
 

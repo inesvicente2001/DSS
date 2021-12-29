@@ -8,14 +8,14 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Passo {
-    public String nomePasso;
-    public Boolean concluido;
-    public LocalDateTime dataInicio;
-    public LocalDateTime dataFim;
-    public Duration tempoPrevisto;
-    public Set<Peca> pecasEstimadas;
-    public Set<Peca> pecasUsadas;
-    public Set<Passo> subPassos;
+    private String nomePasso;
+    private Boolean concluido;
+    private LocalDateTime dataInicio;
+    private LocalDateTime dataFim;
+    private Duration tempoPrevisto;
+    private Set<Peca> pecasEstimadas;
+    private Set<Peca> pecasUsadas;
+    private Set<Passo> subPassos;
 
     public Passo(String nomePasso, LocalDateTime dataInicio, LocalDateTime dataFim, Duration tempoPrevisto) {
         this.nomePasso = nomePasso;
@@ -96,7 +96,7 @@ public class Passo {
     public float definirOrcamento() {
         float orcamento = 0;
         for (Peca peca: pecasEstimadas) {
-            orcamento = orcamento + peca.custo;
+            orcamento = orcamento + peca.getCusto();
         }
         return orcamento;
     }
@@ -104,22 +104,21 @@ public class Passo {
     public float definirCustoFinal() {
         float custoFinal = 0;
         for (Peca peca: pecasUsadas) {
-            custoFinal = custoFinal + (peca.custo * peca.quantidade);
+            custoFinal = custoFinal + (peca.getCusto() * peca.getQuantidade());
         }
         return custoFinal;
     }
 
     public Duration duracao() {
-        Duration duracao = Duration.between(this.dataInicio,this.dataFim);
-        return duracao;
+        return Duration.between(this.dataInicio,this.dataFim);
     }
 
     public void addPecaEstimada(String nomePeca, float custo, int quantidade) {
         boolean flag = false;
 
         for (Peca peca : pecasEstimadas)
-            if (Objects.equals(peca.nomePeca, nomePeca)) {
-                peca.quantidade = peca.quantidade + quantidade;
+            if (Objects.equals(peca.getNomePeca(), nomePeca)) {
+                peca.setQuantidade(peca.getQuantidade() + quantidade);
                 flag = true;
             }
 
@@ -133,8 +132,8 @@ public class Passo {
         boolean flag = false;
 
         for (Peca peca : pecasUsadas)
-            if (Objects.equals(peca.nomePeca, nomePeca)) {
-                peca.quantidade = peca.quantidade + quantidade;
+            if (Objects.equals(peca.getNomePeca(), nomePeca)) {
+                peca.setQuantidade(peca.getQuantidade() + quantidade);
                 flag = true;
             }
 

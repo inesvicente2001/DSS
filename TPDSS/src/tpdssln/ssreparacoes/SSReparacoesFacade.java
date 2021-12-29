@@ -10,12 +10,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class SSReparacoesFacade implements ISSReparacoes {
-    public Set<Registo> pedidosOrcamento; //Os orçamentos que foram pedidos
-    public Map<String, Registo> registosPendentes;
-    public Map<String, Registo> registosNConcluidos; //Os que estão a ser feitos
-    public Map<String, Registo> registosConcluidos; //Os concluidos mas não entregues
-    public Map<String, Registo> registosEntregues; //Os entregues
-    public Map<String, Registo> registosAbandonados;
+    private Set<Registo> pedidosOrcamento; //Os orçamentos que foram pedidos
+    private Map<String, Registo> registosPendentes;
+    private Map<String, Registo> registosNConcluidos; //Os que estão a ser feitos
+    private Map<String, Registo> registosConcluidos; //Os concluidos mas não entregues
+    private Map<String, Registo> registosEntregues; //Os entregues
+    private Map<String, Registo> registosAbandonados;
 
     public SSReparacoesFacade() {
         this.pedidosOrcamento = new HashSet<>();
@@ -91,11 +91,11 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
         //TODO por o sistema a enviar o email
 
-        ReparacaoNormal r = (ReparacaoNormal) aReparar.reparacao;
+        ReparacaoNormal r = (ReparacaoNormal) aReparar.getReparacao();
         r.definirOrcamento();
 
-        registosPendentes.put(aReparar.id, aReparar);
-        aReparar.dataPendente = LocalDateTime.now();
+        registosPendentes.put(aReparar.getId(), aReparar);
+        aReparar.setDataPendente(LocalDateTime.now());
 
     }
 
@@ -106,7 +106,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
         this.registosPendentes.remove(idEquipamento);
         this.registosNConcluidos.put(idEquipamento,value);
-        value.dataNConcluido = LocalDateTime.now();
+        value.setDataNConcluido(LocalDateTime.now());
     }
 
     @Override
@@ -118,21 +118,21 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
         this.registosNConcluidos.remove(idEquipamento);
         this.registosConcluidos.put(idEquipamento,concluido);
-        concluido.dataConcluido = LocalDateTime.now();
-        tecnico.addReparacao(concluido.reparacao);
+        concluido.setDataConcluido(LocalDateTime.now());
+        tecnico.addReparacao(concluido.getId(), concluido.getReparacao());
 
-        Duration duracao = Duration.between(concluido.dataNConcluido, concluido.dataConcluido);
+        Duration duracao = Duration.between(concluido.getDataNConcluido(), concluido.getDataConcluido());
         tecnico.atualizarDuracaoMedia(duracao);
         Duration desvio;
 
-        if (concluido.reparacao instanceof ReparacaoNormal) {
-            ReparacaoNormal r = (ReparacaoNormal)concluido.reparacao;
+        if (concluido.getReparacao() instanceof ReparacaoNormal) {
+            ReparacaoNormal r = (ReparacaoNormal)concluido.getReparacao();
             desvio = Duration.ofSeconds(duracao.getSeconds() - r.tempoPrevisto().getSeconds());
             tecnico.atualizarMediaDesvio(desvio);
             //TODO dar n telefone
         } else {
-            ReparacaoExpresso r = (ReparacaoExpresso) concluido.reparacao;
-            desvio = Duration.ofSeconds(duracao.getSeconds() - r.duracaoPrevista.getSeconds());
+            ReparacaoExpresso r = (ReparacaoExpresso) concluido.getReparacao();
+            desvio = Duration.ofSeconds(duracao.getSeconds() - r.getDuracaoPrevista().getSeconds());
             tecnico.atualizarMediaDesvio(desvio);
             //TODO mandar mail
         }
@@ -146,7 +146,18 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
         registosConcluidos.remove(id);
         registosEntregues.put(id, value);
-        value.dataEntregue = LocalDateTime.now();
+        value.setDataEntregue(LocalDateTime.now());
+        funcionario.addEntrega();
+    }
+
+    public void registarEntregaDeEquipamentoRecusado(String id, Funcionario funcionario) {
+        Registo value = registosPendentes.get(id);
+        if (value == null)
+            return; //TODO exception n existe
+
+        registosPendentes.remove(id);
+        registosEntregues.put(id, value);
+        value.setDataEntregue(LocalDateTime.now());
         funcionario.addEntrega();
     }
 
@@ -155,11 +166,11 @@ public class SSReparacoesFacade implements ISSReparacoes {
         if (value == null)
             return; //TODO exception n existe
 
-        long daysBetween = ChronoUnit.DAYS.between(value.dataConcluido, LocalDateTime.now());
+        long daysBetween = ChronoUnit.DAYS.between(value.getDataConcluido(), LocalDateTime.now());
         if (daysBetween > 90) {
             registosConcluidos.remove(id);
             registosAbandonados.put(id, value);
-            value.dataAbandonado = LocalDateTime.now();
+            value.setDataAbandonado(LocalDateTime.now());
         }
 
     }
@@ -168,7 +179,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
         Registo value = registosNConcluidos.get(id);
 
-        ReparacaoNormal r = (ReparacaoNormal) value.reparacao;
+        ReparacaoNormal r = (ReparacaoNormal) value.getReparacao();
 
         r.iniciarPasso();
     }
@@ -178,7 +189,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
         Registo value = registosNConcluidos.get(id);
 
-        ReparacaoNormal r = (ReparacaoNormal) value.reparacao;
+        ReparacaoNormal r = (ReparacaoNormal) value.getReparacao();
 
         boolean conc = r.concluirPasso(tecnico);
 
@@ -190,9 +201,33 @@ public class SSReparacoesFacade implements ISSReparacoes {
         return null;
     }
 
+    public void addPecaEstimada(Registo registo, Integer passo, String nomePeca, float custo, int quantidade) {
+        if (registo.getReparacao() instanceof ReparacaoNormal) {
+            ReparacaoNormal r = (ReparacaoNormal) registo.getReparacao();
+            r.addPecaEstimada(passo, nomePeca,custo,quantidade);
+        }
+    }
+
+    public void addPecaUsada(Registo registo, Integer passo, String nomePeca, float custo, int quantidade) {
+        if (registo.getReparacao() instanceof ReparacaoNormal) {
+            ReparacaoNormal r = (ReparacaoNormal) registo.getReparacao();
+            r.addPecaUsada(passo, nomePeca,custo,quantidade);
+        }
+    }
+
+    public void addSubPasso(Registo registo, Integer passo, String nomePaco, Duration tempoPrevisto) {
+        if (registo.getReparacao() instanceof ReparacaoNormal) {
+            ReparacaoNormal r = (ReparacaoNormal) registo.getReparacao();
+            r.addSubPasso(passo, nomePaco, tempoPrevisto);
+        }
+    }
+
     @Override
-    public LocalDateTime obterPrazoMaximo() {
-        return null;
+    public LocalDateTime obterPrazoMaximo(Registo registo) {
+        ReparacaoNormal r = (ReparacaoNormal) registo.getReparacao();
+        LocalDateTime prazoMaximo = LocalDateTime.now().plusSeconds(r.tempoPrevisto().getSeconds());
+        r.setPrazoMaximo(prazoMaximo);
+        return prazoMaximo;
     }
 
     public Registo maisUrgente(){
@@ -201,9 +236,10 @@ public class SSReparacoesFacade implements ISSReparacoes {
         int urgencia = -1;
 
         for (Registo pedidoOrcamento : pedidosOrcamento)
-            if (pedidoOrcamento.urgencia >= urgencia && pedidoOrcamento.reparacao instanceof ReparacaoNormal)
+            if (pedidoOrcamento.getUrgencia() >= urgencia && pedidoOrcamento.getReparacao() instanceof ReparacaoNormal) {
                 maisUrgente = pedidoOrcamento;
-
+                urgencia = pedidoOrcamento.getUrgencia();
+            }
         //TODO if (idMaisUrgente == null) lancar exceçao
 
         return maisUrgente;
@@ -222,7 +258,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
                 .toString();
 
         for (Registo pedidoOrcamento : pedidosOrcamento)
-            if (pedidoOrcamento.id == generatedString)
+            if (pedidoOrcamento.getId() == generatedString)
                 generatedString = generateID();
 
         if (registosConcluidos.containsKey(generatedString)

@@ -2,26 +2,23 @@ package tpdssln.ssempregados;
 
 import java.time.Duration;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import tpdssln.ssreparacoes.Passo;
+import java.util.HashMap;
+import java.util.Map;
 import tpdssln.ssreparacoes.Reparacao;
 import tpdssln.ssreparacoes.ReparacaoExpresso;
 import tpdssln.ssreparacoes.ReparacaoNormal;
 
 public class Tecnico extends Empregado implements Serializable {
 
-    public Duration mediaDesvio;
-    public Duration duracaoMedia;
-    public Set<Reparacao> reparacoes;
-    public Set<Passo> passosRealizados;
+    private Duration mediaDesvio;
+    private Duration duracaoMedia;
+    private Map<String, Reparacao> reparacoes;
 
     public Tecnico(String id, String nome, String password) {
         super(id,nome,password);
         mediaDesvio = Duration.ofHours(0);
         duracaoMedia = Duration.ofHours(0);
-        reparacoes = new HashSet<>();
-        passosRealizados = new HashSet<>();
+        reparacoes = new HashMap<>();
     }
 
     public Duration getMediaDesvio() {
@@ -40,20 +37,12 @@ public class Tecnico extends Empregado implements Serializable {
         this.duracaoMedia = duracaoMedia;
     }
 
-    public Set<Reparacao> getReparacoes() {
+    public Map<String, Reparacao> getReparacoes() {
         return reparacoes;
     }
 
-    public void setReparacoes(Set<Reparacao> reparacoes) {
+    public void setReparacoes(Map<String,Reparacao> reparacoes) {
         this.reparacoes = reparacoes;
-    }
-
-    public Set<Passo> getPassosRealizados() {
-        return passosRealizados;
-    }
-
-    public void setPassosRealizados(Set<Passo> passosRealizados) {
-        this.passosRealizados = passosRealizados;
     }
 
     public void atualizarMediaDesvio(Duration desvio){
@@ -66,19 +55,15 @@ public class Tecnico extends Empregado implements Serializable {
         duracaoMedia = Duration.ofSeconds((duracaoMedia.getSeconds() * size + duracao.getSeconds()) / (size + 1));
     }
 
-    public void addReparacao(Reparacao reparacao) {
-        reparacoes.add(reparacao);
-    }
-
-    public void addPasso(Passo passo) {
-        passosRealizados.add(passo);
+    public void addReparacao(String id, Reparacao reparacao) {
+        reparacoes.put(id, reparacao);
     }
 
     public int nReparacoesNormais(){
 
         int n = 0;
 
-        for(Reparacao reparacao : reparacoes)
+        for(Reparacao reparacao : reparacoes.values())
             if (reparacao instanceof ReparacaoNormal)
                 n++;
 
@@ -88,7 +73,7 @@ public class Tecnico extends Empregado implements Serializable {
     public int nReparacoesExpresso(){
         int n = 0;
 
-        for(Reparacao reparacao : reparacoes)
+        for(Reparacao reparacao : reparacoes.values())
             if (reparacao instanceof ReparacaoExpresso)
                 n++;
 

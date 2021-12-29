@@ -5,16 +5,15 @@ import tpdssln.ssempregados.Tecnico;
 import java.time.Duration;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class ReparacaoNormal extends Reparacao implements Serializable {
 
-    public float orcamento;
-    public float custoFinal;
-    public Map<Integer,Passo> planoTrabalho;
+    private float orcamento;
+    private float custoFinal;
+    private Map<Integer,Passo> planoTrabalho;
 
     public ReparacaoNormal(LocalDateTime prazoMaximo) {
         super(prazoMaximo);
@@ -70,7 +69,8 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
         Duration tempoPrevisto = Duration.ofHours(0);
 
         for(Passo passo: planoTrabalho.values()) {
-            tempoPrevisto = Duration.ofSeconds(tempoPrevisto.getSeconds() + passo.tempoPrevisto.getSeconds());
+            Duration tempoPrevistoPasso = passo.getTempoPrevisto();
+            tempoPrevisto = Duration.ofSeconds(tempoPrevisto.getSeconds() + tempoPrevistoPasso.getSeconds());
         }
 
         return tempoPrevisto;
@@ -79,21 +79,20 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
     public void iniciarPasso() {
         int i = 1;
 
-        for(; planoTrabalho.get(i).concluido ; i++);
+        for(; planoTrabalho.get(i).getConcluido() ; i++);
 
-        planoTrabalho.get(i).dataInicio = LocalDateTime.now();
+        planoTrabalho.get(i).setDataInicio(LocalDateTime.now());
     }
 
     public boolean concluirPasso(Tecnico tecnico) {
         int i = 1;
 
-        for(; planoTrabalho.get(i).concluido ; i++);
+        for(; planoTrabalho.get(i).getConcluido() ; i++);
 
-        planoTrabalho.get(i).concluido = true;
-        planoTrabalho.get(i).dataFim = LocalDateTime.now();
+        planoTrabalho.get(i).setConcluido(true);
+        planoTrabalho.get(i).setDataFim(LocalDateTime.now());
 
         definirCustoFinal();
-        tecnico.addPasso(planoTrabalho.get(i));
 
         //TODO
         //if ((custoFinal/orcamento) > 1.2) //fazer a ceninha de contactar o cliente
@@ -103,9 +102,19 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
         else return true;
     }
 
-    public void definirPrazoMaximo() {
-        for(Passo passo: planoTrabalho.values()) {
-            this.prazoMaximo = this.prazoMaximo.plus(passo.tempoPrevisto);
-        }
+    public void addPecaEstimada(Integer passo, String nomePeca, float custo, int quantidade) {
+        Passo p = planoTrabalho.get(passo);
+        p.addPecaEstimada(nomePeca, custo, quantidade);
     }
+
+    public void addPecaUsada(Integer passo, String nomePeca, float custo, int quantidade) {
+        Passo p = planoTrabalho.get(passo);
+        p.addPecaUsada(nomePeca, custo, quantidade);
+    }
+
+    public void addSubPasso(Integer passo, String nomePaco, Duration tempoPrevisto) {
+        Passo p = planoTrabalho.get(passo);
+        p.addSubPasso(nomePaco, tempoPrevisto);
+    }
+
 }

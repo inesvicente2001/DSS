@@ -26,6 +26,8 @@ public interface ISSReparacoes {
 
     public void registarEntrega(String id, Funcionario funcionario);
 
+    public void registarEntregaDeEquipamentoRecusado(String id, Funcionario funcionario);
+
     public void equipamentoAbandonado(String id);
 
     public void iniciarPasso(String id);
@@ -34,5 +36,11 @@ public interface ISSReparacoes {
 
     Reparacao registarReparacao(String nome, String descricao, LocalDateTime prazoMaximo);
 
-    LocalDateTime obterPrazoMaximo();
+    public void addPecaEstimada(Registo registo, Integer passo, String nomePeca, float custo, int quantidade);
+
+    public void addPecaUsada(Registo registo, Integer passo, String nomePeca, float custo, int quantidade);
+
+    public void addSubPasso(Registo registo, Integer passo, String nomePaco, Duration tempoPrevisto);
+
+    LocalDateTime obterPrazoMaximo(Registo registo);
 }

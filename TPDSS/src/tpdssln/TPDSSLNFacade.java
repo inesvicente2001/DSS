@@ -105,7 +105,7 @@ public class TPDSSLNFacade implements ITPDSSLN {
 
     @Override
     public LocalDateTime obterPrazoMaximo() {
-        return reparacoes.obterPrazoMaximo();
+        return null;
     }
 
     @Override

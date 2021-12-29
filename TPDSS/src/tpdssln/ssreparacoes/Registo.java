@@ -5,19 +5,19 @@ import java.time.LocalDateTime;
 
 public class Registo implements Serializable {
 
-    public String id;
-    public String nomeEquipamento;
-    public LocalDateTime dataPedido;
-    public LocalDateTime dataPendente;
-    public LocalDateTime dataNConcluido;
-    public LocalDateTime dataConcluido;
-    public LocalDateTime dataEntregue;
-    public LocalDateTime dataAbandonado;
-    public int urgencia;
-    public String descricao;
-    public String localizacao;
-    public Reparacao reparacao;
-    public Cliente cliente;
+    private String id;
+    private String nomeEquipamento;
+    private LocalDateTime dataPedido;
+    private LocalDateTime dataPendente;
+    private LocalDateTime dataNConcluido;
+    private LocalDateTime dataConcluido;
+    private LocalDateTime dataEntregue;
+    private LocalDateTime dataAbandonado;
+    private int urgencia;
+    private String descricao;
+    private String localizacao;
+    private Reparacao reparacao;
+    private Cliente cliente;
 
     public Registo(String id, String nomeEquipamento, int urgencia, String descricao,
                    String localizacao, Reparacao reparacao, Cliente cliente) {
@@ -54,6 +54,70 @@ public class Registo implements Serializable {
 
     public int getUrgencia() {
         return urgencia;
+    }
+
+    public String getNomeEquipamento() {
+        return nomeEquipamento;
+    }
+
+    public void setNomeEquipamento(String nomeEquipamento) {
+        this.nomeEquipamento = nomeEquipamento;
+    }
+
+    public LocalDateTime getDataPedido() {
+        return dataPedido;
+    }
+
+    public void setDataPedido(LocalDateTime dataPedido) {
+        this.dataPedido = dataPedido;
+    }
+
+    public LocalDateTime getDataPendente() {
+        return dataPendente;
+    }
+
+    public void setDataPendente(LocalDateTime dataPendente) {
+        this.dataPendente = dataPendente;
+    }
+
+    public LocalDateTime getDataNConcluido() {
+        return dataNConcluido;
+    }
+
+    public void setDataNConcluido(LocalDateTime dataNConcluido) {
+        this.dataNConcluido = dataNConcluido;
+    }
+
+    public LocalDateTime getDataConcluido() {
+        return dataConcluido;
+    }
+
+    public void setDataConcluido(LocalDateTime dataConcluido) {
+        this.dataConcluido = dataConcluido;
+    }
+
+    public LocalDateTime getDataEntregue() {
+        return dataEntregue;
+    }
+
+    public void setDataEntregue(LocalDateTime dataEntregue) {
+        this.dataEntregue = dataEntregue;
+    }
+
+    public LocalDateTime getDataAbandonado() {
+        return dataAbandonado;
+    }
+
+    public void setDataAbandonado(LocalDateTime dataAbandonado) {
+        this.dataAbandonado = dataAbandonado;
+    }
+
+    public String getLocalizacao() {
+        return localizacao;
+    }
+
+    public void setLocalizacao(String localizacao) {
+        this.localizacao = localizacao;
     }
 
     public void setUrgencia(int urgencia) {
