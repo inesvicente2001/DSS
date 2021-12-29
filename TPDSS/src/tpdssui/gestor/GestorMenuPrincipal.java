@@ -39,6 +39,7 @@ public class GestorMenuPrincipal extends JFrame {
         lstInfoGeralTec.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                new ListaGeralTecnico(ln);
 
             }
         });
@@ -46,6 +47,7 @@ public class GestorMenuPrincipal extends JFrame {
         lstInfosFunc.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                new ListaFuncionarios(ln);
 
             }
         });
@@ -53,6 +55,7 @@ public class GestorMenuPrincipal extends JFrame {
         lstInfosPormTec.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //
 
             }
         });

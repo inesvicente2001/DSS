@@ -10,6 +10,7 @@ import tpdssui.tecnico.TecnicoMenuPrincipal;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 public class Login extends JFrame {
     private JPanel panel1;
@@ -21,6 +22,10 @@ public class Login extends JFrame {
     private ITPDSSLN ln;
 
     public Login(ITPDSSLN ln) {
+
+        // Definir o butão default
+        this.getRootPane().setDefaultButton(logInButton);
+
         this.ln = ln;
 
         setActions();
@@ -61,6 +66,17 @@ public class Login extends JFrame {
             new GestorMenuPrincipal(ln, (Gestor) autenticado);
         }
         dispose();
+    }
+
+
+    // Designar o que os butões devem fazer
+    private void addKeyStrokes() {
+        panel1.registerKeyboardAction(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                login();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private void flipMostrarPassword() {

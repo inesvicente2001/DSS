@@ -47,32 +47,4 @@ public class FuncionarioRegistoEntregaPagamento extends JFrame{
 
     }
 
-    public FuncionarioRegistoEntregaPagamento() {
-
-        this.ln = new TPDSSLNFacade();
-
-        voltarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new FuncionarioMenuPrincipal();
-                dispose();
-            }
-        });
-
-        confirmarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        this.setTitle("Entrega e Pagamento de Equipamento");
-        this.setContentPane(this.topPanel);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
-
-
-    }
 }

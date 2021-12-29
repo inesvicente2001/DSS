@@ -12,8 +12,8 @@ import java.util.Map;
 public interface ITPDSSLN {
     // Métodos do subsistema de empregados
     public Boolean autenticar(String id, String password);
-    public Map<String, Empregado> acederTecnicos();
-    public Map<String, Empregado> acederFuncionario();
+    public Map<String, Tecnico> acederTecnicos();
+    public Map<String, Funcionario> acederFuncionarios();
     public String adicionarTecnico(String nome, String password);
     public String adicionarFuncionario(String nome, String password);
     public String adicionarGestor(String nome, String password);
@@ -35,4 +35,9 @@ public interface ITPDSSLN {
     void registarConclusao(String idEquipamento, Tecnico tecnico);
 
     LocalDateTime obterPrazoMaximo();
+
+
+    public int numRececoesEmpregado(String id);
+
+    public int numEntregasEmpregado(String id);
 }

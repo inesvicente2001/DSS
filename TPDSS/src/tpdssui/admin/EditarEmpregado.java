@@ -141,7 +141,7 @@ public class EditarEmpregado extends JFrame {
         for(Empregado e: ln.acederTecnicos().values()) {
             System.out.println(e.getNome() + "| ID: " + e.getId() + "| Password: " + e.getPassword());
         }
-        for(Empregado e: ln.acederFuncionario().values()) {
+        for(Empregado e: ln.acederFuncionarios().values()) {
             System.out.println(e.getNome() + "| ID: " + e.getId() + "| Password: " + e.getPassword());
         }
         dispose();

@@ -21,13 +21,13 @@ public class TPDSSLNFacade implements ITPDSSLN {
     }
 
     @Override
-    public Map<String, Empregado> acederTecnicos() {
+    public Map<String, Tecnico> acederTecnicos() {
         return empregados.acederTecnicos();
     }
 
     @Override
-    public Map<String, Empregado> acederFuncionario() {
-        return empregados.acederFuncionario();
+    public Map<String, Funcionario> acederFuncionarios() {
+        return empregados.acederFuncionarios();
     }
 
     @Override
@@ -107,4 +107,16 @@ public class TPDSSLNFacade implements ITPDSSLN {
     public LocalDateTime obterPrazoMaximo() {
         return reparacoes.obterPrazoMaximo();
     }
+
+    @Override
+    public int numRececoesEmpregado(String id) {
+        return empregados.numRececoesEmpregado(id);
+    }
+
+    @Override
+    public int numEntregasEmpregado(String id) {
+        return empregados.numEntregasEmpregado(id);
+    }
+
+
 }

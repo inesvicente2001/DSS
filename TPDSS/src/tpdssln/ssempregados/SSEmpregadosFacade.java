@@ -1,19 +1,68 @@
 package tpdssln.ssempregados;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import tpdssln.ssreparacoes.Reparacao;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class SSEmpregadosFacade implements ISSEmpregados {
     private Map<String, Empregado> empregados;
 
     public SSEmpregadosFacade() {
         this.empregados = new HashMap<>();
-        this.empregados.put("123",new Administrador("123","Rogerio Bala", "123"));
-        this.empregados.put("122222", new Funcionario("122222","Tomas F.", "Furry"));
-        this.empregados.put("12", new Tecnico("12","Gui", "0"));
+
+
+        Tecnico fun1 = new Tecnico("123","Rogerio Bala", "123");
+        Set<Reparacao> test = new HashSet<>();
+        test.add(new Reparacao(LocalDateTime.now()));
+        fun1.setReparacoes(test);
+        fun1.setMediaDesvio(Duration.ofDays(23));
+        fun1.setDuracaoMedia(Duration.ofDays(34));
+        Tecnico fun2  = new Tecnico("122222","Tomas F.", "Furry");
+       
+        Tecnico fun3 = new Tecnico("12","Gui", "0");
+       
+        Tecnico fun4  = new Tecnico("1","Tomas F.", "Furry");
+       
+        Tecnico fun5  = new Tecnico("2","Tomas F.", "Furry");
+        
+        Tecnico fun6  = new Tecnico("3","Tomas F.", "Furry");
+        
+        this.empregados.put("123",fun1);
+        this.empregados.put("122222", fun2 );
+        this.empregados.put("12", fun3);
+        this.empregados.put("1", fun4);
+        this.empregados.put("2", fun5);
+        this.empregados.put("3", fun6);
         this.empregados.put("42", new Gestor("42","JBB","monos"));
+        this.empregados.put("420",new Administrador("420","Creissac","DSS"));
     }
+
+
+    public int numRececoesEmpregado(String id){
+
+        int numRececoes = -1;
+
+        if (empregados.get(id) instanceof Funcionario)
+            numRececoes = ((Funcionario) empregados.get(id)).getnRececoes();
+
+        return numRececoes;
+    }
+
+    public int numEntregasEmpregado(String id){
+
+        int numEntregas = -1;
+
+        if (empregados.get(id) instanceof Funcionario)
+            numEntregas = ((Funcionario) empregados.get(id)).getnEntregas();
+
+        return numEntregas;
+
+    }
+
+
+
 
     public Boolean autenticar(String id, String password) {
 
@@ -25,25 +74,25 @@ public class SSEmpregadosFacade implements ISSEmpregados {
         else return false;
     }
 
-    public Map<String, Empregado> acederTecnicos() {
+    public Map<String,Tecnico> acederTecnicos() {
 
-        Map<String,Empregado> mapT = new HashMap<>();
+        Map<String,Tecnico> mapT = new HashMap<>();
 
         for (Empregado empregado : empregados.values()) {
             if (empregado instanceof Tecnico)
-                mapT.put(empregado.getId(), empregado);
+                mapT.put(empregado.getId(), (Tecnico) empregado);
         }
 
         return mapT;
     }
 
-    public Map<String, Empregado> acederFuncionario() {
+    public Map<String, Funcionario> acederFuncionarios() {
 
-        Map<String,Empregado> mapT = new HashMap<>();
+        Map<String,Funcionario> mapT = new HashMap<>();
 
         for (Empregado empregado : empregados.values()) {
             if (empregado instanceof Funcionario)
-                mapT.put(empregado.getId(), empregado);
+                mapT.put(empregado.getId(), (Funcionario) empregado);
         }
 
         return mapT;

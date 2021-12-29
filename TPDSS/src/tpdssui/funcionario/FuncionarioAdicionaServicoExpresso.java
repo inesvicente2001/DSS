@@ -25,36 +25,6 @@ public class FuncionarioAdicionaServicoExpresso extends JFrame{
 
     private ITPDSSLN ln;
 
-    public FuncionarioAdicionaServicoExpresso() {
-
-        this.ln = new TPDSSLNFacade();
-
-        voltarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new FuncionarioMenuPrincipal();
-                dispose();
-
-            }
-        });
-
-        confirmarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        this.setTitle("Novo Serviço Expresso");
-        this.setContentPane(this.topPanel);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
-
-
-    }
-
 
     public FuncionarioAdicionaServicoExpresso(ITPDSSLN ln) {
 

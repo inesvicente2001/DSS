@@ -24,6 +24,38 @@ public class Tecnico extends Empregado implements Serializable {
         passosRealizados = new HashSet<>();
     }
 
+    public Duration getMediaDesvio() {
+        return mediaDesvio;
+    }
+
+    public void setMediaDesvio(Duration mediaDesvio) {
+        this.mediaDesvio = mediaDesvio;
+    }
+
+    public Duration getDuracaoMedia() {
+        return duracaoMedia;
+    }
+
+    public void setDuracaoMedia(Duration duracaoMedia) {
+        this.duracaoMedia = duracaoMedia;
+    }
+
+    public Set<Reparacao> getReparacoes() {
+        return reparacoes;
+    }
+
+    public void setReparacoes(Set<Reparacao> reparacoes) {
+        this.reparacoes = reparacoes;
+    }
+
+    public Set<Passo> getPassosRealizados() {
+        return passosRealizados;
+    }
+
+    public void setPassosRealizados(Set<Passo> passosRealizados) {
+        this.passosRealizados = passosRealizados;
+    }
+
     public void atualizarMediaDesvio(Duration desvio){
         int size = reparacoes.size();
         mediaDesvio = Duration.ofSeconds((mediaDesvio.getSeconds() * size + desvio.getSeconds()) / (size + 1));

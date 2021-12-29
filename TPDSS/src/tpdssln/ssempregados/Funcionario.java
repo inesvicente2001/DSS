@@ -13,6 +13,23 @@ public class Funcionario extends Empregado implements Serializable {
         nRececoes = 0;
     }
 
+
+    public int getnEntregas() {
+        return nEntregas;
+    }
+
+    public void setnEntregas(int nEntregas) {
+        this.nEntregas = nEntregas;
+    }
+
+    public int getnRececoes() {
+        return nRececoes;
+    }
+
+    public void setnRececoes(int nRececoes) {
+        this.nRececoes = nRececoes;
+    }
+
     public void addEntrega() {
         nEntregas++;
     }

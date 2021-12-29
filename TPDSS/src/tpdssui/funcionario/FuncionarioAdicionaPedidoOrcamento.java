@@ -29,37 +29,6 @@ public class FuncionarioAdicionaPedidoOrcamento extends JFrame{
 
     private ITPDSSLN ln;
 
-    public FuncionarioAdicionaPedidoOrcamento() {
-
-        this.ln = new TPDSSLNFacade();
-
-
-        voltarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new FuncionarioMenuPrincipal();
-                dispose();
-
-            }
-        });
-
-
-        confirmarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        this.setTitle("Novo Pedido de Orçamento");
-        this.setContentPane(this.topPanel);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
-
-    }
-
 
     public FuncionarioAdicionaPedidoOrcamento(ITPDSSLN ln){
 
