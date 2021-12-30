@@ -38,8 +38,7 @@ public class ListaFuncionarios extends JFrame{
         //Iterar o Mapa e ir atualizando o Panel
         for (Map.Entry<String, Funcionario> entry : funcionarios.entrySet()){
 
-           
-            FuncionarioCard fc =  new FuncionarioCard((Funcionario) entry.getValue());
+            FuncionarioCard fc =  new FuncionarioCard(entry.getValue().getNome(), entry.getValue().getnRececoes(), entry.getValue().getnEntregas());
             funcPanel.add(fc);
 
             funcPanel.add(Box.createRigidArea(new Dimension(0,10)));
@@ -51,7 +50,7 @@ public class ListaFuncionarios extends JFrame{
 
         this.setTitle("Lista de Informações sobre Funcionários");
         this.setContentPane(this.panel1);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);

@@ -1,22 +1,40 @@
 package tpdssln;
 
 import tpdssln.ssempregados.*;
-import tpdssln.ssreparacoes.ISSReparacoes;
-import tpdssln.ssreparacoes.Passo;
-import tpdssln.ssreparacoes.Reparacao;
-import tpdssln.ssreparacoes.SSReparacoesFacade;
+import tpdssln.ssempregados.excecoes.CredenciaisErradasException;
+import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
+import tpdssln.ssreparacoes.*;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Map;
 
 public class TPDSSLNFacade implements ITPDSSLN {
-    private ISSReparacoes reparacoes = new SSReparacoesFacade();
+    public SSReparacoesFacade reparacoes = new SSReparacoesFacade();
     private ISSEmpregados empregados = new SSEmpregadosFacade();
 
     public TPDSSLNFacade() {}
 
     @Override
-    public Boolean autenticar(String id, String password) {
+    public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
+                                               String local, LocalDateTime prazo, String nomeCliente, String nif,
+                                               String telemovel, String email, Funcionario funcionario) {
+        reparacoes.adicionarPedidoOrcamentoNormal(nomeEquipamento, urgencia, descricao, local, prazo, nomeCliente, nif, telemovel, email, funcionario);
+    }
+
+    @Override
+    public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
+                                                 String local, LocalDateTime prazo, float precoFixo,
+                                                 Duration duracaoPrevista, String nomeCliente, String nif,
+                                                 String telemovel, String email, Funcionario funcionario) {
+        reparacoes.adicionarPedidoOrcamentoExpresso(
+                nomeEquipamento, urgencia, descricao,
+                local, prazo, precoFixo,
+                duracaoPrevista, nomeCliente, nif,
+                telemovel, email, funcionario);
+    }
+    @Override
+    public Class<? extends Empregado> autenticar(String id, String password) throws CredenciaisErradasException {
         return empregados.autenticar(id, password);
     }
 
@@ -46,12 +64,17 @@ public class TPDSSLNFacade implements ITPDSSLN {
     }
 
     @Override
-    public Empregado verEmpregado(String id) {
+    public Empregado verEmpregado(String id) throws EmpregadoNaoExisteException {
         return empregados.verEmpregado(id);
     }
 
     @Override
-    public void editarNome(String id, String nome) {
+    public boolean existeEmpregado(String id) {
+        return empregados.existeEmpregado(id);
+    }
+
+    @Override
+    public void editarNome(String id, String nome) throws EmpregadoNaoExisteException {
         empregados.editarNome(id, nome);
     }
 
@@ -89,8 +112,8 @@ public class TPDSSLNFacade implements ITPDSSLN {
 
 
     @Override
-    public void registarPlanoTrabalho(Map<Integer, Passo> planoTrabalho) {
-        reparacoes.registarPlanoTrabalho(planoTrabalho);
+    public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho) {
+        reparacoes.registarPlanoTrabalho(id, planoTrabalho);
     }
 
     @Override
@@ -118,5 +141,11 @@ public class TPDSSLNFacade implements ITPDSSLN {
         return empregados.numEntregasEmpregado(id);
     }
 
+    public Registo maisUrgente() {
+        return reparacoes.maisUrgente();
+    }
 
+    public String toHTMLDescricao(String id) throws NullPointerException {
+        return reparacoes.toHTMLDescricao(id);
+    }
 }

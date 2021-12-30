@@ -4,18 +4,30 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 public class Passo {
-    public String nomePasso;
-    public Boolean concluido;
-    public LocalDateTime dataInicio;
-    public LocalDateTime dataFim;
-    public Duration tempoPrevisto;
-    public Set<Peca> pecasEstimadas;
-    public Set<Peca> pecasUsadas;
-    public Set<Passo> subPassos;
+    private String nomePasso;
+    private Boolean concluido;
+    private LocalDateTime dataInicio;
+    private LocalDateTime dataFim;
+    private Duration tempoPrevisto;
+    private Set<Peca> pecasEstimadas;
+    private Set<Peca> pecasUsadas;
+    private Map<Integer, Passo> subPassos;
+
+    public Passo(String nomePasso, Duration tempoPrevisto, Set<Peca> pecas, Map<Integer, Passo> subPassos) {
+        this.nomePasso = nomePasso;
+        this.concluido = false;
+        this.dataInicio = null;
+        this.dataFim = null;
+        this.tempoPrevisto = tempoPrevisto;
+        this.pecasEstimadas = pecas;
+        this.pecasUsadas = new HashSet<>();
+        this.subPassos = subPassos;
+    }
 
     public Passo(String nomePasso, LocalDateTime dataInicio, LocalDateTime dataFim, Duration tempoPrevisto) {
         this.nomePasso = nomePasso;
@@ -83,11 +95,11 @@ public class Passo {
         this.pecasUsadas = pecasUsadas;
     }
 
-    public Set<Passo> getSubPassos() {
+    public Map<Integer, Passo> getSubPassos() {
         return subPassos;
     }
 
-    public void setSubPassos(Set<Passo> subPassos) {
+    public void setSubPassos(Map<Integer, Passo> subPassos) {
         this.subPassos = subPassos;
     }
 
@@ -96,7 +108,7 @@ public class Passo {
     public float definirOrcamento() {
         float orcamento = 0;
         for (Peca peca: pecasEstimadas) {
-            orcamento = orcamento + peca.custo;
+            orcamento = orcamento + peca.getCusto();
         }
         return orcamento;
     }
@@ -104,7 +116,7 @@ public class Passo {
     public float definirCustoFinal() {
         float custoFinal = 0;
         for (Peca peca: pecasUsadas) {
-            custoFinal = custoFinal + (peca.custo * peca.quantidade);
+            custoFinal = custoFinal + (peca.getCusto() * peca.getQuantidade());
         }
         return custoFinal;
     }
@@ -118,8 +130,8 @@ public class Passo {
         boolean flag = false;
 
         for (Peca peca : pecasEstimadas)
-            if (Objects.equals(peca.nomePeca, nomePeca)) {
-                peca.quantidade = peca.quantidade + quantidade;
+            if (Objects.equals(peca.getNomePeca(), nomePeca)) {
+                peca.setQuantidade(peca.getQuantidade() + quantidade);
                 flag = true;
             }
 
@@ -133,8 +145,8 @@ public class Passo {
         boolean flag = false;
 
         for (Peca peca : pecasUsadas)
-            if (Objects.equals(peca.nomePeca, nomePeca)) {
-                peca.quantidade = peca.quantidade + quantidade;
+            if (Objects.equals(peca.getNomePeca(), nomePeca)) {
+                peca.setQuantidade(peca.getQuantidade() + quantidade);
                 flag = true;
             }
 
@@ -146,7 +158,7 @@ public class Passo {
 
     public void addSubPasso(String nomePasso, Duration tempoPrevisto){
         Passo passo = new Passo(nomePasso, null, null, tempoPrevisto);
-        subPassos.add(passo);
+        subPassos.put(subPassos.size(), passo);
     }
 
 }

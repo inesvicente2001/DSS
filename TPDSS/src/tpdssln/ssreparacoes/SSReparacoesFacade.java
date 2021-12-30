@@ -10,7 +10,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class SSReparacoesFacade implements ISSReparacoes {
-    public Set<Registo> pedidosOrcamento; //Os orçamentos que foram pedidos
+    public Map<String, Registo> pedidosOrcamento; //Os orçamentos que foram pedidos
     public Map<String, Registo> registosPendentes;
     public Map<String, Registo> registosNConcluidos; //Os que estão a ser feitos
     public Map<String, Registo> registosConcluidos; //Os concluidos mas não entregues
@@ -18,7 +18,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
     public Map<String, Registo> registosAbandonados;
 
     public SSReparacoesFacade() {
-        this.pedidosOrcamento = new HashSet<>();
+        this.pedidosOrcamento = new HashMap<>();
         this.registosPendentes = new HashMap<>();
         this.registosNConcluidos = new HashMap<>();
         this.registosConcluidos = new HashMap<>();
@@ -26,11 +26,11 @@ public class SSReparacoesFacade implements ISSReparacoes {
         this.registosAbandonados = new HashMap<>();
     }
 
-    public Set<Registo> getOrcamentosPedidos() {
+    public Map<String, Registo> getOrcamentosPedidos() {
         return pedidosOrcamento;
     }
 
-    public void setOrcamentosPedidos(Set<Registo> orcamentosPedidos) {
+    public void setOrcamentosPedidos(Map<String, Registo> orcamentosPedidos) {
         this.pedidosOrcamento = orcamentosPedidos;
     }
 
@@ -53,7 +53,6 @@ public class SSReparacoesFacade implements ISSReparacoes {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
     public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
                                                String local, LocalDateTime prazo, String nomeCliente, String nif,
                                                String telemovel, String email, Funcionario funcionario){
@@ -62,7 +61,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
         Reparacao reparacao = new ReparacaoNormal(prazo);
         Cliente cliente = new Cliente(nomeCliente, nif, telemovel, email);
         Registo registo = new Registo(id, nomeEquipamento, urgencia, descricao, local, reparacao, cliente);
-        pedidosOrcamento.add(registo);
+        pedidosOrcamento.put(registo.getId(), registo);
         funcionario.addRececao();
     }
 
@@ -75,13 +74,13 @@ public class SSReparacoesFacade implements ISSReparacoes {
         Reparacao reparacao = new ReparacaoExpresso(prazo, precoFixo, duracaoPrevista);
         Cliente cliente = new Cliente(nomeCliente, nif, telemovel, email);
         Registo registo = new Registo(id, nomeEquipamento, urgencia, descricao, local, reparacao, cliente);
-        pedidosOrcamento.add(registo);
+        pedidosOrcamento.put(registo.getId(), registo);
         funcionario.addRececao();
     }
 
-    public void registarPlanoTrabalho(Map<Integer, Passo> planoTrabalho){
+    public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho){
 
-        Registo aReparar = maisUrgente();
+        Registo aReparar = pedidosOrcamento.get(id);
 
         pedidosOrcamento.remove(aReparar);
 
@@ -195,14 +194,16 @@ public class SSReparacoesFacade implements ISSReparacoes {
         return null;
     }
 
-    public Registo maisUrgente(){
+    public Registo maisUrgente() {
 
         Registo maisUrgente = null;
         int urgencia = -1;
 
-        for (Registo pedidoOrcamento : pedidosOrcamento)
-            if (pedidoOrcamento.urgencia >= urgencia && pedidoOrcamento.reparacao instanceof ReparacaoNormal)
+        for (Registo pedidoOrcamento : pedidosOrcamento.values())
+            if (pedidoOrcamento.urgencia >= urgencia && pedidoOrcamento.reparacao instanceof ReparacaoNormal){
+                urgencia = pedidoOrcamento.urgencia;
                 maisUrgente = pedidoOrcamento;
+            }
 
         //TODO if (idMaisUrgente == null) lancar exceçao
 
@@ -221,7 +222,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
-        for (Registo pedidoOrcamento : pedidosOrcamento)
+        for (Registo pedidoOrcamento : pedidosOrcamento.values())
             if (pedidoOrcamento.id == generatedString)
                 generatedString = generateID();
 
@@ -234,7 +235,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
 
     public String toHTMLDescricao(String id) throws NullPointerException{
-        return pedidosOrcamento.stream().filter(r -> r.getId().equals(id)).findFirst().orElse(null).toHTMLDescricao();
+        return pedidosOrcamento.values().stream().filter(r -> r.getId().equals(id)).findFirst().orElse(null).toHTMLDescricao();
     }
 
 }

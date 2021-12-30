@@ -18,7 +18,7 @@ public interface ISSReparacoes {
                                                  Duration duracaoPrevista, String nomeCliente, String nif,
                                                  String telemovel, String email, Funcionario funcionario);
 
-    public void registarPlanoTrabalho(Map<Integer, Passo> planoTrabalho);
+    public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho);
 
     public void confirmarReparacao(String idEquipamento);
 
@@ -35,4 +35,5 @@ public interface ISSReparacoes {
     Reparacao registarReparacao(String nome, String descricao, LocalDateTime prazoMaximo);
 
     LocalDateTime obterPrazoMaximo();
+    public String toHTMLDescricao(String id) throws NullPointerException;
 }

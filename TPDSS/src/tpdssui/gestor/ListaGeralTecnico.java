@@ -47,7 +47,7 @@ public class ListaGeralTecnico extends JFrame{
 
         this.setTitle("Lista de Informações Gerais sobre Técnicos");
         this.setContentPane(this.panel1);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);

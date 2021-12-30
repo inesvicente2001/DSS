@@ -3,6 +3,7 @@ package tpdssui.tecnico;
 import tpdssln.ITPDSSLN;
 import tpdssln.TPDSSLNFacade;
 import tpdssln.ssempregados.Tecnico;
+import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
 import tpdssui.Login;
 
 import javax.swing.*;
@@ -18,12 +19,12 @@ public class TecnicoMenuPrincipal extends JFrame {
     private JPanel panel1;
     private JLabel welcome;
 
-    private ITPDSSLN ln;
-    private Tecnico tecnico;
+    private final ITPDSSLN ln;
+    private final String id;
 
-    public TecnicoMenuPrincipal(ITPDSSLN ln, Tecnico autenticado) {
+    public TecnicoMenuPrincipal(ITPDSSLN ln, String id) {
         this.ln = ln;
-        this.tecnico = autenticado;
+        this.id = id;
 
         logoutButton.addActionListener(new ActionListener() {
             @Override
@@ -33,7 +34,15 @@ public class TecnicoMenuPrincipal extends JFrame {
             }
         });
 
-        this.welcome.setText("Bem vindo, " + tecnico.getNome());
+        try {
+            this.welcome.setText("Bem vindo, " + ln.verEmpregado(id).getNome());
+        } catch (EmpregadoNaoExisteException e) {
+            new Login(ln);
+            dispose();
+        }
+
+        addActions();
+
         this.setTitle("Técnico");
         this.setContentPane(this.topPanel);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -42,26 +51,13 @@ public class TecnicoMenuPrincipal extends JFrame {
         this.setVisible(true);
     }
 
-
-    public TecnicoMenuPrincipal() {
-        this.ln = new TPDSSLNFacade();
-
-        logoutButton.addActionListener(new ActionListener() {
+    private void addActions() {
+        pedidosDeOrçamentoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Login(ln);
-                dispose();
+                new TecnicoPlanoTrabalho(ln);
             }
         });
 
-
-        this.setTitle("Técnico");
-        this.setContentPane(this.topPanel);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
     }
-    
-
 }

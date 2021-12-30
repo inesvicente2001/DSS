@@ -1,7 +1,5 @@
 package tpdssui.gestor;
 
-import tpdssln.ssempregados.Funcionario;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -10,12 +8,12 @@ public class FuncionarioCard extends JPanel {
     private JLabel rececoesLabel;
     private JLabel entregasLabel;
 
-    public FuncionarioCard(Funcionario f) {
-        rececoesLabel.setText("Receções: " + f.getnRececoes());
-        entregasLabel.setText("Entregas: " + f.getnEntregas());
+    public FuncionarioCard(String nome, int rececoes, int entregas) {
+        rececoesLabel.setText("Receções: " + rececoes);
+        entregasLabel.setText("Entregas: " + entregas);
 
         Border b = BorderFactory.createLoweredBevelBorder();
-        this.setBorder(BorderFactory.createTitledBorder(b, f.getNome()));
+        this.setBorder(BorderFactory.createTitledBorder(b, nome));
 
         this.add(panel1);
     }

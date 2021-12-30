@@ -1,5 +1,7 @@
 package tpdssln.ssempregados;
 
+import tpdssln.ssempregados.excecoes.CredenciaisErradasException;
+import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
 import tpdssln.ssreparacoes.Reparacao;
 
 import java.time.Duration;
@@ -23,7 +25,7 @@ public class SSEmpregadosFacade implements ISSEmpregados {
        
         Tecnico fun3 = new Tecnico("12","Gui", "0");
        
-        Tecnico fun4  = new Tecnico("1","Tomas F.", "Furry");
+        Tecnico fun4  = new Tecnico("32","Tomas F.", "Furry");
        
         Tecnico fun5  = new Tecnico("2","Tomas F.", "Furry");
         
@@ -32,7 +34,7 @@ public class SSEmpregadosFacade implements ISSEmpregados {
         this.empregados.put("123",fun1);
         this.empregados.put("122222", fun2 );
         this.empregados.put("12", fun3);
-        this.empregados.put("1", fun4);
+        this.empregados.put("32", fun4);
         this.empregados.put("2", fun5);
         this.empregados.put("3", fun6);
         this.empregados.put("42", new Gestor("42","JBB","monos"));
@@ -64,14 +66,13 @@ public class SSEmpregadosFacade implements ISSEmpregados {
 
 
 
-    public Boolean autenticar(String id, String password) {
+    public Class<? extends Empregado> autenticar(String id, String password) throws CredenciaisErradasException {
 
         Empregado value = empregados.get(id);
-        if (value == null) return false; //TODO exception n existe
+        if (value == null || !value.getPassword().equals(password))
+            throw new CredenciaisErradasException();
 
-        if (password.equals(value.getPassword()))
-            return true;
-        else return false;
+        return value.getClass();
     }
 
     public Map<String,Tecnico> acederTecnicos() {
@@ -128,20 +129,25 @@ public class SSEmpregadosFacade implements ISSEmpregados {
         return id;
     }
 
-    public Empregado verEmpregado(String id){
+    public Empregado verEmpregado(String id) throws EmpregadoNaoExisteException {
 
         Empregado value = empregados.get(id);
         if (value == null)
-            return null; //TODO exception n existe
+            throw new EmpregadoNaoExisteException();
 
         return value;
     }
 
-    public void editarNome(String id, String nome) {
+    @Override
+    public boolean existeEmpregado(String id) {
+        return empregados.containsKey(id);
+    }
+
+    public void editarNome(String id, String nome) throws EmpregadoNaoExisteException {
 
         Empregado value = empregados.get(id);
         if (value == null)
-            return; //TODO exception n existe
+            throw new EmpregadoNaoExisteException();
 
         value.setNome(nome);
     }

@@ -70,7 +70,7 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
         Duration tempoPrevisto = Duration.ofHours(0);
 
         for(Passo passo: planoTrabalho.values()) {
-            tempoPrevisto = Duration.ofSeconds(tempoPrevisto.getSeconds() + passo.tempoPrevisto.getSeconds());
+            tempoPrevisto = Duration.ofSeconds(tempoPrevisto.getSeconds() + passo.getTempoPrevisto().getSeconds());
         }
 
         return tempoPrevisto;
@@ -79,18 +79,18 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
     public void iniciarPasso() {
         int i = 1;
 
-        for(; planoTrabalho.get(i).concluido ; i++);
+        for(; planoTrabalho.get(i).getConcluido() ; i++);
 
-        planoTrabalho.get(i).dataInicio = LocalDateTime.now();
+        planoTrabalho.get(i).setDataInicio(LocalDateTime.now());
     }
 
     public boolean concluirPasso(Tecnico tecnico) {
         int i = 1;
 
-        for(; planoTrabalho.get(i).concluido ; i++);
+        for(; planoTrabalho.get(i).getConcluido() ; i++);
 
-        planoTrabalho.get(i).concluido = true;
-        planoTrabalho.get(i).dataFim = LocalDateTime.now();
+        planoTrabalho.get(i).setConcluido(true);
+        planoTrabalho.get(i).setDataFim(LocalDateTime.now());
 
         definirCustoFinal();
         tecnico.addPasso(planoTrabalho.get(i));
@@ -105,7 +105,7 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
 
     public void definirPrazoMaximo() {
         for(Passo passo: planoTrabalho.values()) {
-            this.prazoMaximo = this.prazoMaximo.plus(passo.tempoPrevisto);
+            this.prazoMaximo = this.prazoMaximo.plus(passo.getTempoPrevisto());
         }
     }
 }

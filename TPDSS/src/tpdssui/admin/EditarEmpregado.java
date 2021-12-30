@@ -2,6 +2,7 @@ package tpdssui.admin;
 
 import tpdssln.ITPDSSLN;
 import tpdssln.ssempregados.Empregado;
+import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,8 +23,9 @@ public class EditarEmpregado extends JFrame {
     private JPanel secndPanel;
     private JPanel fourthPanel;
     private JPanel firstPanel;
+    private JLabel statusLabel;
 
-    private ITPDSSLN ln;
+    private final ITPDSSLN ln;
 
     public EditarEmpregado(ITPDSSLN ln) {
         this.ln = ln;
@@ -129,22 +131,22 @@ public class EditarEmpregado extends JFrame {
      *  obtemos o texto da caixa de texto respetiva e executamos o método de edição adequado.
      */
     private void confirmar() {
-        String id = idTextField.getText();
-
-        if(editarNomeCheckBox.isSelected()) {
-            ln.editarNome(id,nomeTextField.getText());
+        String empregado = idTextField.getText();
+        try {
+            if(editarNomeCheckBox.isSelected()) {
+                String nome = nomeTextField.getText();
+                ln.editarNome(empregado,nome);
+            }
+            if(editarPasswordCheckBox.isSelected()) {
+                String password = new String(passwordField1.getPassword());
+                ln.editarPassword(empregado,password);
+            }
+            dispose();
+        } catch (EmpregadoNaoExisteException e) {
+            statusLabel.setText("Empregado não existe");
+            statusLabel.setVisible(true);
+            this.pack();
         }
-        if(editarPasswordCheckBox.isSelected()) {
-            String password = new String(passwordField1.getPassword());
-            ln.editarPassword(id,password);
-        }
-        for(Empregado e: ln.acederTecnicos().values()) {
-            System.out.println(e.getNome() + "| ID: " + e.getId() + "| Password: " + e.getPassword());
-        }
-        for(Empregado e: ln.acederFuncionarios().values()) {
-            System.out.println(e.getNome() + "| ID: " + e.getId() + "| Password: " + e.getPassword());
-        }
-        dispose();
     }
 
     // Quando o utilizador cancela a operação, destruímos a janela.

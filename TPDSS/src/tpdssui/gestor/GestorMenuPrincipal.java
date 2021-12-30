@@ -2,6 +2,7 @@ package tpdssui.gestor;
 
 import tpdssln.ITPDSSLN;
 import tpdssln.ssempregados.Gestor;
+import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
 import tpdssui.Login;
 
 import javax.swing.*;
@@ -17,15 +18,15 @@ public class GestorMenuPrincipal extends JFrame {
     private JLabel welcome;
 
 
-    private ITPDSSLN ln;
-    private Gestor gestor;
+    private final ITPDSSLN ln;
+    private final String id;
 
 
 
-    public GestorMenuPrincipal(ITPDSSLN ln, Gestor autenticado) {
+    public GestorMenuPrincipal(ITPDSSLN ln, String id) {
 
         this.ln = ln;
-        this.gestor = autenticado;
+        this.id = id;
 
         logoutButton.addActionListener(new ActionListener() {
             @Override
@@ -60,7 +61,12 @@ public class GestorMenuPrincipal extends JFrame {
             }
         });
 
-        this.welcome.setText("Bem vindo, " + gestor.getNome());
+        try {
+            this.welcome.setText("Bem vindo, " + ln.verEmpregado(id).getNome());
+        } catch (EmpregadoNaoExisteException e) {
+            new Login(ln);
+            dispose();
+        }
         this.setTitle("Gestor");
         this.setContentPane(this.topPanel);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
