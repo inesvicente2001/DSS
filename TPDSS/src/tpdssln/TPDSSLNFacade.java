@@ -7,6 +7,7 @@ import tpdssln.ssreparacoes.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 public class TPDSSLNFacade implements ITPDSSLN {
@@ -127,11 +128,6 @@ public class TPDSSLNFacade implements ITPDSSLN {
     }
 
     @Override
-    public LocalDateTime obterPrazoMaximo() {
-        return reparacoes.obterPrazoMaximo();
-    }
-
-    @Override
     public int numRececoesEmpregado(String id) {
         return empregados.numRececoesEmpregado(id);
     }
@@ -143,6 +139,14 @@ public class TPDSSLNFacade implements ITPDSSLN {
 
     public Registo maisUrgente() {
         return reparacoes.maisUrgente();
+    }
+    @Override
+    public List<String> toLstInfosPlanosTrabalho(String idTecnico) {
+        return empregados.toLstInfosPlanosTrabalho(idTecnico);
+    }
+
+    public Map<String,List<String>> todosPlanosTrabalho(){
+        return  empregados.todosPlanosTrabalho();
     }
 
     public String toHTMLDescricao(String id) throws NullPointerException {

@@ -1,10 +1,10 @@
 package tpdssln.ssreparacoes;
 
 public class Cliente {
-    public String nomeCliente;
-    public String nif;
-    public String telemovel;
-    public String email;
+    private String nomeCliente;
+    private String nif;
+    private String telemovel;
+    private String email;
 
     public Cliente(String nomeCliente, String nif, String telemovel, String email) {
         this.nomeCliente = nomeCliente;

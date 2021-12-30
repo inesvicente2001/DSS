@@ -2,7 +2,6 @@ package tpdssui.tecnico;
 
 import tpdssln.ssreparacoes.Passo;
 import tpdssln.ssreparacoes.Peca;
-import utils.Pair;
 
 import javax.swing.*;
 import java.awt.*;

@@ -26,7 +26,7 @@ public class AdicionarPeca extends JFrame {
 
         this.setTitle("Criar Peça");
         this.setContentPane(this.panel1);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);

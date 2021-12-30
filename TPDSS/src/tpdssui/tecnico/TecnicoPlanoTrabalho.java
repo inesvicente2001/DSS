@@ -38,10 +38,6 @@ public class TecnicoPlanoTrabalho extends JFrame{
 
     private float orcamento = 0;
 
-    public static void main(String[] args) {
-        JFrame frame = new TecnicoPlanoTrabalho(new TPDSSLNFacade());
-    }
-
     public TecnicoPlanoTrabalho(ITPDSSLN ln) {
 
         this.ln = ln;
@@ -49,7 +45,7 @@ public class TecnicoPlanoTrabalho extends JFrame{
         Registo r = ln.maisUrgente();
         String html = ln.toHTMLDescricao(r.getId());
         idEquipamento.setText(r.getId());
-        nomeEquipamento.setText(r.nomeEquipamento);
+        nomeEquipamento.setText(r.getNomeEquipamento());
         descricao.setText(html);
         dataRececao.setText(DateTimeFormatter.ISO_DATE.format(r.getData()));
 
@@ -62,7 +58,7 @@ public class TecnicoPlanoTrabalho extends JFrame{
 
         this.setTitle("Definir PLano de Trabalhos");
         this.setContentPane(this.topPanel);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);

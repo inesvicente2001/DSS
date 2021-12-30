@@ -122,8 +122,7 @@ public class Passo {
     }
 
     public Duration duracao() {
-        Duration duracao = Duration.between(this.dataInicio,this.dataFim);
-        return duracao;
+        return Duration.between(this.dataInicio,this.dataFim);
     }
 
     public void addPecaEstimada(String nomePeca, float custo, int quantidade) {

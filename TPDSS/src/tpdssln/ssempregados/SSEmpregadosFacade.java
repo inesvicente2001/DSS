@@ -3,6 +3,7 @@ package tpdssln.ssempregados;
 import tpdssln.ssempregados.excecoes.CredenciaisErradasException;
 import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
 import tpdssln.ssreparacoes.Reparacao;
+import tpdssln.ssreparacoes.ReparacaoNormal;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -16,12 +17,12 @@ public class SSEmpregadosFacade implements ISSEmpregados {
 
 
         Tecnico fun1 = new Tecnico("123","Rogerio Bala", "123");
-        Set<Reparacao> test = new HashSet<>();
-        test.add(new Reparacao(LocalDateTime.now()));
+        Map<String, Reparacao> test = new HashMap<>();
+        test.put("123", new ReparacaoNormal(LocalDateTime.now()));
         fun1.setReparacoes(test);
         fun1.setMediaDesvio(Duration.ofDays(23));
         fun1.setDuracaoMedia(Duration.ofDays(34));
-        Tecnico fun2  = new Tecnico("122222","Tomas F.", "Furry");
+        Funcionario fun2  = new Funcionario("122222","Tomas F.", "Furry");
        
         Tecnico fun3 = new Tecnico("12","Gui", "0");
        
@@ -32,7 +33,7 @@ public class SSEmpregadosFacade implements ISSEmpregados {
         Tecnico fun6  = new Tecnico("3","Tomas F.", "Furry");
         
         this.empregados.put("123",fun1);
-        this.empregados.put("122222", fun2 );
+        this.empregados.put("Furry", fun2 );
         this.empregados.put("12", fun3);
         this.empregados.put("32", fun4);
         this.empregados.put("2", fun5);
@@ -62,9 +63,6 @@ public class SSEmpregadosFacade implements ISSEmpregados {
         return numEntregas;
 
     }
-
-
-
 
     public Class<? extends Empregado> autenticar(String id, String password) throws CredenciaisErradasException {
 
@@ -186,5 +184,26 @@ public class SSEmpregadosFacade implements ISSEmpregados {
             generatedString = generateID();
 
         return generatedString;
+    }
+
+
+    public List<String> toLstInfosPlanosTrabalho(String idTecnico){
+
+        List<String> lst = new ArrayList<>();
+
+        if (empregados.get(idTecnico) instanceof Tecnico)
+            lst = ((Tecnico) empregados.get(idTecnico)).toLstInfosPlanosTrabalho(idTecnico);
+
+        return lst;
+    }
+
+    public Map<String,List<String>> todosPlanosTrabalho(){
+        Map<String,List<String>> map= new HashMap<>();
+
+        for (Map.Entry<String, Funcionario> entry : this.acederFuncionarios().entrySet())
+            map.put(entry.getKey(),toLstInfosPlanosTrabalho(entry.getKey()));
+
+        return map;
+
     }
 }

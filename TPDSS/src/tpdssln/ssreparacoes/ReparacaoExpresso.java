@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class ReparacaoExpresso extends Reparacao implements Serializable {
-    public float precoFixo;
-    public Duration duracaoPrevista;
+    private float precoFixo;
+    private Duration duracaoPrevista;
 
     public ReparacaoExpresso(LocalDateTime prazoMaximo, float precoFixo, Duration duracaoPrevista) {
         super(prazoMaximo);
@@ -21,5 +21,11 @@ public class ReparacaoExpresso extends Reparacao implements Serializable {
         this.precoFixo = precoFixo;
     }
 
+    public Duration getDuracaoPrevista() {
+        return duracaoPrevista;
+    }
 
+    public void setDuracaoPrevista(Duration duracaoPrevista) {
+        this.duracaoPrevista = duracaoPrevista;
+    }
 }

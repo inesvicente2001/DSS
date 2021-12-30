@@ -11,6 +11,7 @@ import tpdssln.ssreparacoes.Reparacao;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 public interface ITPDSSLN {
@@ -49,9 +50,6 @@ public interface ITPDSSLN {
 
     void registarConclusao(String idEquipamento, Tecnico tecnico);
 
-    LocalDateTime obterPrazoMaximo();
-
-
     public int numRececoesEmpregado(String id);
 
     public int numEntregasEmpregado(String id);
@@ -59,4 +57,7 @@ public interface ITPDSSLN {
     public Registo maisUrgente();
 
     public String toHTMLDescricao(String id) throws NullPointerException;
+    public List<String> toLstInfosPlanosTrabalho(String idTecnico);
+
+    public Map<String,List<String>> todosPlanosTrabalho();
 }

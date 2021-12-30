@@ -2,7 +2,10 @@ package tpdssln.ssempregados;
 
 import tpdssln.ssempregados.excecoes.CredenciaisErradasException;
 import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
+import tpdssln.ssreparacoes.Registo;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 public interface ISSEmpregados {
@@ -21,6 +24,7 @@ public interface ISSEmpregados {
     public void removerUtilizador(String id);
     public int numEntregasEmpregado(String id);
     public int numRececoesEmpregado(String id);
-
+    public List<String> toLstInfosPlanosTrabalho(String idTecnico);
+    public Map<String,List<String>> todosPlanosTrabalho();
 
 }
