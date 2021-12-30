@@ -45,6 +45,10 @@ public interface ISSReparacoes {
 
     public String toHTMLDescricao(String id) throws NullPointerException;
 
+    public void addPecaEstimada(Registo registo, Integer passo, String nomePeca, float custo, int quantidade);
+
+    public void addPecaUsada(Registo registo, Integer passo, String nomePeca, float custo, int quantidade);
+
     LocalDateTime obterPrazoMaximo(Registo registo);
 
     Registo maisUrgente();
