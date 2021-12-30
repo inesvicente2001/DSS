@@ -113,9 +113,9 @@ public class SSReparacoesFacade implements ISSReparacoes {
         r.setPrazoMaximo(prazo);
         r.setPlanoTrabalho(planoTrabalho);
 
-        registosNConcluidos.put(aReparar.getId(), aReparar);
-        aReparar.setDataNConcluido(LocalDateTime.now());
-
+        registosPendentes.put(aReparar.getId(), aReparar);
+        aReparar.setDataPendente(LocalDateTime.now());
+        aReparar.getReparacao().setPrazoMaximo(obterPrazoMaximo(aReparar));
     }
 
     public void confirmarReparacao(String idEquipamento) {
