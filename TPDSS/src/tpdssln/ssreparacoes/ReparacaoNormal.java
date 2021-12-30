@@ -94,8 +94,8 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
 
         definirCustoFinal();
 
-        //TODO
-        //if ((custoFinal/orcamento) > 1.2) //fazer a ceninha de contactar o cliente
+        //TODO fazer a ceninha de contactar o cliente
+        if ((custoFinal/orcamento) > 1.2);
 
         //retorna se o plano de trabalhos está td concluido ou se ainda há algum passo por fazer
         if (planoTrabalho.containsKey(i+1)) return false;

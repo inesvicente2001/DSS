@@ -13,6 +13,7 @@ public interface ISSReparacoes {
                                                String local, String nomeCliente, String nif,
                                                String telemovel, String email);
 
+
     public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
                                                  String local, float precoFixo,
                                                  Duration duracaoPrevista, String nomeCliente, String nif,

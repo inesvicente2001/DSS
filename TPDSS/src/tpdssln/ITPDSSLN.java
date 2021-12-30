@@ -19,8 +19,10 @@ public interface ITPDSSLN {
                                                String local, String nomeCliente, String nif,
                                                String telemovel, String email);
 
+
+
     public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
-                                                 String local,  float precoFixo,
+                                                 String local, float precoFixo,
                                                  Duration duracaoPrevista, String nomeCliente, String nif,
                                                  String telemovel, String email);
     // Métodos do subsistema de empregados
