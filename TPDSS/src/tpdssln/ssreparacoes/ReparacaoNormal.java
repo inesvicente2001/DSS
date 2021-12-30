@@ -46,11 +46,6 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
         this.planoTrabalho = planoTrabalho;
     }
 
-    public void addPasso(String nomePasso, Duration tempoPrevisto){
-        Passo passo = new Passo(nomePasso, null, null, tempoPrevisto);
-        this.planoTrabalho.put(planoTrabalho.size() + 1, passo);
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void definirOrcamento() {
@@ -127,12 +122,6 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
         Passo p = planoTrabalho.get(passo);
         p.addPecaUsada(nomePeca, custo, quantidade);
     }
-
-    public void addSubPasso(Integer passo, String nomePasso, Duration tempoPrevisto) {
-        Passo p = planoTrabalho.get(passo);
-        p.addSubPasso(nomePasso, tempoPrevisto);
-    }
-
 
     public String toHTMLPlanoTrabalho(){
 

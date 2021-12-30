@@ -34,8 +34,10 @@ public class SSReparacoesFacade implements ISSReparacoes {
         pecas.add(new Peca("prego", 32, 49));
         pecas.add(new Peca("porca", 58, 74));
 
-        passos.put(1, new Passo("oola", Duration.ofMinutes(22), pecas, new HashMap<>()));
-        passos.put(2, new Passo("HAHAHA", Duration.ofMinutes(421), new HashSet<>(), new HashMap<>()));
+        Passo p = new Passo("oola", Duration.ofMinutes(22), pecas, new HashMap<>(), "1");
+
+        passos.put(1, p);
+        passos.put(2, new Passo("HAHAHA", Duration.ofMinutes(421), new HashSet<>(), new HashMap<>(), "2"));
 
         registarPlanoTrabalho(id,passos, LocalDateTime.now());
     }
@@ -113,9 +115,8 @@ public class SSReparacoesFacade implements ISSReparacoes {
         r.setPrazoMaximo(prazo);
         r.setPlanoTrabalho(planoTrabalho);
 
-        registosPendentes.put(aReparar.getId(), aReparar);
-        aReparar.setDataPendente(LocalDateTime.now());
-        aReparar.getReparacao().setPrazoMaximo(obterPrazoMaximo(aReparar));
+        registosNConcluidos.put(aReparar.getId(), aReparar);
+        aReparar.setDataNConcluido(LocalDateTime.now());
     }
 
     public void confirmarReparacao(String idEquipamento) {
@@ -241,13 +242,6 @@ public class SSReparacoesFacade implements ISSReparacoes {
         }
     }
 
-    public void addSubPasso(Registo registo, Integer passo, String nomePasso, Duration tempoPrevisto) {
-        if (registo.getReparacao() instanceof ReparacaoNormal) {
-            ReparacaoNormal r = (ReparacaoNormal) registo.getReparacao();
-            r.addSubPasso(passo, nomePasso, tempoPrevisto);
-        }
-    }
-
     @Override
     public LocalDateTime obterPrazoMaximo(Registo registo) {
         ReparacaoNormal r = (ReparacaoNormal) registo.getReparacao();
@@ -300,12 +294,6 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
     @Override
     public Set<String> getRegistosNConcluidos() {
-        Set<String> registos = new HashSet<>();
-
-        for(String id: registosNConcluidos.keySet()) {
-            registos.add(id);
-        }
-
-        return registos;
+        return new HashSet<>(registosNConcluidos.keySet());
     }
 }

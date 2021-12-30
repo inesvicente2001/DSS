@@ -2,13 +2,13 @@ package tpdssln.ssreparacoes;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 public class Passo {
+    private String id;
     private String nomePasso;
     private Boolean concluido;
     private LocalDateTime dataInicio;
@@ -17,8 +17,10 @@ public class Passo {
     private Set<Peca> pecasEstimadas;
     private Set<Peca> pecasUsadas;
     private Map<Integer, Passo> subPassos;
+    private float custoFinal;
 
-    public Passo(String nomePasso, Duration tempoPrevisto, Set<Peca> pecas, Map<Integer, Passo> subPassos) {
+    public Passo(String nomePasso, Duration tempoPrevisto, Set<Peca> pecas, Map<Integer, Passo> subPassos, String id) {
+        this.id = id;
         this.nomePasso = nomePasso;
         this.concluido = false;
         this.dataInicio = null;
@@ -29,7 +31,8 @@ public class Passo {
         this.subPassos = subPassos;
     }
 
-    public Passo(String nomePasso, LocalDateTime dataInicio, LocalDateTime dataFim, Duration tempoPrevisto) {
+    public Passo(String nomePasso, LocalDateTime dataInicio, LocalDateTime dataFim, Duration tempoPrevisto, String id) {
+        this.id = id;
         this.nomePasso = nomePasso;
         this.concluido = false;
         this.dataInicio = dataInicio;
@@ -37,6 +40,14 @@ public class Passo {
         this.tempoPrevisto = tempoPrevisto;
         this.pecasEstimadas = new HashSet<>();
         this.pecasUsadas = new HashSet<>();
+    }
+
+    public void setCustoFinal(float custoFinal) {
+        this.custoFinal = custoFinal;
+    }
+
+    public float getCustoFinal() {
+        return custoFinal;
     }
 
     public String getNomePasso() {
@@ -110,7 +121,7 @@ public class Passo {
 
         if (subPassos.isEmpty()) {
             for (Peca peca : pecasEstimadas) {
-                orcamento = orcamento + peca.getCusto();
+                orcamento = orcamento + (peca.getCusto() * peca.getQuantidade());
             }
         }
         else {
@@ -168,11 +179,6 @@ public class Passo {
         }
     }
 
-    public void addSubPasso(String nomePasso, Duration tempoPrevisto){
-        Passo passo = new Passo(nomePasso, null, null, tempoPrevisto);
-        subPassos.put(subPassos.size(), passo);
-    }
-
     public void iniciarPasso() {
 
         if (subPassos.isEmpty()) {
@@ -218,4 +224,7 @@ public class Passo {
         }
     }
 
+    public String getID() {
+        return id;
+    }
 }
