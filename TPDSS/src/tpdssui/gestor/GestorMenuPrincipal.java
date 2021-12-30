@@ -56,8 +56,7 @@ public class GestorMenuPrincipal extends JFrame {
         lstInfosPormTec.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //
-
+                new PormenoresTecnico(ln);
             }
         });
 

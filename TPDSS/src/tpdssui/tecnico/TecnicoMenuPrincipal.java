@@ -58,6 +58,12 @@ public class TecnicoMenuPrincipal extends JFrame {
                 new TecnicoPlanoTrabalho(ln);
             }
         });
+        reparaçõesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ListReparacoes(ln, id);
+            }
+        });
 
     }
 }

@@ -48,7 +48,7 @@ public interface ITPDSSLN {
     public void repararProduto(String id);
 
 
-    public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho);
+    public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho, LocalDateTime prazo);
     public void registarConclusao(String idEquipamento);
 
     void registarConclusao(String idEquipamento, Tecnico tecnico);
@@ -71,4 +71,10 @@ public interface ITPDSSLN {
     Set<String> getRegistosNConcluidos();
 
     String obterInfoRegistoNConcluido(String id) throws RegistoNaoExisteException;
+
+    Passo getInfoProximoPasso(String id);
+
+    void iniciarPasso(String id);
+
+    void concluirPasso(String id, Tecnico t);
 }

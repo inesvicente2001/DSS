@@ -185,6 +185,22 @@ public class Passo {
         }
     }
 
+    public Passo getInfoProximoPasso() {
+        Passo ret;
+
+        if (subPassos.isEmpty()) {
+            return this;
+        }
+        else {
+            int i = 1;
+            for(; subPassos.get(i).getConcluido() ; i++);
+
+            ret = subPassos.get(i).getInfoProximoPasso();
+        }
+
+        return ret;
+    }
+
     public void concluirPasso() {
         if (subPassos.isEmpty()) {
             concluido = true;

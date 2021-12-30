@@ -102,6 +102,16 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
         else return true;
     }
 
+    public Passo getInfoProximoPasso() {
+        int i = 1;
+
+        if(planoTrabalho.isEmpty()) return null;
+
+        for(; planoTrabalho.get(i).getConcluido(); i++);
+
+        return planoTrabalho.get(i).getInfoProximoPasso();
+    }
+
     public void definirPrazoMaximo() {
         for (Passo passo : planoTrabalho.values()) {
             this.prazoMaximo = this.prazoMaximo.plus(passo.getTempoPrevisto());

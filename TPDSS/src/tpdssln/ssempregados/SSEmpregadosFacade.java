@@ -224,7 +224,7 @@ public class SSEmpregadosFacade implements ISSEmpregados {
     public Map<String,List<String>> todosPlanosTrabalho(){
         Map<String,List<String>> map= new HashMap<>();
 
-        for (Map.Entry<String, Funcionario> entry : this.acederFuncionarios().entrySet())
+        for (Map.Entry<String, Tecnico> entry : this.acederTecnicos().entrySet())
             map.put(entry.getKey(),toLstInfosPlanosTrabalho(entry.getKey()));
 
         return map;

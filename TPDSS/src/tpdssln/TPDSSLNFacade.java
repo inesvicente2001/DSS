@@ -109,8 +109,8 @@ public class TPDSSLNFacade implements ITPDSSLN {
 
 
     @Override
-    public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho) {
-        reparacoes.registarPlanoTrabalho(id, planoTrabalho);
+    public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho, LocalDateTime prazo) {
+        reparacoes.registarPlanoTrabalho(id, planoTrabalho, prazo);
     }
 
     @Override
@@ -171,5 +171,20 @@ public class TPDSSLNFacade implements ITPDSSLN {
     @Override
     public String obterInfoRegistoNConcluido(String id) throws RegistoNaoExisteException {
         return reparacoes.obterInfoRegistoNConcluido(id);
+    }
+
+    @Override
+    public Passo getInfoProximoPasso(String id) {
+        return reparacoes.getInfoProximoPasso(id);
+    }
+
+    @Override
+    public void iniciarPasso(String id) {
+        reparacoes.iniciarPasso(id);
+    }
+
+    @Override
+    public void concluirPasso(String id, Tecnico t) {
+        reparacoes.concluirPasso(id,t);
     }
 }

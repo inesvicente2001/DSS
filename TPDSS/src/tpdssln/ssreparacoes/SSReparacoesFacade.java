@@ -25,6 +25,19 @@ public class SSReparacoesFacade implements ISSReparacoes {
         this.registosConcluidos = new HashMap<>();
         this.registosEntregues = new HashMap<>();
         this.registosAbandonados = new HashMap<>();
+
+        String id = adicionarPedidoOrcamentoNormal("1293801", 2, "q", "aqui", "eu", "123", "9123", "email");
+        System.out.println("OLA" + id);
+        Map<Integer, Passo> passos = new HashMap<>();
+        Set<Peca> pecas = new HashSet<>();
+        pecas.add(new Peca("parafuso", 12, 30));
+        pecas.add(new Peca("prego", 32, 49));
+        pecas.add(new Peca("porca", 58, 74));
+
+        passos.put(1, new Passo("oola", Duration.ofMinutes(22), pecas, new HashMap<>()));
+        passos.put(2, new Passo("HAHAHA", Duration.ofMinutes(421), new HashSet<>(), new HashMap<>()));
+
+        registarPlanoTrabalho(id,passos, LocalDateTime.now());
     }
 
     public Map<String, Registo> getOrcamentosPedidos() {
@@ -81,7 +94,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
         return id;
     }
 
-    public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho){
+    public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho, LocalDateTime prazo){
 
         Registo aReparar = pedidosOrcamento.get(id);
 
@@ -97,9 +110,11 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
         ReparacaoNormal r = (ReparacaoNormal) aReparar.getReparacao();
         r.definirOrcamento();
+        r.setPrazoMaximo(prazo);
+        r.setPlanoTrabalho(planoTrabalho);
 
-        registosPendentes.put(aReparar.getId(), aReparar);
-        aReparar.setDataPendente(LocalDateTime.now());
+        registosNConcluidos.put(aReparar.getId(), aReparar);
+        aReparar.setDataNConcluido(LocalDateTime.now());
 
     }
 
@@ -194,6 +209,17 @@ public class SSReparacoesFacade implements ISSReparacoes {
         boolean conc = r.concluirPasso(tecnico);
 
         if (conc) registarConclusao(id,tecnico);
+    }
+
+    @Override
+    public Passo getInfoProximoPasso(String id) {
+        Registo value = registosNConcluidos.get(id);
+
+        if(value == null) return null;
+
+        ReparacaoNormal r = (ReparacaoNormal) value.getReparacao();
+
+        return r.getInfoProximoPasso();
     }
 
     @Override

@@ -2,6 +2,7 @@ package tpdssui.tecnico;
 
 import tpdssln.ITPDSSLN;
 import tpdssln.TPDSSLNFacade;
+import tpdssln.ssempregados.Tecnico;
 import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
 import tpdssln.ssreparacoes.Registo;
 import tpdssln.ssreparacoes.excecoes.RegistoNaoExisteException;
@@ -22,13 +23,17 @@ public class RegistoCard extends JPanel {
     private JLabel prazoLabel;
     private JLabel dataPedido;
 
-    private ITPDSSLN ln;
+    private final ITPDSSLN ln;
     private final String id;
+    private final Tecnico t;
+    private ListReparacoes caller;
 
 
-    public RegistoCard(ITPDSSLN ln, String id) {
+    public RegistoCard(ITPDSSLN ln, String id, Tecnico t, ListReparacoes caller) {
         this.ln = ln;
         this.id = id;
+        this.t = t;
+        this.caller = caller;
 
         this.setLayout(new CardLayout());
 
@@ -55,7 +60,7 @@ public class RegistoCard extends JPanel {
         repararButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Reparar(ln, id);
+                new Reparar(ln, id, t, caller);
             }
         });
 

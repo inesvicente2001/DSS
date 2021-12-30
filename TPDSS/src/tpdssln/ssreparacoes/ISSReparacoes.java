@@ -21,7 +21,7 @@ public interface ISSReparacoes {
                                                    Duration duracaoPrevista, String nomeCliente, String nif,
                                                    String telemovel, String email);
 
-    public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho);
+    public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho, LocalDateTime prazo);
 
     public void confirmarReparacao(String idEquipamento);
 
@@ -38,6 +38,8 @@ public interface ISSReparacoes {
     public void iniciarPasso(String id);
 
     public void concluirPasso(String id, Tecnico tecnico);
+
+    Passo getInfoProximoPasso(String id);
 
     Reparacao registarReparacao(String nome, String descricao, LocalDateTime prazoMaximo);
 

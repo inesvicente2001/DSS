@@ -1,11 +1,8 @@
 package tpdssui.tecnico;
 
 import tpdssln.ITPDSSLN;
-import tpdssln.TPDSSLNFacade;
-import tpdssln.ssempregados.Funcionario;
 import tpdssln.ssreparacoes.Passo;
 import tpdssln.ssreparacoes.Registo;
-import tpdssln.ssreparacoes.ReparacaoNormal;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Formatter;
+import java.time.format.FormatStyle;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +27,7 @@ public class TecnicoPlanoTrabalho extends JFrame{
     private JButton cancelarButton;
     private JPanel passosPanel = new JPanel();
     private JScrollPane scrollPane;
+    private JTextField prazoLabel;
 
     private ITPDSSLN ln;
     private Map<Integer, Passo> passos = new HashMap<>();
@@ -83,7 +81,8 @@ public class TecnicoPlanoTrabalho extends JFrame{
         confirmarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ln.registarPlanoTrabalho(r.getId(), passos);
+                LocalDateTime prazo = LocalDateTime.parse(prazoLabel.getText(), DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+                ln.registarPlanoTrabalho(r.getId(), passos, prazo);
                 dispose();
             }
         });
