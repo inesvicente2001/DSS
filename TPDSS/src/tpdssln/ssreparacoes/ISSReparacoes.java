@@ -55,4 +55,10 @@ public interface ISSReparacoes {
     Registo maisUrgente();
 
     Set<String> getRegistosNConcluidos();
+
+    public int getDisponibilidade();
+
+    public int getOcupados();
+
+    public void setOcupados(int ocupados);
 }

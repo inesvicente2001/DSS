@@ -11,12 +11,29 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class SSReparacoesFacade implements ISSReparacoes {
+    private final int disponibilidade = 5; //O SISTEMA SÓ PODE TER 5 REPARAÇÕES EXPRESSO
+    private int ocupados = 0;
     private Map<String, Registo> pedidosOrcamento; //Os orçamentos que foram pedidos
     private Map<String, Registo> registosPendentes;
     private Map<String, Registo> registosNConcluidos; //Os que estão a ser feitos
     private Map<String, Registo> registosConcluidos; //Os concluidos mas não entregues
     private Map<String, Registo> registosEntregues; //Os entregues
     private Map<String, Registo> registosAbandonados;
+
+
+    public int getDisponibilidade() {
+        return disponibilidade;
+    }
+
+    public int getOcupados() {
+        return ocupados;
+    }
+
+    public void setOcupados(int ocupados) {
+        this.ocupados = ocupados;
+    }
+
+
 
     public SSReparacoesFacade() {
         this.pedidosOrcamento = new HashMap<>();
@@ -29,6 +46,9 @@ public class SSReparacoesFacade implements ISSReparacoes {
         String id = adicionarPedidoOrcamentoNormal("1293801", 2, "q", "aqui", "eu", "123", "9123", "email");
         System.out.println("OLA" + id);
         Map<Integer, Passo> passos = new HashMap<>();
+
+
+
         Set<Peca> pecas = new HashSet<>();
         pecas.add(new Peca("parafuso", 12, 30));
         pecas.add(new Peca("prego", 32, 49));
@@ -91,6 +111,9 @@ public class SSReparacoesFacade implements ISSReparacoes {
         Registo registo = new Registo(id, nomeEquipamento, urgencia, descricao, local, reparacao, cliente);
         pedidosOrcamento.put(registo.getId(), registo);
 
+        int ocup = getOcupados();
+        this.setOcupados(ocup + 1);
+
         return id;
     }
 
@@ -113,8 +136,8 @@ public class SSReparacoesFacade implements ISSReparacoes {
         r.setPrazoMaximo(prazo);
         r.setPlanoTrabalho(planoTrabalho);
 
-        registosPendentes.put(aReparar.getId(), aReparar);
-        aReparar.setDataPendente(LocalDateTime.now());
+        registosNConcluidos.put(aReparar.getId(), aReparar);
+        aReparar.setDataNConcluido(LocalDateTime.now());
         aReparar.getReparacao().setPrazoMaximo(obterPrazoMaximo(aReparar));
     }
 
@@ -146,12 +169,16 @@ public class SSReparacoesFacade implements ISSReparacoes {
             tecnico.atualizarMediaDesvio(desvio);
             //TODO dar n telefone
             String nr = concluido.getCliente().getTelemovel();
+            System.out.println("Mensagem enviada para: " + nr);
         } else {
             ReparacaoExpresso r = (ReparacaoExpresso) concluido.getReparacao();
             desvio = Duration.ofSeconds(duracao.getSeconds() - r.getDuracaoPrevista().getSeconds());
             tecnico.atualizarMediaDesvio(desvio);
+            int ocup = getOcupados();
+            this.setOcupados(ocup-1);
             //TODO mandar mail
             String email = concluido.getCliente().getEmail();
+            System.out.println("Mail enviado para: " + email);
         }
     }
 
