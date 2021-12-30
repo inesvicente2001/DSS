@@ -14,32 +14,7 @@ public class SSEmpregadosFacade implements ISSEmpregados {
 
     public SSEmpregadosFacade() {
         this.empregados = new HashMap<>();
-
-
-        Tecnico fun1 = new Tecnico("123","Rogerio Bala", "123");
-        Map<String, Reparacao> test = new HashMap<>();
-        test.put("123", new ReparacaoNormal());
-        fun1.setReparacoes(test);
-        fun1.setMediaDesvio(Duration.ofDays(23));
-        fun1.setDuracaoMedia(Duration.ofDays(34));
-        Funcionario fun2  = new Funcionario("Furry","Tomas F.", "Furry");
-       
-        Tecnico fun3 = new Tecnico("12","Gui", "0");
-       
-        Tecnico fun4  = new Tecnico("32","Tomas F.", "Furry");
-       
-        Tecnico fun5  = new Tecnico("2","Tomas F.", "Furry");
-        
-        Tecnico fun6  = new Tecnico("3","Tomas F.", "Furry");
-        
-        this.empregados.put("123",fun1);
-        this.empregados.put("Furry", fun2 );
-        this.empregados.put("12", fun3);
-        this.empregados.put("32", fun4);
-        this.empregados.put("2", fun5);
-        this.empregados.put("3", fun6);
-        this.empregados.put("42", new Gestor("42","JBB","monos"));
-        this.empregados.put("420",new Administrador("420","Creissac","DSS"));
+        this.empregados.put("Admin",new Administrador("Admin","Admin","Admin"));
     }
 
 
@@ -121,6 +96,8 @@ public class SSEmpregadosFacade implements ISSEmpregados {
 
         String id = generateID();
 
+        System.out.println("Funcionário: " + nome + " | ID: " + id + " | " + password);
+
         Funcionario funcionario = new Funcionario(id,nome,password);
         empregados.put(id,funcionario);
 
@@ -131,6 +108,8 @@ public class SSEmpregadosFacade implements ISSEmpregados {
 
         String id = generateID();
 
+        System.out.println("Técnico: " + nome + " | ID: " + id + " | " + password);
+
         Tecnico tecnico = new Tecnico(id,nome,password);
         empregados.put(id,tecnico);
 
@@ -140,6 +119,7 @@ public class SSEmpregadosFacade implements ISSEmpregados {
     public String adicionarGestor(String nome, String password) {
 
         String id = generateID();
+        System.out.println("Gestor: " + nome + " | ID: " + id + " | " + password);
 
         Gestor gestor = new Gestor(id,nome,password);
         empregados.put(id,gestor);
