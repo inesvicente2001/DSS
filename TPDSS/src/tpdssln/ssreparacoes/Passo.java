@@ -107,16 +107,29 @@ public class Passo {
 
     public float definirOrcamento() {
         float orcamento = 0;
-        for (Peca peca: pecasEstimadas) {
-            orcamento = orcamento + peca.getCusto();
+
+        if (subPassos.isEmpty()) {
+            for (Peca peca : pecasEstimadas) {
+                orcamento = orcamento + peca.getCusto();
+            }
+        }
+        else {
+            for (Passo passo : subPassos.values())
+                orcamento = orcamento + passo.definirOrcamento();
         }
         return orcamento;
     }
 
     public float definirCustoFinal() {
         float custoFinal = 0;
-        for (Peca peca: pecasUsadas) {
-            custoFinal = custoFinal + (peca.getCusto() * peca.getQuantidade());
+
+        if (subPassos.isEmpty()) {
+            for (Peca peca : pecasUsadas) {
+                custoFinal = custoFinal + (peca.getCusto() * peca.getQuantidade());
+            }
+        } else{
+            for (Passo passo : subPassos.values())
+                custoFinal = custoFinal + passo.definirCustoFinal();
         }
         return custoFinal;
     }
@@ -158,6 +171,30 @@ public class Passo {
     public void addSubPasso(String nomePasso, Duration tempoPrevisto){
         Passo passo = new Passo(nomePasso, null, null, tempoPrevisto);
         subPassos.put(subPassos.size(), passo);
+    }
+
+    public void iniciarPasso() {
+
+        if (subPassos.isEmpty()) {
+            dataInicio = LocalDateTime.now();
+        }
+        else {
+            int i = 1;
+            for(; subPassos.get(i).getConcluido() ; i++);
+            subPassos.get(i).iniciarPasso();
+        }
+    }
+
+    public void concluirPasso() {
+        if (subPassos.isEmpty()) {
+            concluido = true;
+            dataFim = LocalDateTime.now();
+        }
+        else {
+            int i = 1;
+            for(; subPassos.get(i).getConcluido() ; i++);
+            subPassos.get(i).concluirPasso();
+        }
     }
 
 }

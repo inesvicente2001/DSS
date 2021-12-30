@@ -81,7 +81,8 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
 
         for(; planoTrabalho.get(i).getConcluido() ; i++);
 
-        planoTrabalho.get(i).setDataInicio(LocalDateTime.now());
+        planoTrabalho.get(i).iniciarPasso();
+
     }
 
     public boolean concluirPasso(Tecnico tecnico) {
@@ -89,8 +90,7 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
 
         for(; planoTrabalho.get(i).getConcluido() ; i++);
 
-        planoTrabalho.get(i).setConcluido(true);
-        planoTrabalho.get(i).setDataFim(LocalDateTime.now());
+        planoTrabalho.get(i).concluirPasso();
 
         definirCustoFinal();
 
