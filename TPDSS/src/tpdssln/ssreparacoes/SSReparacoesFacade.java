@@ -215,10 +215,10 @@ public class SSReparacoesFacade implements ISSReparacoes {
         }
     }
 
-    public void addSubPasso(Registo registo, Integer passo, String nomePaco, Duration tempoPrevisto) {
+    public void addSubPasso(Registo registo, Integer passo, String nomePasso, Duration tempoPrevisto) {
         if (registo.getReparacao() instanceof ReparacaoNormal) {
             ReparacaoNormal r = (ReparacaoNormal) registo.getReparacao();
-            r.addSubPasso(passo, nomePaco, tempoPrevisto);
+            r.addSubPasso(passo, nomePasso, tempoPrevisto);
         }
     }
 

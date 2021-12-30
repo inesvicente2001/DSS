@@ -162,6 +162,16 @@ public class SSEmpregadosFacade implements ISSEmpregados {
         empregados.remove(id);
     }
 
+    public int nReparacoesNormaisTecnico(String id) {
+        Tecnico t = (Tecnico)empregados.get(id);
+        return t.nReparacoesNormais();
+    }
+
+    public int nReparacoesExpressoTecnico(String id) {
+        Tecnico t = (Tecnico)empregados.get(id);
+        return t.nReparacoesExpresso();
+    }
+
     public String generateID() {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'

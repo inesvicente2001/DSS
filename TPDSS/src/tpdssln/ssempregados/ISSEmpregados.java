@@ -15,6 +15,7 @@ public interface ISSEmpregados {
     public void removerUtilizador(String id);
     public int numEntregasEmpregado(String id);
     public int numRececoesEmpregado(String id);
-
+    public int nReparacoesNormaisTecnico(String id);
+    public int nReparacoesExpressoTecnico(String id);
 
 }

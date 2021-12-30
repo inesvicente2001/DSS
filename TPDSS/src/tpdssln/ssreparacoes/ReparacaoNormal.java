@@ -112,9 +112,9 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
         p.addPecaUsada(nomePeca, custo, quantidade);
     }
 
-    public void addSubPasso(Integer passo, String nomePaco, Duration tempoPrevisto) {
+    public void addSubPasso(Integer passo, String nomePasso, Duration tempoPrevisto) {
         Passo p = planoTrabalho.get(passo);
-        p.addSubPasso(nomePaco, tempoPrevisto);
+        p.addSubPasso(nomePasso, tempoPrevisto);
     }
 
 }
