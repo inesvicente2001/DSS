@@ -1,5 +1,6 @@
 package tpdssln.ssreparacoes;
 
+import tpdssdl.*;
 import tpdssln.ssempregados.Funcionario;
 import tpdssln.ssempregados.Tecnico;
 import tpdssln.ssreparacoes.excecoes.RegistoNaoExisteException;
@@ -19,12 +20,12 @@ public class SSReparacoesFacade implements ISSReparacoes {
     private Map<String, Registo> registosAbandonados;
 
     public SSReparacoesFacade() {
-        this.pedidosOrcamento = new HashMap<>();
-        this.registosPendentes = new HashMap<>();
-        this.registosNConcluidos = new HashMap<>();
-        this.registosConcluidos = new HashMap<>();
-        this.registosEntregues = new HashMap<>();
-        this.registosAbandonados = new HashMap<>();
+        this.pedidosOrcamento = PedidosOrcamento.leFile();
+        this.registosPendentes = RegistosPendentes.leFile();
+        this.registosNConcluidos = RegistosNConcluidos.leFile();
+        this.registosConcluidos = RegistosConcluidos.leFile();
+        this.registosEntregues = RegistosEntregues.leFile();
+        this.registosAbandonados = RegistosAbandonados.leFile();
 
         String id = adicionarPedidoOrcamentoNormal("1293801", 2, "q", "aqui", "eu", "123", "9123", "email");
         System.out.println("OLA" + id);
@@ -38,6 +39,14 @@ public class SSReparacoesFacade implements ISSReparacoes {
         passos.put(2, new Passo("HAHAHA", Duration.ofMinutes(421), new HashSet<>(), new HashMap<>()));
 
         registarPlanoTrabalho(id,passos, LocalDateTime.now());
+
+        PedidosOrcamento.escreveFile(this.pedidosOrcamento);
+        RegistosPendentes.escreveFile(this.registosPendentes);
+        RegistosNConcluidos.escreveFile(this.registosNConcluidos);
+        RegistosConcluidos.escreveFile(this.registosConcluidos);
+        RegistosEntregues.escreveFile(this.registosEntregues);
+        RegistosAbandonados.escreveFile(this.registosAbandonados);
+
     }
 
     public Map<String, Registo> getOrcamentosPedidos() {

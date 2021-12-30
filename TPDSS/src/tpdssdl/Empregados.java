@@ -37,6 +37,6 @@ public class Empregados {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return new HashMap<>();
     }
 }

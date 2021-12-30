@@ -36,7 +36,7 @@ public class RegistosNConcluidos {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return new HashMap<>();
 
     }
 }

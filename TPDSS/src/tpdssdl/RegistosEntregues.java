@@ -2,6 +2,7 @@ package tpdssdl;
 
 import tpdssln.ssreparacoes.Registo;
 
+import javax.print.attribute.HashAttributeSet;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class RegistosEntregues {
         }
     }
 
-    public static HashMap<String, Registo> leFile(){
+    public static HashMap<String, Registo> leFile() {
         try {
             File toRead = new File("db/RegistosEntregues");
             FileInputStream fis = new FileInputStream(toRead);
@@ -36,7 +37,7 @@ public class RegistosEntregues {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return new HashMap<>();
 
     }
 }

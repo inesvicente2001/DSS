@@ -22,7 +22,7 @@ public class RegistosPendentes {
         }
     }
 
-    public static HashMap<String, Registo> leFile() throws IOException, ClassNotFoundException {
+    public static HashMap<String, Registo> leFile() {
         try {
             File toRead = new File("db/RegistosPendentes");
             FileInputStream fis = new FileInputStream(toRead);
@@ -36,7 +36,7 @@ public class RegistosPendentes {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return new HashMap<>();
 
     }
 }

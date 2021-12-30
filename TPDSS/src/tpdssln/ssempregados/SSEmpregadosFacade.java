@@ -1,47 +1,27 @@
 package tpdssln.ssempregados;
 
+import tpdssdl.Empregados;
 import tpdssln.ssempregados.excecoes.CredenciaisErradasException;
 import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
-import tpdssln.ssreparacoes.Reparacao;
-import tpdssln.ssreparacoes.ReparacaoNormal;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class SSEmpregadosFacade implements ISSEmpregados {
     private Map<String, Empregado> empregados;
 
     public SSEmpregadosFacade() {
-        this.empregados = new HashMap<>();
+        this.empregados = Empregados.leFile();
 
+        Administrador fun2  = new Administrador("Furry","Tomas F.", "Furry");
 
-        Tecnico fun1 = new Tecnico("123","Rogerio Bala", "123");
-        Map<String, Reparacao> test = new HashMap<>();
-        test.put("123", new ReparacaoNormal());
-        fun1.setReparacoes(test);
-        fun1.setMediaDesvio(Duration.ofDays(23));
-        fun1.setDuracaoMedia(Duration.ofDays(34));
-        Funcionario fun2  = new Funcionario("Furry","Tomas F.", "Furry");
-       
-        Tecnico fun3 = new Tecnico("12","Gui", "0");
-       
-        Tecnico fun4  = new Tecnico("32","Tomas F.", "Furry");
-       
-        Tecnico fun5  = new Tecnico("2","Tomas F.", "Furry");
-        
-        Tecnico fun6  = new Tecnico("3","Tomas F.", "Furry");
-        
-        this.empregados.put("123",fun1);
         this.empregados.put("Furry", fun2 );
-        this.empregados.put("12", fun3);
-        this.empregados.put("32", fun4);
-        this.empregados.put("2", fun5);
-        this.empregados.put("3", fun6);
+        this.empregados.put("2",new Tecnico("2","Miguel","Ramos"));
+        this.empregados.put("12",new Funcionario("12","Jorge","Paiva"));
         this.empregados.put("42", new Gestor("42","JBB","monos"));
         this.empregados.put("420",new Administrador("420","Creissac","DSS"));
-    }
 
+        Empregados.escreveFile(this.empregados);
+    }
 
     public int numRececoesEmpregado(String id){
 

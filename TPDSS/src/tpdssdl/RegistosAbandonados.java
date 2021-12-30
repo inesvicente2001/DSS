@@ -25,7 +25,7 @@ public class RegistosAbandonados {
         }
     }
 
-    public static HashMap<String, Registo> leFile(){
+    public static HashMap<String, Registo> leFile() {
         try {
             File toRead = new File("db/RegistosAbandonados");
             FileInputStream fis = new FileInputStream(toRead);
@@ -39,6 +39,6 @@ public class RegistosAbandonados {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return new HashMap<>();
     }
 }
