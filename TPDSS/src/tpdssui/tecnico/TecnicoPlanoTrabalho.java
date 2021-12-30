@@ -29,6 +29,7 @@ public class TecnicoPlanoTrabalho extends JFrame{
     private JPanel passosPanel = new JPanel();
     private JScrollPane scrollPane;
     private JTextField prazoLabel;
+    private JLabel localLabel;
 
     private ITPDSSLN ln;
     private final Map<Integer, Passo> passos = new HashMap<>();
@@ -45,6 +46,7 @@ public class TecnicoPlanoTrabalho extends JFrame{
         String html = ln.toHTMLDescricao(r.getId());
         idEquipamento.setText(r.getId());
         nomeEquipamento.setText(r.getNomeEquipamento());
+        localLabel.setText(r.getLocalizacao());
         descricao.setText(html);
         dataRececao.setText(DateTimeFormatter.ISO_DATE.format(r.getData()));
 
