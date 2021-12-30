@@ -18,19 +18,19 @@ public class TPDSSLNFacade implements ITPDSSLN {
 
     @Override
     public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
-                                               String local, LocalDateTime prazo, String nomeCliente, String nif,
+                                               String local, String nomeCliente, String nif,
                                                String telemovel, String email, Funcionario funcionario) {
-        reparacoes.adicionarPedidoOrcamentoNormal(nomeEquipamento, urgencia, descricao, local, prazo, nomeCliente, nif, telemovel, email, funcionario);
+        reparacoes.adicionarPedidoOrcamentoNormal(nomeEquipamento, urgencia, descricao, local, nomeCliente, nif, telemovel, email, funcionario);
     }
 
     @Override
     public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
-                                                 String local, LocalDateTime prazo, float precoFixo,
+                                                 String local, float precoFixo,
                                                  Duration duracaoPrevista, String nomeCliente, String nif,
                                                  String telemovel, String email, Funcionario funcionario) {
         reparacoes.adicionarPedidoOrcamentoExpresso(
                 nomeEquipamento, urgencia, descricao,
-                local, prazo, precoFixo,
+                local, precoFixo,
                 duracaoPrevista, nomeCliente, nif,
                 telemovel, email, funcionario);
     }

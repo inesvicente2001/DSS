@@ -16,11 +16,11 @@ import java.util.Map;
 
 public interface ITPDSSLN {
     public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
-                                               String local, LocalDateTime prazo, String nomeCliente, String nif,
+                                               String local, String nomeCliente, String nif,
                                                String telemovel, String email, Funcionario funcionario);
 
     public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
-                                                 String local, LocalDateTime prazo, float precoFixo,
+                                                 String local, float precoFixo,
                                                  Duration duracaoPrevista, String nomeCliente, String nif,
                                                  String telemovel, String email, Funcionario funcionario);
     // Métodos do subsistema de empregados

@@ -82,7 +82,6 @@ public class Tecnico extends Empregado implements Serializable {
         return n;
     }
 
-
     public List<String> toLstInfosPlanosTrabalho(String idTecnico){
 
         List<String> planosTrabalhoInfos = new ArrayList<>();
@@ -108,24 +107,9 @@ public class Tecnico extends Empregado implements Serializable {
                 sb.append("%");
                 sb.append(" "); //Não tem plano de trabalhos: vai vazio
 
-
-
             }
-
             planosTrabalhoInfos.add(sb.toString());
-
-
-
         }
-
-
-
-
-
-
-
-
-
         return planosTrabalhoInfos;
     }
 

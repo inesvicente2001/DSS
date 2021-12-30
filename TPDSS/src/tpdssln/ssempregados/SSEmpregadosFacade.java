@@ -153,18 +153,12 @@ public class SSEmpregadosFacade implements ISSEmpregados {
     public void editarPassword(String id, String password) {
 
         Empregado value = empregados.get(id);
-        if (value == null)
-            return; //TODO exception n existe
-
         value.setPassword(password);
     }
 
     public void removerUtilizador(String id) {
 
         Empregado value = empregados.get(id);
-        if (value == null)
-            return; //TODO exception n existe
-
         empregados.remove(id);
     }
 

@@ -5,7 +5,6 @@ import tpdssln.ssempregados.Tecnico;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -54,11 +53,11 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
 
     public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
-                                               String local, LocalDateTime prazo, String nomeCliente, String nif,
+                                               String local, String nomeCliente, String nif,
                                                String telemovel, String email, Funcionario funcionario){
 
         String id = generateID();
-        Reparacao reparacao = new ReparacaoNormal(prazo);
+        Reparacao reparacao = new ReparacaoNormal(null);
         Cliente cliente = new Cliente(nomeCliente, nif, telemovel, email);
         Registo registo = new Registo(id, nomeEquipamento, urgencia, descricao, local, reparacao, cliente);
         pedidosOrcamento.put(registo.getId(), registo);
@@ -66,12 +65,12 @@ public class SSReparacoesFacade implements ISSReparacoes {
     }
 
     public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
-                                                 String local, LocalDateTime prazo, float precoFixo,
-                                                 Duration duracaoPrevista, String nomeCliente, String nif,
-                                                 String telemovel, String email, Funcionario funcionario){
+                                                 String local, float precoFixo, Duration duracaoPrevista,
+                                                 String nomeCliente, String nif, String telemovel, String email,
+                                                 Funcionario funcionario){
 
         String id = generateID();
-        Reparacao reparacao = new ReparacaoExpresso(prazo, precoFixo, duracaoPrevista);
+        Reparacao reparacao = new ReparacaoExpresso(null, precoFixo, duracaoPrevista);
         Cliente cliente = new Cliente(nomeCliente, nif, telemovel, email);
         Registo registo = new Registo(id, nomeEquipamento, urgencia, descricao, local, reparacao, cliente);
         pedidosOrcamento.put(registo.getId(), registo);
@@ -85,10 +84,12 @@ public class SSReparacoesFacade implements ISSReparacoes {
         pedidosOrcamento.remove(aReparar);
 
         //TODO somehow retornar a localizaçao
+        String local = aReparar.getLocalizacao();
 
         //na interface vai ter de ser possivel adicionar os passos entre estas duas cenas
 
         //TODO por o sistema a enviar o email
+        String email = aReparar.getCliente().getEmail();
 
         ReparacaoNormal r = (ReparacaoNormal) aReparar.getReparacao();
         r.definirOrcamento();
@@ -98,12 +99,11 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
     }
 
-    public void confirmarReparacao(String idEquipamento){
+    public void confirmarReparacao(String idEquipamento) {
         Registo value = this.registosPendentes.get(idEquipamento);
-        if (value == null)
-            return; //TODO exception n existe
 
         this.registosPendentes.remove(idEquipamento);
+
         this.registosNConcluidos.put(idEquipamento,value);
         value.setDataNConcluido(LocalDateTime.now());
     }
@@ -112,9 +112,6 @@ public class SSReparacoesFacade implements ISSReparacoes {
     public void registarConclusao(String idEquipamento, Tecnico tecnico){
 
         Registo concluido = this.registosNConcluidos.get(idEquipamento);
-        if (concluido == null)
-            return; //TODO exception n existe
-
         this.registosNConcluidos.remove(idEquipamento);
         this.registosConcluidos.put(idEquipamento,concluido);
         concluido.setDataConcluido(LocalDateTime.now());
@@ -129,20 +126,19 @@ public class SSReparacoesFacade implements ISSReparacoes {
             desvio = Duration.ofSeconds(duracao.getSeconds() - r.tempoPrevisto().getSeconds());
             tecnico.atualizarMediaDesvio(desvio);
             //TODO dar n telefone
+            String nr = concluido.getCliente().getTelemovel();
         } else {
             ReparacaoExpresso r = (ReparacaoExpresso) concluido.getReparacao();
             desvio = Duration.ofSeconds(duracao.getSeconds() - r.getDuracaoPrevista().getSeconds());
             tecnico.atualizarMediaDesvio(desvio);
             //TODO mandar mail
+            String email = concluido.getCliente().getEmail();
         }
     }
 
     @Override
     public void registarEntrega(String id, Funcionario funcionario) {
         Registo value = registosConcluidos.get(id);
-        if (value == null)
-            return; //TODO exception n existe
-
         registosConcluidos.remove(id);
         registosEntregues.put(id, value);
         value.setDataEntregue(LocalDateTime.now());
@@ -151,9 +147,6 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
     public void registarEntregaDeEquipamentoRecusado(String id, Funcionario funcionario) {
         Registo value = registosPendentes.get(id);
-        if (value == null)
-            return; //TODO exception n existe
-
         registosPendentes.remove(id);
         registosEntregues.put(id, value);
         value.setDataEntregue(LocalDateTime.now());
@@ -162,9 +155,6 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
     public void equipamentoAbandonado(String id) {
         Registo value = registosConcluidos.get(id);
-        if (value == null)
-            return; //TODO exception n existe
-
         long daysBetween = ChronoUnit.DAYS.between(value.getDataConcluido(), LocalDateTime.now());
         if (daysBetween > 90) {
             registosConcluidos.remove(id);
@@ -239,8 +229,6 @@ public class SSReparacoesFacade implements ISSReparacoes {
                 urgencia = pedidoOrcamento.getUrgencia();
                 maisUrgente = pedidoOrcamento;
             }
-
-        //TODO if (idMaisUrgente == null) lancar exceçao
 
         return maisUrgente;
     }
