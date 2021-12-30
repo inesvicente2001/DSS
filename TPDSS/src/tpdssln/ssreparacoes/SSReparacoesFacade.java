@@ -10,12 +10,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class SSReparacoesFacade implements ISSReparacoes {
-    public Map<String, Registo> pedidosOrcamento; //Os orçamentos que foram pedidos
-    public Map<String, Registo> registosPendentes;
-    public Map<String, Registo> registosNConcluidos; //Os que estão a ser feitos
-    public Map<String, Registo> registosConcluidos; //Os concluidos mas não entregues
-    public Map<String, Registo> registosEntregues; //Os entregues
-    public Map<String, Registo> registosAbandonados;
+    private Map<String, Registo> pedidosOrcamento; //Os orçamentos que foram pedidos
+    private Map<String, Registo> registosPendentes;
+    private Map<String, Registo> registosNConcluidos; //Os que estão a ser feitos
+    private Map<String, Registo> registosConcluidos; //Os concluidos mas não entregues
+    private Map<String, Registo> registosEntregues; //Os entregues
+    private Map<String, Registo> registosAbandonados;
 
     public SSReparacoesFacade() {
         this.pedidosOrcamento = new HashMap<>();
@@ -54,28 +54,26 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
 
     public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
-                                               String local, LocalDateTime prazo, String nomeCliente, String nif,
-                                               String telemovel, String email, Funcionario funcionario){
+                                               String local, String nomeCliente, String nif,
+                                               String telemovel, String email){
 
         String id = generateID();
-        Reparacao reparacao = new ReparacaoNormal(prazo);
+        Reparacao reparacao = new ReparacaoNormal();
         Cliente cliente = new Cliente(nomeCliente, nif, telemovel, email);
         Registo registo = new Registo(id, nomeEquipamento, urgencia, descricao, local, reparacao, cliente);
         pedidosOrcamento.put(registo.getId(), registo);
-        funcionario.addRececao();
     }
 
     public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
-                                                 String local, LocalDateTime prazo, float precoFixo,
+                                                 String local, float precoFixo,
                                                  Duration duracaoPrevista, String nomeCliente, String nif,
-                                                 String telemovel, String email, Funcionario funcionario){
+                                                 String telemovel, String email){
 
         String id = generateID();
-        Reparacao reparacao = new ReparacaoExpresso(prazo, precoFixo, duracaoPrevista);
+        Reparacao reparacao = new ReparacaoExpresso(precoFixo, duracaoPrevista);
         Cliente cliente = new Cliente(nomeCliente, nif, telemovel, email);
         Registo registo = new Registo(id, nomeEquipamento, urgencia, descricao, local, reparacao, cliente);
         pedidosOrcamento.put(registo.getId(), registo);
-        funcionario.addRececao();
     }
 
     public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho){
@@ -138,7 +136,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
     }
 
     @Override
-    public void registarEntrega(String id, Funcionario funcionario) {
+    public void registarEntrega(String id) {
         Registo value = registosConcluidos.get(id);
         if (value == null)
             return; //TODO exception n existe
@@ -146,7 +144,6 @@ public class SSReparacoesFacade implements ISSReparacoes {
         registosConcluidos.remove(id);
         registosEntregues.put(id, value);
         value.setDataEntregue(LocalDateTime.now());
-        funcionario.addEntrega();
     }
 
     public void registarEntregaDeEquipamentoRecusado(String id, Funcionario funcionario) {

@@ -6,8 +6,8 @@ import java.util.Map;
 public abstract class Reparacao {
     protected LocalDateTime prazoMaximo;
 
-    public Reparacao(LocalDateTime prazoMaximo) {
-        this.prazoMaximo = prazoMaximo;
+    public Reparacao() {
+        this.prazoMaximo = null;
     }
 
     public LocalDateTime getPrazoMaximo() {

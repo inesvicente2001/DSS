@@ -11,28 +11,28 @@ import java.util.List;
 import java.util.Map;
 
 public class TPDSSLNFacade implements ITPDSSLN {
-    public SSReparacoesFacade reparacoes = new SSReparacoesFacade();
+    private ISSReparacoes reparacoes = new SSReparacoesFacade();
     private ISSEmpregados empregados = new SSEmpregadosFacade();
 
     public TPDSSLNFacade() {}
 
     @Override
     public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
-                                               String local, LocalDateTime prazo, String nomeCliente, String nif,
-                                               String telemovel, String email, Funcionario funcionario) {
-        reparacoes.adicionarPedidoOrcamentoNormal(nomeEquipamento, urgencia, descricao, local, prazo, nomeCliente, nif, telemovel, email, funcionario);
+                                               String local,  String nomeCliente, String nif,
+                                               String telemovel, String email) {
+        reparacoes.adicionarPedidoOrcamentoNormal(nomeEquipamento, urgencia, descricao, local, nomeCliente, nif, telemovel, email);
     }
 
     @Override
     public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
-                                                 String local, LocalDateTime prazo, float precoFixo,
+                                                 String local, float precoFixo,
                                                  Duration duracaoPrevista, String nomeCliente, String nif,
-                                                 String telemovel, String email, Funcionario funcionario) {
+                                                 String telemovel, String email) {
         reparacoes.adicionarPedidoOrcamentoExpresso(
                 nomeEquipamento, urgencia, descricao,
-                local, prazo, precoFixo,
+                local, precoFixo,
                 duracaoPrevista, nomeCliente, nif,
-                telemovel, email, funcionario);
+                telemovel, email);
     }
     @Override
     public Class<? extends Empregado> autenticar(String id, String password) throws CredenciaisErradasException {
@@ -94,11 +94,6 @@ public class TPDSSLNFacade implements ITPDSSLN {
         return reparacoes.registarReparacao(nome, descricao, prazoMaximo);
     }
 
-    @Override
-    public void registarEntrega(String id) {
-
-
-    }
 
     @Override
     public void repararProduto(String id) {
@@ -106,8 +101,8 @@ public class TPDSSLNFacade implements ITPDSSLN {
     }
 
     @Override
-    public void registarEntrega(String id, Funcionario funcionario) {
-        reparacoes.registarEntrega(id, funcionario);
+    public void registarEntrega(String id) {
+        reparacoes.registarEntrega(id);
     }
 
 
@@ -147,6 +142,20 @@ public class TPDSSLNFacade implements ITPDSSLN {
 
     public Map<String,List<String>> todosPlanosTrabalho(){
         return  empregados.todosPlanosTrabalho();
+    }
+
+    @Override
+    public void aumentarEntregasEmpregado(String id) {
+
+        empregados.aumentarEntregasEmpregado(id);
+
+    }
+
+    @Override
+    public void aumentarRececoesEmpregado(String id) {
+
+        empregados.aumentarRececoesEmpregado(id);
+
     }
 
     public String toHTMLDescricao(String id) throws NullPointerException {

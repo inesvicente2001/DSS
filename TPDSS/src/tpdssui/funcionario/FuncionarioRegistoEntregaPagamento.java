@@ -2,11 +2,16 @@ package tpdssui.funcionario;
 
 import tpdssln.ITPDSSLN;
 import tpdssln.TPDSSLNFacade;
+import tpdssln.ssreparacoes.Passo;
+import tpdssln.ssreparacoes.Peca;
 import tpdssui.funcionario.FuncionarioMenuPrincipal;
+import tpdssui.tecnico.NovoPassosCard;
+import tpdssui.tecnico.PecasCard;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Duration;
 
 public class FuncionarioRegistoEntregaPagamento extends JFrame{
     private JButton voltarButton;
@@ -19,7 +24,7 @@ public class FuncionarioRegistoEntregaPagamento extends JFrame{
 
     private ITPDSSLN ln;
 
-    public FuncionarioRegistoEntregaPagamento(ITPDSSLN ln) {
+    public FuncionarioRegistoEntregaPagamento(ITPDSSLN ln, String idFuncionario) {
 
         this.ln = ln;
 
@@ -37,6 +42,9 @@ public class FuncionarioRegistoEntregaPagamento extends JFrame{
             }
         });
 
+
+        addActions(idFuncionario);
+
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         this.setTitle("Entrega e Pagamento de Equipamento");
@@ -46,6 +54,24 @@ public class FuncionarioRegistoEntregaPagamento extends JFrame{
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
+
+    }
+
+
+    private void addActions(String idFuncionario) {
+        confirmarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (entregueRadioButton.isSelected() && pagoRadioButton.isSelected()) {
+                    String idEquipamentoInput = idEquipamentoField.getText();
+
+                    ln.registarEntrega(idEquipamentoInput);
+                    ln.aumentarEntregasEmpregado(idFuncionario);
+
+                    dispose();
+                }
+            }
+        });
 
     }
 

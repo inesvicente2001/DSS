@@ -18,11 +18,11 @@ public class SSEmpregadosFacade implements ISSEmpregados {
 
         Tecnico fun1 = new Tecnico("123","Rogerio Bala", "123");
         Map<String, Reparacao> test = new HashMap<>();
-        test.put("123", new ReparacaoNormal(LocalDateTime.now()));
+        test.put("123", new ReparacaoNormal());
         fun1.setReparacoes(test);
         fun1.setMediaDesvio(Duration.ofDays(23));
         fun1.setDuracaoMedia(Duration.ofDays(34));
-        Funcionario fun2  = new Funcionario("122222","Tomas F.", "Furry");
+        Funcionario fun2  = new Funcionario("Furry","Tomas F.", "Furry");
        
         Tecnico fun3 = new Tecnico("12","Gui", "0");
        
@@ -63,6 +63,26 @@ public class SSEmpregadosFacade implements ISSEmpregados {
         return numEntregas;
 
     }
+
+    public void aumentarEntregasEmpregado(String id){
+
+
+        if (empregados.get(id) instanceof Funcionario)
+            ((Funcionario) empregados.get(id)).setnEntregas(((Funcionario) empregados.get(id)).getnEntregas() + 1);
+
+
+    }
+
+
+    public void aumentarRececoesEmpregado(String id){
+
+        if (empregados.get(id) instanceof Funcionario)
+            ((Funcionario) empregados.get(id)).setnRececoes(((Funcionario) empregados.get(id)).getnRececoes() + 1);
+
+    }
+
+
+
 
     public Class<? extends Empregado> autenticar(String id, String password) throws CredenciaisErradasException {
 

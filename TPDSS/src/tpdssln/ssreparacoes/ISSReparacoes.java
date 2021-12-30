@@ -10,13 +10,13 @@ import java.util.Map;
 public interface ISSReparacoes {
 
     public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
-                                               String local, LocalDateTime prazo, String nomeCliente, String nif,
-                                               String telemovel, String email, Funcionario funcionario);
+                                               String local, String nomeCliente, String nif,
+                                               String telemovel, String email);
 
     public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
-                                                 String local, LocalDateTime prazo, float precoFixo,
+                                                 String local, float precoFixo,
                                                  Duration duracaoPrevista, String nomeCliente, String nif,
-                                                 String telemovel, String email, Funcionario funcionario);
+                                                 String telemovel, String email);
 
     public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho);
 
@@ -24,7 +24,7 @@ public interface ISSReparacoes {
 
     public void registarConclusao(String idEquipamento, Tecnico tecnico);
 
-    public void registarEntrega(String id, Funcionario funcionario);
+    public void registarEntrega(String id);
 
     public void registarEntregaDeEquipamentoRecusado(String id, Funcionario funcionario);
 
@@ -44,4 +44,6 @@ public interface ISSReparacoes {
     public void addSubPasso(Registo registo, Integer passo, String nomePasso, Duration tempoPrevisto);
 
     LocalDateTime obterPrazoMaximo(Registo registo);
+
+    Registo maisUrgente();
 }

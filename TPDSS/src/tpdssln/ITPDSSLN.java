@@ -16,13 +16,13 @@ import java.util.Map;
 
 public interface ITPDSSLN {
     public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
-                                               String local, LocalDateTime prazo, String nomeCliente, String nif,
-                                               String telemovel, String email, Funcionario funcionario);
+                                               String local, String nomeCliente, String nif,
+                                               String telemovel, String email);
 
     public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
-                                                 String local, LocalDateTime prazo, float precoFixo,
+                                                 String local,  float precoFixo,
                                                  Duration duracaoPrevista, String nomeCliente, String nif,
-                                                 String telemovel, String email, Funcionario funcionario);
+                                                 String telemovel, String email);
     // Métodos do subsistema de empregados
     public Class<? extends Empregado> autenticar(String id, String password) throws CredenciaisErradasException;
     public Map<String, Tecnico> acederTecnicos();
@@ -43,7 +43,6 @@ public interface ITPDSSLN {
     public void registarEntrega(String id);
     public void repararProduto(String id);
 
-    void registarEntrega(String id, Funcionario funcionario);
 
     public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho);
     public void registarConclusao(String idEquipamento);
@@ -60,4 +59,8 @@ public interface ITPDSSLN {
     public List<String> toLstInfosPlanosTrabalho(String idTecnico);
 
     public Map<String,List<String>> todosPlanosTrabalho();
+
+    public void aumentarEntregasEmpregado(String id);
+
+    public void aumentarRececoesEmpregado(String id);
 }

@@ -8,8 +8,8 @@ public class ReparacaoExpresso extends Reparacao implements Serializable {
     private float precoFixo;
     private Duration duracaoPrevista;
 
-    public ReparacaoExpresso(LocalDateTime prazoMaximo, float precoFixo, Duration duracaoPrevista) {
-        super(prazoMaximo);
+    public ReparacaoExpresso(float precoFixo, Duration duracaoPrevista) {
+        super();
         this.precoFixo = precoFixo;
     }
 
