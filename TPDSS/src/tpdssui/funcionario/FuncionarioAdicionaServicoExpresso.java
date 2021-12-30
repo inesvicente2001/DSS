@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 public class FuncionarioAdicionaServicoExpresso extends JFrame{
     private JButton voltarButton;
     private JTextField nomeClienteField;
@@ -61,24 +63,28 @@ public class FuncionarioAdicionaServicoExpresso extends JFrame{
         confirmarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    String nomeClienteInput = nomeClienteField.getText();
-                    String nifClienteInput = nifClienteField.getText();
-                    String emailClienteInput = emailClienteField.getText();
-                    String tlmClienteInput = tlmClienteField.getText();
-                    String nomeEquipamentoInput = nomeEquipamentoField.getText();
-                    String localArmazemInput = localArmazemField.getText();
+                        String nomeClienteInput = nomeClienteField.getText();
+                        String nifClienteInput = nifClienteField.getText();
+                        String emailClienteInput = emailClienteField.getText();
+                        String tlmClienteInput = tlmClienteField.getText();
+                        String nomeEquipamentoInput = nomeEquipamentoField.getText();
+                        String localArmazemInput = localArmazemField.getText();
 
-                    String descEprecoReparacaoInput = servExpressoBox1.getEditor().getItem().toString();
+                        String descEprecoReparacaoInput = servExpressoBox1.getEditor().getItem().toString();
 
-                    String[] descPrecoSeparados = descEprecoReparacaoInput.split("/");
+                        String[] descPrecoSeparados = descEprecoReparacaoInput.split("/");
 
 
-                    ln.adicionarPedidoOrcamentoExpresso(nomeEquipamentoInput,11,"Serviço Expresso: " + descPrecoSeparados[0],
-                            localArmazemInput, Long.parseLong(descPrecoSeparados[1]), Duration.ofMinutes(Long.parseLong(descPrecoSeparados[2])),
-                            nomeClienteInput,nifClienteInput,tlmClienteInput,emailClienteInput);
-                    ln.aumentarRececoesEmpregado(idFuncionario);
+                        ln.adicionarPedidoOrcamentoExpresso(nomeEquipamentoInput,11,"Serviço Expresso: " + descPrecoSeparados[0],
+                                localArmazemInput, Long.parseLong(descPrecoSeparados[1]), Duration.ofMinutes(Long.parseLong(descPrecoSeparados[2])),
+                                nomeClienteInput,nifClienteInput,tlmClienteInput,emailClienteInput);
+                        ln.aumentarRececoesEmpregado(idFuncionario);
 
-                    dispose();
+                        ln.setOcupados(ln.getOcupados()+1);
+
+                        dispose();
+
+
             }
         });
 

@@ -93,7 +93,7 @@ public class Tecnico extends Empregado implements Serializable {
 
                 sb.append(entry.getKey()); //IdReparacao
                 sb.append("%");
-                sb.append(((ReparacaoNormal) entry.getValue()).getCustoFinal());
+                sb.append(((ReparacaoNormal) entry.getValue()).definirCustoFinal());
                 sb.append("%");
                 sb.append(((ReparacaoNormal) entry.getValue()).toHTMLPlanoTrabalho());
 

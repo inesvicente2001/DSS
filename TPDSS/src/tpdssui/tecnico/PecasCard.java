@@ -9,7 +9,7 @@ public class PecasCard extends JPanel {
     private JLabel quantidadeLabel;
     private JLabel custoLabel;
 
-    public PecasCard(String peca, float quantidade, int custo) {
+    public PecasCard(String peca, float custo, int quantidade) {
         quantidadeLabel.setText(quantidade + " unidades");
         custoLabel.setText(custo + " €");
 
