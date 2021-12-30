@@ -48,14 +48,16 @@ public class PormenoresTecnico extends JFrame{
         for (Map.Entry<String, List<String>> entry : infosPlano.entrySet()){
 
 
-            TecnicoInfoPormCard tecnCard =  new TecnicoInfoPormCard(entry.getValue(), entry.getKey());
+            if(entry.getValue().size() > 0){
+                TecnicoInfoPormCard tecnCard =  new TecnicoInfoPormCard(entry.getValue(), entry.getKey());
 
-            //Border b = BorderFactory.createLoweredBevelBorder();
-            //geralPanel.setBorder(BorderFactory.createTitledBorder(b,entry.getKey()));
+                //Border b = BorderFactory.createLoweredBevelBorder();
+                //geralPanel.setBorder(BorderFactory.createTitledBorder(b,entry.getKey()));
 
-            geralPanel.add(tecnCard);
+                geralPanel.add(tecnCard);
 
-            geralPanel.add(Box.createRigidArea(new Dimension(0,10)));
+                geralPanel.add(Box.createRigidArea(new Dimension(0,10)));
+            }
 
         }
 

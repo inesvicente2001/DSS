@@ -9,6 +9,9 @@ import tpdssui.Login;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Duration;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class FuncionarioMenuPrincipal extends JFrame{
     private JPanel panel1;
@@ -50,10 +53,20 @@ public class FuncionarioMenuPrincipal extends JFrame{
             }
         });
 
+
         serviçosExpressoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new FuncionarioAdicionaServicoExpresso(ln,id);
+                if(ln.getOcupados() < ln.getDisponibilidade()){
+
+
+                    new FuncionarioAdicionaServicoExpresso(ln,id);
+
+                }else{
+
+                    showMessageDialog(null, "Não existe mais disponibilidade para Reparações Expresso");
+
+                }
             }
         });
 
