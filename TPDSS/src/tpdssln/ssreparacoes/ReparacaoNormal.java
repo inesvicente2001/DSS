@@ -117,4 +117,31 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
         p.addSubPasso(nomePaco, tempoPrevisto);
     }
 
+
+    public String toHTMLPlanoTrabalho(){
+
+        StringBuilder html = new StringBuilder();
+
+        html.append("<html>\n");
+        html.append("<body>\n");
+
+
+        html.append("<br/>").append("Passo ").append("1").append(") ").append(this.getPlanoTrabalho().get(1)).append("<br/>");
+
+        int i = 2;
+        for(; i<this.getPlanoTrabalho().size() - 1 ;i++){
+
+            html.append("Passo ").append(i).append(") ").append(this.getPlanoTrabalho().get(i)).append("<br/>");
+        }
+
+        html.append("Passo ").append(i).append(") ").append(this.getPlanoTrabalho().get(i));
+
+        html.append("</body>\n");
+        html.append("</html>");
+
+
+        return html.toString();
+    }
+
+
 }

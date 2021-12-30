@@ -7,6 +7,7 @@ import tpdssln.ssreparacoes.Passo;
 import tpdssln.ssreparacoes.Reparacao;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 public interface ITPDSSLN {
@@ -40,4 +41,8 @@ public interface ITPDSSLN {
     public int numRececoesEmpregado(String id);
 
     public int numEntregasEmpregado(String id);
+
+    public List<String> toLstInfosPlanosTrabalho(String idTecnico);
+
+    public Map<String,List<String>> todosPlanosTrabalho();
 }

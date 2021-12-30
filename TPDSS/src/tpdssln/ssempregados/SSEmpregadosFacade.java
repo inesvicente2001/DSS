@@ -179,4 +179,25 @@ public class SSEmpregadosFacade implements ISSEmpregados {
 
         return generatedString;
     }
+
+
+    public List<String> toLstInfosPlanosTrabalho(String idTecnico){
+
+        List<String> lst = new ArrayList<>();
+
+        if (empregados.get(idTecnico) instanceof Tecnico)
+            lst = ((Tecnico) empregados.get(idTecnico)).toLstInfosPlanosTrabalho(idTecnico);
+
+        return lst;
+    }
+
+    public Map<String,List<String>> todosPlanosTrabalho(){
+        Map<String,List<String>> map= new HashMap<>();
+
+        for (Map.Entry<String, Funcionario> entry : this.acederFuncionarios().entrySet())
+            map.put(entry.getKey(),toLstInfosPlanosTrabalho(entry.getKey()));
+
+        return map;
+
+    }
 }

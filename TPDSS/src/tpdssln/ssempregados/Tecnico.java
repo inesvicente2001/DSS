@@ -2,7 +2,9 @@ package tpdssln.ssempregados;
 
 import java.time.Duration;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import tpdssln.ssreparacoes.Reparacao;
 import tpdssln.ssreparacoes.ReparacaoExpresso;
@@ -79,4 +81,53 @@ public class Tecnico extends Empregado implements Serializable {
 
         return n;
     }
+
+
+    public List<String> toLstInfosPlanosTrabalho(String idTecnico){
+
+        List<String> planosTrabalhoInfos = new ArrayList<>();
+
+        for (Map.Entry<String,Reparacao> entry : this.getReparacoes().entrySet()){
+            StringBuilder sb = new StringBuilder();
+
+            if(entry.getValue() instanceof ReparacaoNormal){
+
+                sb.append(entry.getKey()); //IdReparacao
+                sb.append("%");
+                sb.append(((ReparacaoNormal) entry.getValue()).getCustoFinal());
+                sb.append("%");
+                sb.append(((ReparacaoNormal) entry.getValue()).toHTMLPlanoTrabalho());
+
+            }
+
+            if(entry.getValue() instanceof ReparacaoExpresso){
+
+                sb.append(entry.getKey()); //IdReparacao
+                sb.append("%");
+                sb.append(((ReparacaoExpresso) entry.getValue()).getPrecoFixo());
+                sb.append("%");
+                sb.append(" "); //Não tem plano de trabalhos: vai vazio
+
+
+
+            }
+
+            planosTrabalhoInfos.add(sb.toString());
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+        return planosTrabalhoInfos;
+    }
+
+
 }

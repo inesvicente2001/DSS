@@ -7,6 +7,7 @@ import tpdssln.ssreparacoes.Reparacao;
 import tpdssln.ssreparacoes.SSReparacoesFacade;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 public class TPDSSLNFacade implements ITPDSSLN {
@@ -116,6 +117,15 @@ public class TPDSSLNFacade implements ITPDSSLN {
     @Override
     public int numEntregasEmpregado(String id) {
         return empregados.numEntregasEmpregado(id);
+    }
+
+    @Override
+    public List<String> toLstInfosPlanosTrabalho(String idTecnico) {
+        return empregados.toLstInfosPlanosTrabalho(idTecnico);
+    }
+
+    public Map<String,List<String>> todosPlanosTrabalho(){
+        return  empregados.todosPlanosTrabalho();
     }
 
 
