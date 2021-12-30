@@ -1,5 +1,6 @@
 package tpdssln.ssreparacoes;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -7,7 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class Passo {
+public class Passo implements Serializable {
     private String id;
     private String nomePasso;
     private Boolean concluido;

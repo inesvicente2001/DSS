@@ -1,5 +1,6 @@
 package tpdssln.ssreparacoes;
 
+import tpdssdl.*;
 import tpdssln.ssempregados.Funcionario;
 import tpdssln.ssempregados.Tecnico;
 import tpdssln.ssreparacoes.excecoes.RegistoNaoExisteException;
@@ -33,15 +34,23 @@ public class SSReparacoesFacade implements ISSReparacoes {
         this.ocupados = ocupados;
     }
 
-
-
     public SSReparacoesFacade() {
-        this.pedidosOrcamento = new HashMap<>();
-        this.registosPendentes = new HashMap<>();
-        this.registosNConcluidos = new HashMap<>();
-        this.registosConcluidos = new HashMap<>();
-        this.registosEntregues = new HashMap<>();
-        this.registosAbandonados = new HashMap<>();
+        this.pedidosOrcamento = PedidosOrcamento.leFile();
+        this.registosPendentes = RegistosPendentes.leFile();
+        this.registosNConcluidos = RegistosNConcluidos.leFile();
+        this.registosConcluidos = RegistosConcluidos.leFile();
+        this.registosEntregues = RegistosEntregues.leFile();
+        this.registosAbandonados = RegistosAbandonados.leFile();
+    }
+
+    @Override
+    public void save() {
+        PedidosOrcamento.escreveFile(this.pedidosOrcamento);
+        RegistosPendentes.escreveFile(this.registosPendentes);
+        RegistosNConcluidos.escreveFile(this.registosNConcluidos);
+        RegistosConcluidos.escreveFile(this.registosConcluidos);
+        RegistosEntregues.escreveFile(this.registosEntregues);
+        RegistosAbandonados.escreveFile(this.registosAbandonados);
     }
 
     public Map<String, Registo> getOrcamentosPedidos() {
@@ -105,7 +114,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
 
         Registo aReparar = pedidosOrcamento.get(id);
 
-        pedidosOrcamento.remove(aReparar);
+        pedidosOrcamento.remove(id);
 
         //TODO somehow retornar a localizaçao
         String local = aReparar.getLocalizacao();

@@ -3,10 +3,12 @@ package tpdssdl;
 import tpdssln.ssreparacoes.Registo;
 
 import java.io.*;
-import java.util.Set;
+import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PedidosOrcamento {
-    public static void escreveFile(Set<Registo> po) {
+    public static void escreveFile(Map<String, Registo> po) {
         try {
             File fileOne = new File("db/pedidosOrcamento");
             FileOutputStream fos = new FileOutputStream(fileOne);
@@ -20,20 +22,25 @@ public class PedidosOrcamento {
         }
     }
 
-    public static Set<Registo> leFile(){
+    public static Map<String, Registo> leFile() {
+        File toRead = new File("db/pedidosOrcamento");
         try {
-            File toRead = new File("db/pedidosOrcamento");
             FileInputStream fis = new FileInputStream(toRead);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            Set<Registo> po = (Set<Registo>) ois.readObject();
+            Map<String, Registo> po = (Map<String, Registo>) ois.readObject();
 
             ois.close();
             fis.close();
             return po;
         } catch (Exception e){
-            e.printStackTrace();
+            try {
+                Files.createDirectories(toRead.getParentFile().toPath());
+                toRead.createNewFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
-        return null;
+        return new HashMap<>();
     }
 }

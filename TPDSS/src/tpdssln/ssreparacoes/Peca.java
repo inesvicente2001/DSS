@@ -1,6 +1,8 @@
 package tpdssln.ssreparacoes;
 
-public class Peca {
+import java.io.Serializable;
+
+public class Peca implements Serializable {
     private String nomePeca;
     private float custo;
     private int quantidade;

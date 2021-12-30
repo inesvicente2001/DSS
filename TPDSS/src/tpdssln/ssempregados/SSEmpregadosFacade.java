@@ -1,12 +1,9 @@
 package tpdssln.ssempregados;
 
+import tpdssdl.Empregados;
 import tpdssln.ssempregados.excecoes.CredenciaisErradasException;
 import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
-import tpdssln.ssreparacoes.Reparacao;
-import tpdssln.ssreparacoes.ReparacaoNormal;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class SSEmpregadosFacade implements ISSEmpregados {
@@ -14,9 +11,14 @@ public class SSEmpregadosFacade implements ISSEmpregados {
 
     public SSEmpregadosFacade() {
         this.empregados = new HashMap<>();
+        this.empregados = Empregados.leFile();
         this.empregados.put("Admin",new Administrador("Admin","Admin","Admin"));
     }
 
+    @Override
+    public void save() {
+        Empregados.escreveFile(this.empregados);
+    }
 
     public int numRececoesEmpregado(String id){
 

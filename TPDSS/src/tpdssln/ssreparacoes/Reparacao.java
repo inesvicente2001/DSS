@@ -1,9 +1,9 @@
 package tpdssln.ssreparacoes;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Map;
 
-public abstract class Reparacao {
+public abstract class Reparacao implements Serializable {
     protected LocalDateTime prazoMaximo;
 
     public Reparacao() {

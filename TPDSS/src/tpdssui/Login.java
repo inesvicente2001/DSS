@@ -9,9 +9,7 @@ import tpdssui.gestor.GestorMenuPrincipal;
 import tpdssui.tecnico.TecnicoMenuPrincipal;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 public class Login extends JFrame {
     private JPanel panel1;
@@ -31,6 +29,13 @@ public class Login extends JFrame {
         this.ln = ln;
 
         setActions();
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                ln.save();
+            }
+        });
 
         this.setTitle("Login");
         this.setContentPane(panel1);

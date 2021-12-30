@@ -19,6 +19,12 @@ public class TPDSSLNFacade implements ITPDSSLN {
     public TPDSSLNFacade() {}
 
     @Override
+    public void save() {
+        reparacoes.save();
+        empregados.save();
+    }
+
+    @Override
     public String adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
                                                  String local, String nomeCliente, String nif, String telemovel, String email) {
         return reparacoes.adicionarPedidoOrcamentoNormal(nomeEquipamento, urgencia, descricao, local, nomeCliente, nif, telemovel, email);

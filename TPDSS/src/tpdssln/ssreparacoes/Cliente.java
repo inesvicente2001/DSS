@@ -1,6 +1,8 @@
 package tpdssln.ssreparacoes;
 
-public class Cliente {
+import java.io.Serializable;
+
+public class Cliente implements Serializable {
     private String nomeCliente;
     private String nif;
     private String telemovel;

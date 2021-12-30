@@ -11,9 +11,11 @@ import java.util.Set;
 
 public interface ISSReparacoes {
 
+    void save();
+
     public String adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
-                                               String local, String nomeCliente, String nif,
-                                               String telemovel, String email);
+                                                 String local, String nomeCliente, String nif,
+                                                 String telemovel, String email);
 
 
     public String adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,

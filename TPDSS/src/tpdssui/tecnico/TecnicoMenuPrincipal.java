@@ -9,6 +9,8 @@ import tpdssui.Login;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class TecnicoMenuPrincipal extends JFrame {
     private JButton logoutButton;
@@ -31,6 +33,13 @@ public class TecnicoMenuPrincipal extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 new Login(ln);
                 dispose();
+            }
+        });
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                ln.save();
             }
         });
 
@@ -58,7 +67,9 @@ public class TecnicoMenuPrincipal extends JFrame {
                 new TecnicoPlanoTrabalho(ln);
             }
         });
-        reparaçõesButton.addActionListener(e -> new ListReparacoes(ln, id));
+        reparaçõesButton.addActionListener(e ->
+                new ListReparacoes(ln, id)
+        );
 
     }
 }

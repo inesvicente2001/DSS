@@ -3,6 +3,7 @@ package tpdssdl;
 import tpdssln.ssreparacoes.Registo;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,9 +23,9 @@ public class RegistosConcluidos {
         }
     }
 
-    public static HashMap<String, Registo> leFile(){
+    public static HashMap<String, Registo> leFile() {
+        File toRead = new File("db/RegistosConcluidos");
         try {
-            File toRead = new File("db/RegistosConcluidos");
             FileInputStream fis = new FileInputStream(toRead);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
@@ -34,8 +35,13 @@ public class RegistosConcluidos {
             fis.close();
             return map;
         } catch (Exception e){
-            e.printStackTrace();
+            try {
+                Files.createDirectories(toRead.getParentFile().toPath());
+                toRead.createNewFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            return new HashMap<>();
         }
-        return null;
     }
 }

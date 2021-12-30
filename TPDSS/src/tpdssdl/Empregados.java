@@ -3,6 +3,7 @@ package tpdssdl;
 import tpdssln.ssempregados.Empregado;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,8 +25,8 @@ public class Empregados {
     }
 
     public static HashMap<String, Empregado> leFile() {
+        File toRead = new File("db/empregados");
         try {
-            File toRead = new File("db/empregados");
             FileInputStream fis = new FileInputStream(toRead);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
@@ -35,8 +36,13 @@ public class Empregados {
             fis.close();
             return empregados;
         } catch (Exception e){
-            e.printStackTrace();
+            try {
+                Files.createDirectories(toRead.getParentFile().toPath());
+                toRead.createNewFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
-        return null;
+        return new HashMap<>();
     }
 }

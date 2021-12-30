@@ -9,6 +9,8 @@ import tpdssui.Login;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.Duration;
 
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -30,43 +32,28 @@ public class FuncionarioMenuPrincipal extends JFrame{
         this.ln = ln;
         this.id = id;
 
-        logoutButton.addActionListener(new ActionListener() {
+        logoutButton.addActionListener(e -> {
+            new Login(ln);
+            dispose();
+        });
+
+        this.addWindowListener(new WindowAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                new Login(ln);
-                dispose();
+            public void windowClosing(WindowEvent e) {
+                ln.save();
             }
         });
 
-        adicionarPedidoDeOrçamentoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new FuncionarioAdicionaPedidoOrcamento(ln,id);
-            }
-        });
+        adicionarPedidoDeOrçamentoButton.addActionListener(e -> new FuncionarioAdicionaPedidoOrcamento(ln,id));
 
-        registarEntregaEPagamentoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new FuncionarioRegistoEntregaPagamento(ln, id);
-
-            }
-        });
+        registarEntregaEPagamentoButton.addActionListener(e -> new FuncionarioRegistoEntregaPagamento(ln, id));
 
 
-        serviçosExpressoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(ln.getOcupados() < ln.getDisponibilidade()){
-
-
-                    new FuncionarioAdicionaServicoExpresso(ln,id);
-
-                }else{
-
-                    showMessageDialog(null, "Não existe mais disponibilidade para Reparações Expresso");
-
-                }
+        serviçosExpressoButton.addActionListener(e -> {
+            if(ln.getOcupados() < ln.getDisponibilidade()){
+                new FuncionarioAdicionaServicoExpresso(ln,id);
+            }else{
+                showMessageDialog(null, "Não existe mais disponibilidade para Reparações Expresso");
             }
         });
 
@@ -76,6 +63,7 @@ public class FuncionarioMenuPrincipal extends JFrame{
             new Login(ln);
             dispose();
         }
+
         this.setTitle("Funcionário");
         this.setContentPane(this.topPanel);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

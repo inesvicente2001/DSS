@@ -17,6 +17,8 @@ import java.util.Map;
 import java.util.Set;
 
 public interface ITPDSSLN {
+    void save();
+
     public String adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
                                                  String local, String nomeCliente, String nif,
                                                  String telemovel, String email);
