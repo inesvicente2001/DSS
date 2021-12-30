@@ -28,18 +28,12 @@ public class PormenoresTecnico extends JFrame{
 
         this.ln = ln;
 
-        voltarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-
-            }
-        });
+        voltarButton.addActionListener(e -> dispose());
 
 
         geralPanel.setLayout(new BoxLayout(geralPanel,BoxLayout.Y_AXIS));
-
-
+        geralScrollPanel.setViewportView(geralPanel);
+        geralScrollPanel.setPreferredSize(new Dimension(300, 200));
 
         Map<String, List<String>> infosPlano = ln.todosPlanosTrabalho();
 
@@ -48,14 +42,13 @@ public class PormenoresTecnico extends JFrame{
         for (Map.Entry<String, List<String>> entry : infosPlano.entrySet()){
 
 
-            TecnicoInfoPormCard tecnCard =  new TecnicoInfoPormCard(entry.getValue(), entry.getKey());
+            if(entry.getValue().size() > 0){
+                TecnicoInfoPormCard tecnCard =  new TecnicoInfoPormCard(entry.getValue(), entry.getKey());
 
-            //Border b = BorderFactory.createLoweredBevelBorder();
-            //geralPanel.setBorder(BorderFactory.createTitledBorder(b,entry.getKey()));
+                geralPanel.add(tecnCard);
 
-            geralPanel.add(tecnCard);
-
-            geralPanel.add(Box.createRigidArea(new Dimension(0,10)));
+                geralPanel.add(Box.createRigidArea(new Dimension(0,10)));
+            }
 
         }
 

@@ -18,7 +18,7 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
     public ReparacaoNormal() {
         super();
         this.orcamento = -1;
-        this.custoFinal = -1;
+        this.custoFinal = 0;
         this.planoTrabalho = new HashMap<>();
     }
 
@@ -46,11 +46,6 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
         this.planoTrabalho = planoTrabalho;
     }
 
-    public void addPasso(String nomePasso, Duration tempoPrevisto){
-        Passo passo = new Passo(nomePasso, null, null, tempoPrevisto);
-        this.planoTrabalho.put(planoTrabalho.size() + 1, passo);
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void definirOrcamento() {
@@ -59,10 +54,13 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
         }
     }
 
-    public void definirCustoFinal() {
+    public float definirCustoFinal() {
+        this.custoFinal = 0;
         for(Passo passo: planoTrabalho.values()) {
             this.custoFinal = this.custoFinal + passo.definirCustoFinal();
         }
+        System.out.println("adeus: " + custoFinal);
+        return this.custoFinal;
     }
 
     public Duration tempoPrevisto(){
@@ -128,35 +126,36 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
         p.addPecaUsada(nomePeca, custo, quantidade);
     }
 
-    public void addSubPasso(Integer passo, String nomePasso, Duration tempoPrevisto) {
-        Passo p = planoTrabalho.get(passo);
-        p.addSubPasso(nomePasso, tempoPrevisto);
-    }
-
-
     public String toHTMLPlanoTrabalho(){
 
-        StringBuilder html = new StringBuilder();
 
-        html.append("<html>\n");
-        html.append("<body>\n");
+        String htmlString = " ";
+
+        if(this.getPlanoTrabalho().size() > 0){
+
+            StringBuilder html = new StringBuilder();
+
+            html.append("<html>\n");
+            html.append("<body>\n");
+
+            int i = 1;
+            for(; i<this.getPlanoTrabalho().size() - 1 ;i++){
+
+                html.append("Passo ").append(i).append(") ").append(this.getPlanoTrabalho().get(i).getNomePasso()).append("<br/>");
+            }
+
+            html.append("Passo ").append(i).append(") ").append(this.getPlanoTrabalho().get(i).getNomePasso());
+
+            html.append("</body>\n");
+            html.append("</html>");
 
 
-        html.append("<br/>").append("Passo ").append("1").append(") ").append(this.getPlanoTrabalho().get(1)).append("<br/>");
+            htmlString = html.toString();
 
-        int i = 2;
-        for(; i<this.getPlanoTrabalho().size() - 1 ;i++){
 
-            html.append("Passo ").append(i).append(") ").append(this.getPlanoTrabalho().get(i)).append("<br/>");
         }
 
-        html.append("Passo ").append(i).append(") ").append(this.getPlanoTrabalho().get(i));
-
-        html.append("</body>\n");
-        html.append("</html>");
-
-
-        return html.toString();
+        return htmlString;
     }
 
 

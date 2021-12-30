@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -30,8 +31,8 @@ public class TecnicoPlanoTrabalho extends JFrame{
     private JTextField prazoLabel;
 
     private ITPDSSLN ln;
-    private Map<Integer, Passo> passos = new HashMap<>();
-    private Registo r;
+    private final Map<Integer, Passo> passos = new HashMap<>();
+    private final Registo r;
     private int counter = 1;
 
     private float orcamento = 0;
@@ -40,7 +41,7 @@ public class TecnicoPlanoTrabalho extends JFrame{
 
         this.ln = ln;
 
-        Registo r = ln.maisUrgente();
+        r = ln.maisUrgente();
         String html = ln.toHTMLDescricao(r.getId());
         idEquipamento.setText(r.getId());
         nomeEquipamento.setText(r.getNomeEquipamento());
@@ -81,8 +82,9 @@ public class TecnicoPlanoTrabalho extends JFrame{
         confirmarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                LocalDateTime prazo = LocalDateTime.parse(prazoLabel.getText(), DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
-                ln.registarPlanoTrabalho(r.getId(), passos, prazo);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate prazo = LocalDate.parse(prazoLabel.getText(), formatter);
+                ln.registarPlanoTrabalho(r.getId(), passos, prazo.atStartOfDay());
                 dispose();
             }
         });

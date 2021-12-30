@@ -77,4 +77,10 @@ public interface ITPDSSLN {
     void iniciarPasso(String id);
 
     void concluirPasso(String id, Tecnico t);
+
+    public int getDisponibilidade();
+
+    public int getOcupados();
+
+    public void setOcupados(int ocupados);
 }

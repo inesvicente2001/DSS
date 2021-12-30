@@ -187,4 +187,16 @@ public class TPDSSLNFacade implements ITPDSSLN {
     public void concluirPasso(String id, Tecnico t) {
         reparacoes.concluirPasso(id,t);
     }
+
+    public int getDisponibilidade() {
+        return reparacoes.getDisponibilidade();
+    }
+
+    public int getOcupados() {
+        return reparacoes.getOcupados();
+    }
+
+    public void setOcupados(int ocupados) {
+        reparacoes.setOcupados(ocupados);
+    }
 }
