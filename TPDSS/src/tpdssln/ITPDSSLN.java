@@ -8,23 +8,25 @@ import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
 import tpdssln.ssreparacoes.Passo;
 import tpdssln.ssreparacoes.Registo;
 import tpdssln.ssreparacoes.Reparacao;
+import tpdssln.ssreparacoes.excecoes.RegistoNaoExisteException;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface ITPDSSLN {
-    public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
-                                               String local, String nomeCliente, String nif,
-                                               String telemovel, String email);
-
-
-
-    public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
-                                                 String local, float precoFixo,
-                                                 Duration duracaoPrevista, String nomeCliente, String nif,
+    public String adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
+                                                 String local, String nomeCliente, String nif,
                                                  String telemovel, String email);
+
+
+
+    public String adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
+                                                   String local, float precoFixo,
+                                                   Duration duracaoPrevista, String nomeCliente, String nif,
+                                                   String telemovel, String email);
     // Métodos do subsistema de empregados
     public Class<? extends Empregado> autenticar(String id, String password) throws CredenciaisErradasException;
     public Map<String, Tecnico> acederTecnicos();
@@ -65,4 +67,8 @@ public interface ITPDSSLN {
     public void aumentarEntregasEmpregado(String id);
 
     public void aumentarRececoesEmpregado(String id);
+
+    Set<String> getRegistosNConcluidos();
+
+    String obterInfoRegistoNConcluido(String id) throws RegistoNaoExisteException;
 }

@@ -4,11 +4,13 @@ import tpdssln.ssempregados.*;
 import tpdssln.ssempregados.excecoes.CredenciaisErradasException;
 import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
 import tpdssln.ssreparacoes.*;
+import tpdssln.ssreparacoes.excecoes.RegistoNaoExisteException;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class TPDSSLNFacade implements ITPDSSLN {
     private ISSReparacoes reparacoes = new SSReparacoesFacade();
@@ -17,17 +19,17 @@ public class TPDSSLNFacade implements ITPDSSLN {
     public TPDSSLNFacade() {}
 
     @Override
-    public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
-                                               String local,  String nomeCliente, String nif, String telemovel, String email) {
-        reparacoes.adicionarPedidoOrcamentoNormal(nomeEquipamento, urgencia, descricao, local, nomeCliente, nif, telemovel, email);
+    public String adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
+                                                 String local, String nomeCliente, String nif, String telemovel, String email) {
+        return reparacoes.adicionarPedidoOrcamentoNormal(nomeEquipamento, urgencia, descricao, local, nomeCliente, nif, telemovel, email);
     }
 
     @Override
-    public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
-                                                 String local, float precoFixo,
-                                                 Duration duracaoPrevista, String nomeCliente, String nif,
-                                                 String telemovel, String email) {
-        reparacoes.adicionarPedidoOrcamentoExpresso(
+    public String adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
+                                                   String local, float precoFixo,
+                                                   Duration duracaoPrevista, String nomeCliente, String nif,
+                                                   String telemovel, String email) {
+        return reparacoes.adicionarPedidoOrcamentoExpresso(
                 nomeEquipamento, urgencia, descricao,
                 local, precoFixo,
                 duracaoPrevista, nomeCliente, nif,
@@ -159,5 +161,15 @@ public class TPDSSLNFacade implements ITPDSSLN {
 
     public String toHTMLDescricao(String id) throws NullPointerException {
         return reparacoes.toHTMLDescricao(id);
+    }
+
+    @Override
+    public Set<String> getRegistosNConcluidos() {
+        return reparacoes.getRegistosNConcluidos();
+    }
+
+    @Override
+    public String obterInfoRegistoNConcluido(String id) throws RegistoNaoExisteException {
+        return reparacoes.obterInfoRegistoNConcluido(id);
     }
 }

@@ -2,28 +2,32 @@ package tpdssln.ssreparacoes;
 
 import tpdssln.ssempregados.Funcionario;
 import tpdssln.ssempregados.Tecnico;
+import tpdssln.ssreparacoes.excecoes.RegistoNaoExisteException;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Set;
 
 public interface ISSReparacoes {
 
-    public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
+    public String adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
                                                String local, String nomeCliente, String nif,
                                                String telemovel, String email);
 
 
-    public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
-                                                 String local, float precoFixo,
-                                                 Duration duracaoPrevista, String nomeCliente, String nif,
-                                                 String telemovel, String email);
+    public String adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
+                                                   String local, float precoFixo,
+                                                   Duration duracaoPrevista, String nomeCliente, String nif,
+                                                   String telemovel, String email);
 
     public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho);
 
     public void confirmarReparacao(String idEquipamento);
 
     public void registarConclusao(String idEquipamento, Tecnico tecnico);
+
+    String obterInfoRegistoNConcluido(String id) throws RegistoNaoExisteException;
 
     public void registarEntrega(String id);
 
@@ -47,4 +51,6 @@ public interface ISSReparacoes {
     LocalDateTime obterPrazoMaximo(Registo registo);
 
     Registo maisUrgente();
+
+    Set<String> getRegistosNConcluidos();
 }
