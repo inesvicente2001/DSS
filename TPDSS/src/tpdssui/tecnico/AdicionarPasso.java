@@ -99,7 +99,9 @@ public class AdicionarPasso extends JFrame {
                 String nome = nomeField1.getText();
                 Duration d = Duration.ofMinutes(Integer.parseInt(previsaoField2.getText()));
                 Passo p = new Passo(nome, d, pecas, subPassos, id);
-                passos.put(counter, p);
+                String[] tokens = id.split("\\.");
+                int key = Integer.parseInt(tokens[tokens.length-1]);
+                passos.put(key, p);
 
                 NovoPassosCard pc = new NovoPassosCard(id, p.getNomePasso(), p.definirOrcamento(), (int) p.getTempoPrevisto().toMinutes());
                 for(Peca peca: pecas) {

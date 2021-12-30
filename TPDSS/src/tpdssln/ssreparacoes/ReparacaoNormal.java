@@ -18,7 +18,7 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
     public ReparacaoNormal() {
         super();
         this.orcamento = -1;
-        this.custoFinal = -1;
+        this.custoFinal = 0;
         this.planoTrabalho = new HashMap<>();
     }
 
@@ -54,10 +54,13 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
         }
     }
 
-    public void definirCustoFinal() {
+    public float definirCustoFinal() {
+        this.custoFinal = 0;
         for(Passo passo: planoTrabalho.values()) {
             this.custoFinal = this.custoFinal + passo.definirCustoFinal();
         }
+        System.out.println("adeus: " + custoFinal);
+        return this.custoFinal;
     }
 
     public Duration tempoPrevisto(){
@@ -135,10 +138,7 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
             html.append("<html>\n");
             html.append("<body>\n");
 
-
-            html.append("<br/>").append("Passo ").append("1").append(") ").append(this.getPlanoTrabalho().get(1).getNomePasso()).append("<br/>");
-
-            int i = 2;
+            int i = 1;
             for(; i<this.getPlanoTrabalho().size() - 1 ;i++){
 
                 html.append("Passo ").append(i).append(") ").append(this.getPlanoTrabalho().get(i).getNomePasso()).append("<br/>");

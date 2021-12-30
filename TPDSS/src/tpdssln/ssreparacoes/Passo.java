@@ -132,17 +132,18 @@ public class Passo {
     }
 
     public float definirCustoFinal() {
-        float custoFinal = 0;
+        float ret = 0;
 
         if (subPassos.isEmpty()) {
-            for (Peca peca : pecasUsadas) {
-                custoFinal = custoFinal + (peca.getCusto() * peca.getQuantidade());
-            }
+            ret = custoFinal;
         } else{
             for (Passo passo : subPassos.values())
-                custoFinal = custoFinal + passo.definirCustoFinal();
+                ret = ret + passo.definirCustoFinal();
         }
-        return custoFinal;
+
+        System.out.println("ola: " + ret);
+
+        return ret;
     }
 
     public Duration duracao() {
