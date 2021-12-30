@@ -1,8 +1,7 @@
 package tpdssui.admin;
 
 import tpdssln.ITPDSSLN;
-import tpdssln.ssempregados.Administrador;
-import tpdssln.ssempregados.Empregado;
+import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
 import tpdssui.Login;
 
 import javax.swing.*;
@@ -19,11 +18,11 @@ public class AdminMenuPrincipal extends JFrame {
     private JLabel greeting;
 
     private final ITPDSSLN ln;
-    private final Administrador autenticado;
+    private final String id;
 
-    public AdminMenuPrincipal(ITPDSSLN ln, Administrador autenticado) {
+    public AdminMenuPrincipal(ITPDSSLN ln, String id) {
         this.ln = ln;
-        this.autenticado = autenticado;
+        this.id = id;
 
         setGreeting();
         addActions();
@@ -42,8 +41,12 @@ public class AdminMenuPrincipal extends JFrame {
     }
 
     private void setGreeting() {
-        System.out.println(autenticado.getNome());
-        greeting.setText("Bem vindo, " + autenticado.getNome());
+        try {
+            greeting.setText("Bem vindo, " + ln.verEmpregado(id).getNome());
+        } catch (EmpregadoNaoExisteException e) {
+            new Login(ln);
+            dispose();
+        }
     }
 
     // Definir o que cada butão faz quando clicado
@@ -91,6 +94,6 @@ public class AdminMenuPrincipal extends JFrame {
 
     // Para remover um empregado, criar uma janela de remoção de empregado
     private void removerEmpregado() {
-        new RemoverEmpregado(ln);
+        new RemoverEmpregado(ln, id);
     }
 }

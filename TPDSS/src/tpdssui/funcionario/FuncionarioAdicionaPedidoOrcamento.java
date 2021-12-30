@@ -52,9 +52,10 @@ public class FuncionarioAdicionaPedidoOrcamento extends JFrame{
             }
         });
 
+
         this.setTitle("Novo Pedido de Orçamento");
         this.setContentPane(this.topPanel);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);

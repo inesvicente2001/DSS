@@ -97,13 +97,7 @@ public class AdicionarEmpregado extends JFrame {
         switch (tipo) {
             case "Funcionário"  : ln.adicionarFuncionario(username,password); break;
             case "Técnico"      : ln.adicionarTecnico(username,password); break;
-            case "Gestor"       : ln.adicionarGestor(username, password); break;
-        }
-        for(Empregado e: ln.acederTecnicos().values()) {
-            System.out.println(e.getNome() + "| ID: " + e.getId() + "| Password: " + e.getPassword());
-        }
-        for(Empregado e: ln.acederFuncionarios().values()) {
-            System.out.println(e.getNome() + "| ID: " + e.getId() + "| Password: " + e.getPassword());
+            case "Gestor"       : ln.adicionarGestor(username,password); break;
         }
         dispose();
     }

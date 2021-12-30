@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,7 +16,18 @@ public class Passo {
     private Duration tempoPrevisto;
     private Set<Peca> pecasEstimadas;
     private Set<Peca> pecasUsadas;
-    private Set<Passo> subPassos;
+    private Map<Integer, Passo> subPassos;
+
+    public Passo(String nomePasso, Duration tempoPrevisto, Set<Peca> pecas, Map<Integer, Passo> subPassos) {
+        this.nomePasso = nomePasso;
+        this.concluido = false;
+        this.dataInicio = null;
+        this.dataFim = null;
+        this.tempoPrevisto = tempoPrevisto;
+        this.pecasEstimadas = pecas;
+        this.pecasUsadas = new HashSet<>();
+        this.subPassos = subPassos;
+    }
 
     public Passo(String nomePasso, LocalDateTime dataInicio, LocalDateTime dataFim, Duration tempoPrevisto) {
         this.nomePasso = nomePasso;
@@ -83,11 +95,11 @@ public class Passo {
         this.pecasUsadas = pecasUsadas;
     }
 
-    public Set<Passo> getSubPassos() {
+    public Map<Integer, Passo> getSubPassos() {
         return subPassos;
     }
 
-    public void setSubPassos(Set<Passo> subPassos) {
+    public void setSubPassos(Map<Integer, Passo> subPassos) {
         this.subPassos = subPassos;
     }
 
@@ -145,7 +157,7 @@ public class Passo {
 
     public void addSubPasso(String nomePasso, Duration tempoPrevisto){
         Passo passo = new Passo(nomePasso, null, null, tempoPrevisto);
-        subPassos.add(passo);
+        subPassos.put(subPassos.size(), passo);
     }
 
 }

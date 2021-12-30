@@ -13,11 +13,14 @@ public class RemoverEmpregado extends JFrame {
     private JPanel panel1;
     private JButton confirmarButton;
     private JButton cancelarButton;
+    private JLabel statusLabel;
 
-    private ITPDSSLN ln;
+    private final ITPDSSLN ln;
+    private final String id;
 
-    public RemoverEmpregado(ITPDSSLN ln) {
+    public RemoverEmpregado(ITPDSSLN ln, String id) {
         this.ln = ln;
+        this.id = id;
 
         addActions();
 
@@ -49,7 +52,20 @@ public class RemoverEmpregado extends JFrame {
     }
 
     private void confirmar() {
-        Empregado empregado = ln.verEmpregado(textField1.getText());
-        new RemoverDialog(ln, empregado, this);
+        String empregado = textField1.getText();
+        if(empregado.equals(id)) {
+            statusLabel.setText("Não te removas a ti mesmo, por favor");
+            statusLabel.setVisible(true);
+            this.pack();
+        }
+        else if(ln.existeEmpregado(empregado)) {
+            statusLabel.setVisible(false);
+            this.pack();
+            new RemoverDialog(ln, empregado, this);
+        } else {
+            statusLabel.setText("Empregado não existe");
+            statusLabel.setVisible(true);
+            this.pack();
+        }
     }
 }

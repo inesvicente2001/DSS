@@ -161,9 +161,9 @@ public class Registo implements Serializable {
 
         int i = 0;
         for(; i<list.length - 1 ;i++){
-            html.append(list[i] + "<br/>");
+            html.append(list[i]).append("<br/>");
         }
-        html.append(list[i] + "<br/>");
+        html.append(list[i] );
 
         html.append("</body>\n");
         html.append("</html>");

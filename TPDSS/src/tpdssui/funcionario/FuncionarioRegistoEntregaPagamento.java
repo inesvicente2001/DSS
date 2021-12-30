@@ -37,9 +37,11 @@ public class FuncionarioRegistoEntregaPagamento extends JFrame{
             }
         });
 
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
         this.setTitle("Entrega e Pagamento de Equipamento");
         this.setContentPane(this.topPanel);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);

@@ -3,6 +3,7 @@ package tpdssui.funcionario;
 import tpdssln.ITPDSSLN;
 import tpdssln.TPDSSLNFacade;
 import tpdssln.ssempregados.Funcionario;
+import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
 import tpdssui.Login;
 
 import javax.swing.*;
@@ -19,12 +20,12 @@ public class FuncionarioMenuPrincipal extends JFrame{
     private JButton serviçosExpressoButton;
     private JLabel welcome;
 
-    private ITPDSSLN ln;
-    private Funcionario funcionario;
+    private final ITPDSSLN ln;
+    private final String id;
 
-    public FuncionarioMenuPrincipal(ITPDSSLN ln, Funcionario autenticado) {
+    public FuncionarioMenuPrincipal(ITPDSSLN ln, String id) {
         this.ln = ln;
-        this.funcionario = autenticado;
+        this.id = id;
 
         logoutButton.addActionListener(new ActionListener() {
             @Override
@@ -56,7 +57,12 @@ public class FuncionarioMenuPrincipal extends JFrame{
             }
         });
 
-        this.welcome.setText("Bem vindo, " + funcionario.getNome());
+        try {
+            this.welcome.setText("Bem vindo, " + ln.verEmpregado(id).getNome());
+        } catch (EmpregadoNaoExisteException e) {
+            new Login(ln);
+            dispose();
+        }
         this.setTitle("Funcionário");
         this.setContentPane(this.topPanel);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

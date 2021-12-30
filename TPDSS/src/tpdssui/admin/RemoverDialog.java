@@ -2,6 +2,7 @@ package tpdssui.admin;
 
 import tpdssln.ITPDSSLN;
 import tpdssln.ssempregados.Empregado;
+import tpdssln.ssempregados.excecoes.EmpregadoNaoExisteException;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -11,13 +12,13 @@ public class RemoverDialog extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
 
-    private final Empregado empregado;
+    private final String id;
     private final ITPDSSLN ln;
     private final JFrame caller;
 
-    public RemoverDialog(ITPDSSLN ln, Empregado empregado, JFrame caller) {
+    public RemoverDialog(ITPDSSLN ln, String id, JFrame caller) {
         this.ln = ln;
-        this.empregado = empregado;
+        this.id= id;
         this.caller = caller;
 
         setContentPane(contentPane);
@@ -57,15 +58,13 @@ public class RemoverDialog extends JDialog {
     }
 
     private void onOK() {
-        ln.removerUtilizador(empregado.getId());
-        caller.dispose();
-        for(Empregado e: ln.acederTecnicos().values()) {
-            System.out.println(e.getNome() + "| ID: " + e.getId() + "| Password: " + e.getPassword());
+        try {
+            ln.removerUtilizador(ln.verEmpregado(id).getId());
+            caller.dispose();
+            dispose();
+        } catch (EmpregadoNaoExisteException e) {
+            dispose();
         }
-        for(Empregado e: ln.acederFuncionarios().values()) {
-            System.out.println(e.getNome() + "| ID: " + e.getId() + "| Password: " + e.getPassword());
-        }
-        dispose();
     }
 
     private void onCancel() {

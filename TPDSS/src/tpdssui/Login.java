@@ -2,6 +2,7 @@ package tpdssui;
 
 import tpdssln.ITPDSSLN;
 import tpdssln.ssempregados.*;
+import tpdssln.ssempregados.excecoes.CredenciaisErradasException;
 import tpdssui.admin.AdminMenuPrincipal;
 import tpdssui.funcionario.FuncionarioMenuPrincipal;
 import tpdssui.gestor.GestorMenuPrincipal;
@@ -18,8 +19,9 @@ public class Login extends JFrame {
     private JPasswordField passwordField1;
     private JTextField textField1;
     private JRadioButton mostrarPasswordRadioButton;
+    private JLabel statusLabel;
 
-    private ITPDSSLN ln;
+    private final ITPDSSLN ln;
 
     public Login(ITPDSSLN ln) {
 
@@ -54,18 +56,26 @@ public class Login extends JFrame {
     }
 
     private void login() {
-        Empregado autenticado = ln.verEmpregado(textField1.getText());
+        String id = textField1.getText();
+        String password = new String(passwordField1.getPassword());
+        try {
+            Class<? extends Empregado> tipo = ln.autenticar(id, password);
 
-        if(autenticado instanceof Administrador) {
-            new AdminMenuPrincipal(ln, (Administrador) autenticado);
-        } else if(autenticado instanceof Funcionario) {
-            new FuncionarioMenuPrincipal(ln, (Funcionario) autenticado);
-        } else if(autenticado instanceof Tecnico) {
-            new TecnicoMenuPrincipal(ln, (Tecnico) autenticado);
-        } else if(autenticado instanceof Gestor) {
-            new GestorMenuPrincipal(ln, (Gestor) autenticado);
+            if (tipo == Administrador.class) {
+                new AdminMenuPrincipal(ln, id);
+            } else if (tipo == Funcionario.class) {
+                new FuncionarioMenuPrincipal(ln, id);
+            } else if (tipo == Tecnico.class) {
+                new TecnicoMenuPrincipal(ln, id);
+            } else if (tipo == Gestor.class) {
+                new GestorMenuPrincipal(ln, id);
+            }
+            dispose();
+        } catch (CredenciaisErradasException e) {
+            statusLabel.setText("ID ou password inválidos");
+            statusLabel.setVisible(true);
+            this.pack();
         }
-        dispose();
     }
 
 
