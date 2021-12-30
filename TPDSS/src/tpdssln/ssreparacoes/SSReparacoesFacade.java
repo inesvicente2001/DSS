@@ -2,9 +2,11 @@ package tpdssln.ssreparacoes;
 
 import tpdssln.ssempregados.Funcionario;
 import tpdssln.ssempregados.Tecnico;
+import tpdssln.ssreparacoes.excecoes.RegistoNaoExisteException;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -41,10 +43,6 @@ public class SSReparacoesFacade implements ISSReparacoes {
         this.registosConcluidos = registosConcluidos;
     }
 
-    public Map<String, Registo> getRegistosNConcluidos() {
-        return registosNConcluidos;
-    }
-
     public void setRegistosNConcluidos(Map<String, Registo> registosNConcluidos) {
         this.registosNConcluidos = registosNConcluidos;
     }
@@ -52,7 +50,7 @@ public class SSReparacoesFacade implements ISSReparacoes {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    public void adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
+    public String adicionarPedidoOrcamentoNormal(String nomeEquipamento, int urgencia, String descricao,
                                                String local, String nomeCliente, String nif,
                                                String telemovel, String email){
 
@@ -63,12 +61,14 @@ public class SSReparacoesFacade implements ISSReparacoes {
         Cliente cliente = new Cliente(nomeCliente, nif, telemovel, email);
         Registo registo = new Registo(id, nomeEquipamento, urgencia, descricao, local, reparacao, cliente);
         pedidosOrcamento.put(registo.getId(), registo);
+
+        return id;
     }
 
-    public void adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
-                                                 String local, float precoFixo,
-                                                 Duration duracaoPrevista, String nomeCliente, String nif,
-                                                 String telemovel, String email){
+    public String adicionarPedidoOrcamentoExpresso(String nomeEquipamento, int urgencia, String descricao,
+                                                   String local, float precoFixo,
+                                                   Duration duracaoPrevista, String nomeCliente, String nif,
+                                                   String telemovel, String email){
 
         String id = generateID();
         System.out.println(id);
@@ -77,6 +77,8 @@ public class SSReparacoesFacade implements ISSReparacoes {
         Cliente cliente = new Cliente(nomeCliente, nif, telemovel, email);
         Registo registo = new Registo(id, nomeEquipamento, urgencia, descricao, local, reparacao, cliente);
         pedidosOrcamento.put(registo.getId(), registo);
+
+        return id;
     }
 
     public void registarPlanoTrabalho(String id, Map<Integer, Passo> planoTrabalho){
@@ -136,6 +138,14 @@ public class SSReparacoesFacade implements ISSReparacoes {
             //TODO mandar mail
             String email = concluido.getCliente().getEmail();
         }
+    }
+
+    @Override
+    public String obterInfoRegistoNConcluido(String id) throws RegistoNaoExisteException {
+        Registo r = registosNConcluidos.get(id);
+        if(r == null) throw new RegistoNaoExisteException();
+
+        return r.getNomeEquipamento() + ";" + r.getUrgencia() + ";" + r.getDataPedido().format(DateTimeFormatter.ISO_DATE) + ";" + r.getReparacao().getPrazoMaximo().format(DateTimeFormatter.ISO_DATE);
     }
 
     @Override
@@ -262,4 +272,14 @@ public class SSReparacoesFacade implements ISSReparacoes {
         return pedidosOrcamento.values().stream().filter(r -> r.getId().equals(id)).findFirst().orElse(null).toHTMLDescricao();
     }
 
+    @Override
+    public Set<String> getRegistosNConcluidos() {
+        Set<String> registos = new HashSet<>();
+
+        for(String id: registosNConcluidos.keySet()) {
+            registos.add(id);
+        }
+
+        return registos;
+    }
 }
