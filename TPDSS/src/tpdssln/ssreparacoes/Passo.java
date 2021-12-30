@@ -182,6 +182,7 @@ public class Passo {
             int i = 1;
             for(; subPassos.get(i).getConcluido() ; i++);
             subPassos.get(i).iniciarPasso();
+            if (i==1) dataInicio = LocalDateTime.now();
         }
     }
 
@@ -194,6 +195,10 @@ public class Passo {
             int i = 1;
             for(; subPassos.get(i).getConcluido() ; i++);
             subPassos.get(i).concluirPasso();
+            if (!subPassos.containsKey(i+1)){
+                concluido = true;
+                dataFim = LocalDateTime.now();
+            }
         }
     }
 
