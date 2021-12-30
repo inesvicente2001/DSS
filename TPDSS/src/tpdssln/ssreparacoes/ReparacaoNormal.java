@@ -15,8 +15,8 @@ public class ReparacaoNormal extends Reparacao implements Serializable {
     private float custoFinal;
     private Map<Integer,Passo> planoTrabalho;
 
-    public ReparacaoNormal(LocalDateTime prazoMaximo) {
-        super(prazoMaximo);
+    public ReparacaoNormal() {
+        super();
         this.orcamento = -1;
         this.custoFinal = -1;
         this.planoTrabalho = new HashMap<>();

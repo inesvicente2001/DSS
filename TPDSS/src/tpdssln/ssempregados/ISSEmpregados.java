@@ -29,4 +29,8 @@ public interface ISSEmpregados {
     public List<String> toLstInfosPlanosTrabalho(String idTecnico);
     public Map<String,List<String>> todosPlanosTrabalho();
 
+    public void aumentarRececoesEmpregado(String id);
+
+    public void aumentarEntregasEmpregado(String id);
+
 }

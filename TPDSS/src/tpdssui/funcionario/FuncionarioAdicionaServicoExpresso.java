@@ -1,11 +1,12 @@
 package tpdssui.funcionario;
 
 import tpdssln.ITPDSSLN;
-import tpdssln.TPDSSLNFacade;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class FuncionarioAdicionaServicoExpresso extends JFrame{
     private JButton voltarButton;
@@ -14,7 +15,7 @@ public class FuncionarioAdicionaServicoExpresso extends JFrame{
     private JButton confirmarButton;
     private JTextField tlmClienteField;
     private JTextField nomeEquipamentoField;
-    private JComboBox comboBox1;
+    private JComboBox servExpressoBox1;
     private JTextField nifClienteField;
     private JLabel nomeCliente;
     private JLabel emailCliente;
@@ -22,11 +23,13 @@ public class FuncionarioAdicionaServicoExpresso extends JFrame{
     private JLabel nifCliente;
     private JLabel nomeEquipamento;
     private JPanel topPanel;
+    private JLabel localArmazem;
+    private JTextField localArmazemField;
 
     private ITPDSSLN ln;
 
 
-    public FuncionarioAdicionaServicoExpresso(ITPDSSLN ln) {
+    public FuncionarioAdicionaServicoExpresso(ITPDSSLN ln, String idFuncionario) {
 
         this.ln = ln;
 
@@ -38,12 +41,8 @@ public class FuncionarioAdicionaServicoExpresso extends JFrame{
             }
         });
 
-        confirmarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-            }
-        });
+        addActions(idFuncionario);
 
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
@@ -54,6 +53,34 @@ public class FuncionarioAdicionaServicoExpresso extends JFrame{
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
+
+    }
+
+
+    private void addActions(String idFuncionario) {
+        confirmarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    String nomeClienteInput = nomeClienteField.getText();
+                    String nifClienteInput = nifClienteField.getText();
+                    String emailClienteInput = emailClienteField.getText();
+                    String tlmClienteInput = tlmClienteField.getText();
+                    String nomeEquipamentoInput = nomeEquipamentoField.getText();
+                    String localArmazemInput = localArmazemField.getText();
+
+                    String descEprecoReparacaoInput = servExpressoBox1.getEditor().getItem().toString();
+
+                    String[] descPrecoSeparados = descEprecoReparacaoInput.split("/");
+
+
+                    ln.adicionarPedidoOrcamentoExpresso(nomeEquipamentoInput,11,"Serviço Expresso: " + descPrecoSeparados[0],
+                            localArmazemInput, Long.parseLong(descPrecoSeparados[1]), Duration.ofMinutes(Long.parseLong(descPrecoSeparados[2])),
+                            nomeClienteInput,nifClienteInput,tlmClienteInput,emailClienteInput);
+                    ln.aumentarRececoesEmpregado(idFuncionario);
+
+                    dispose();
+            }
+        });
 
     }
 

@@ -38,14 +38,14 @@ public class FuncionarioMenuPrincipal extends JFrame{
         adicionarPedidoDeOrçamentoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new FuncionarioAdicionaPedidoOrcamento(ln);
+                new FuncionarioAdicionaPedidoOrcamento(ln,id);
             }
         });
 
         registarEntregaEPagamentoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new FuncionarioRegistoEntregaPagamento(ln);
+                new FuncionarioRegistoEntregaPagamento(ln, id);
 
             }
         });
@@ -53,7 +53,7 @@ public class FuncionarioMenuPrincipal extends JFrame{
         serviçosExpressoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new FuncionarioAdicionaServicoExpresso(ln);
+                new FuncionarioAdicionaServicoExpresso(ln,id);
             }
         });
 
